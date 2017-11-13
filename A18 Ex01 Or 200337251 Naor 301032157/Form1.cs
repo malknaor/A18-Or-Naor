@@ -22,6 +22,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         public formFacebookApp()
         {
             InitializeComponent();
+            FacebookWrapper.FacebookService.s_CollectionLimit = 200;
+            FacebookWrapper.FacebookService.s_FbApiVersion = 2.8f;
         }
 
         private void buttonUserLogin_Click(object sender, EventArgs e)
@@ -96,12 +98,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchUserInfo()
         {
-
             pictureBoxProfilePhoto.LoadAsync(m_LoggedInUser.PictureNormalURL);
+            labelUserName.Text = m_LoggedInUser.Name;
 
             if (m_LoggedInUser.Posts.Count > 0)
             {
-             //   textBoxStatus.Text = m_LoggedInUser.Posts[0].Message;
+                //textBoxStatus.Text = m_LoggedInUser.Posts[0].Message;
             }
         }
 
@@ -112,10 +114,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonFetchFriends_Click(object sender, EventArgs e)
         {
-            FetchFriends();
+            fetchFriends();
         }
 
-        private void FetchFriends()
+        private void fetchFriends()
         {
             listBoxFriendsList.Items.Clear();
             listBoxFriendsList.DisplayMember = "Name";
@@ -125,6 +127,50 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 listBoxFriendsList.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
+        }
+
+        private void buttonFetchLikedPages_Click(object sender, EventArgs e)
+        {
+            fetchLikedPages();
+        }
+
+        private void fetchLikedPages()
+        {
+            listBoxLikedPages.Items.Clear();
+            listBoxLikedPages.DisplayMember = "Name";
+
+            foreach (Page page in m_LoggedInUser.LikedPages)
+            {
+                listBoxLikedPages.Items.Add(page);
+            }
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            FacebookService.Logout(null);
+        }
+
+        //private void linkCheckins_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        //{
+        //    fetchCheckins();
+        //}
+
+        private void fetchCheckins()
+        {
+            foreach (Checkin checkin in m_LoggedInUser.Checkins)
+            {
+                listBoxCheckins.Items.Add(checkin.Place.Name);
+            }
+
+            if (m_LoggedInUser.Checkins.Count == 0)
+            {
+                MessageBox.Show("No Checkins to retrieve :(");
+            }
+        }
+
+        private void buttonFetchCheckins_Click(object sender, EventArgs e)
+        {
+            fetchCheckins();
         }
     }
 }
