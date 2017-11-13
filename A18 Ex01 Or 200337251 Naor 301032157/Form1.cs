@@ -109,5 +109,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
 
         }
+
+        private void buttonFetchFriends_Click(object sender, EventArgs e)
+        {
+            FetchFriends();
+        }
+
+        private void FetchFriends()
+        {
+            listBoxFriendsList.Items.Clear();
+            listBoxFriendsList.DisplayMember = "Name";
+
+            foreach (User friend in m_LoggedInUser.Friends)
+            {
+                listBoxFriendsList.Items.Add(friend);
+                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            }
+        }
     }
 }

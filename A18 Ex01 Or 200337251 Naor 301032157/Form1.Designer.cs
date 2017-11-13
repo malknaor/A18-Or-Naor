@@ -31,6 +31,9 @@
             this.pictureBoxProfilePhoto = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonUserLogin = new System.Windows.Forms.Button();
+            this.listBoxFriendsList = new System.Windows.Forms.ListBox();
+            this.labelFriendsList = new System.Windows.Forms.Label();
+            this.buttonFetchFriends = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePhoto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,11 +66,41 @@
             this.buttonUserLogin.UseVisualStyleBackColor = true;
             this.buttonUserLogin.Click += new System.EventHandler(this.buttonUserLogin_Click);
             // 
+            // listBoxFriendsList
+            // 
+            this.listBoxFriendsList.FormattingEnabled = true;
+            this.listBoxFriendsList.Location = new System.Drawing.Point(12, 180);
+            this.listBoxFriendsList.Name = "listBoxFriendsList";
+            this.listBoxFriendsList.Size = new System.Drawing.Size(136, 95);
+            this.listBoxFriendsList.TabIndex = 3;
+            // 
+            // labelFriendsList
+            // 
+            this.labelFriendsList.AutoSize = true;
+            this.labelFriendsList.Location = new System.Drawing.Point(9, 156);
+            this.labelFriendsList.Name = "labelFriendsList";
+            this.labelFriendsList.Size = new System.Drawing.Size(57, 13);
+            this.labelFriendsList.TabIndex = 4;
+            this.labelFriendsList.Text = "FriendsList";
+            // 
+            // buttonFetchFriends
+            // 
+            this.buttonFetchFriends.Location = new System.Drawing.Point(73, 151);
+            this.buttonFetchFriends.Name = "buttonFetchFriends";
+            this.buttonFetchFriends.Size = new System.Drawing.Size(75, 23);
+            this.buttonFetchFriends.TabIndex = 5;
+            this.buttonFetchFriends.Text = "Fetch Friends";
+            this.buttonFetchFriends.UseVisualStyleBackColor = true;
+            this.buttonFetchFriends.Click += new System.EventHandler(this.buttonFetchFriends_Click);
+            // 
             // formFacebookApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(417, 322);
+            this.Controls.Add(this.buttonFetchFriends);
+            this.Controls.Add(this.labelFriendsList);
+            this.Controls.Add(this.listBoxFriendsList);
             this.Controls.Add(this.buttonUserLogin);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBoxProfilePhoto);
@@ -84,6 +117,9 @@
         private System.Windows.Forms.PictureBox pictureBoxProfilePhoto;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonUserLogin;
+        private System.Windows.Forms.ListBox listBoxFriendsList;
+        private System.Windows.Forms.Label labelFriendsList;
+        private System.Windows.Forms.Button buttonFetchFriends;
     }
 }
 
