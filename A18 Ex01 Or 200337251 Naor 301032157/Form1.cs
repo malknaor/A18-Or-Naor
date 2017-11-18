@@ -15,9 +15,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public partial class formFacebookApp : Form
     {
-        private const string k_AppID = "135637767091578";
+        private const string k_AppID = "495417090841854";
 
         User m_LoggedInUser;
+
+        public User LoggedInUser
+        {
+            get
+            {
+                return m_LoggedInUser;
+            }
+
+            private set
+            {
+                m_LoggedInUser = value;
+            }
+        }
 
         public formFacebookApp()
         {
@@ -29,6 +42,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
             loginAndInit();
+            if (LoggedInUser != null)
+            {
+                buttonLogout.Enabled = true;
+                buttonUserLogin.Enabled = false;
+            }
         }
 
         private void loginAndInit()
@@ -84,11 +102,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             // The documentation regarding facebook login and permissions can be found here: 
             // https://developers.facebook.com/docs/facebook-login/permissions#reference
 
-
             if (!string.IsNullOrEmpty(result.AccessToken))
             {
-                m_LoggedInUser = result.LoggedInUser;
+                LoggedInUser = result.LoggedInUser;
                 fetchUserInfo();
+                
             }
             else
             {
@@ -98,13 +116,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchUserInfo()
         {
-            pictureBoxProfilePhoto.LoadAsync(m_LoggedInUser.PictureNormalURL);
-            labelUserName.Text = m_LoggedInUser.Name;
-
-            if (m_LoggedInUser.Posts.Count > 0)
-            {
-                //textBoxStatus.Text = m_LoggedInUser.Posts[0].Message;
-            }
+            pictureBoxProfilePhoto.LoadAsync(LoggedInUser.PictureNormalURL);
+            labelUserName.Text = LoggedInUser.Name;
         }
 
         private void pictureBoxProfilePhoto_Click(object sender, EventArgs e)
@@ -122,7 +135,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxFriendsList.Items.Clear();
             listBoxFriendsList.DisplayMember = "Name";
 
-            foreach (User friend in m_LoggedInUser.Friends)
+            foreach (User friend in LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
@@ -139,7 +152,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxLikedPages.Items.Clear();
             listBoxLikedPages.DisplayMember = "Name";
 
-            foreach (Page page in m_LoggedInUser.LikedPages)
+            foreach (Page page in LoggedInUser.LikedPages)
             {
                 listBoxLikedPages.Items.Add(page);
             }
@@ -147,7 +160,23 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            FacebookService.Logout(null);
+            if (LoggedInUser != null)
+            {
+                FacebookService.Logout(null);
+                buttonUserLogin.Enabled = true;
+                resetFormControls();
+            }
+        }
+
+        private void resetFormControls()
+        {
+            labelUserName.Text = string.Empty;
+            listBoxFriendsList.Items.Clear();
+            listBoxCheckins.Items.Clear();
+            listBoxLikedPages.Items.Clear();
+            listBoxEvents.Items.Clear();
+            listBoxPosts.Items.Clear();
+            pictureBoxProfilePhoto.Image = null;
         }
 
         //private void linkCheckins_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -157,12 +186,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchCheckins()
         {
-            foreach (Checkin checkin in m_LoggedInUser.Checkins)
+            foreach (Checkin checkin in LoggedInUser.Checkins)
             {
                 listBoxCheckins.Items.Add(checkin.Place.Name);
             }
 
-            if (m_LoggedInUser.Checkins.Count == 0)
+            if (LoggedInUser.Checkins.Count == 0)
             {
                 MessageBox.Show("No Checkins to retrieve :(");
             }
@@ -171,6 +200,63 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void buttonFetchCheckins_Click(object sender, EventArgs e)
         {
             fetchCheckins();
+        }
+
+        private void buttonPostStatus_Click(object sender, EventArgs e)
+        {
+            Status status = LoggedInUser.PostStatus(textBoxPostStatus.Text);
+            MessageBox.Show("Status posted! ID : " + status.Id);
+            textBoxPostStatus.Text = string.Empty;
+        }
+
+        private void buttonFetchPosts_Click(object sender, EventArgs e)
+        {
+            fetchPosts();
+        }
+
+        private void fetchPosts()
+        {
+            foreach (Post post in LoggedInUser.Posts)
+            {
+                if (post.Message != null)
+                {
+                    listBoxPosts.Items.Add(post.Message);
+                }
+                else if (post.Caption != null)
+                {
+                    listBoxPosts.Items.Add(post.Caption);
+                }
+                else
+                {
+                    listBoxPosts.Items.Add(string.Format("[{0}]", post.Type));
+                }
+            }
+
+            if (LoggedInUser.Posts.Count == 0)
+            {
+                MessageBox.Show("No Posts to retrieve :(");
+            }
+        }
+
+        private void buttonFetchEvents_Click(object sender, EventArgs e)
+        {
+            fetchEvents();
+        }
+
+        private void fetchEvents()
+        {
+            listBoxEvents.Items.Clear();
+            listBoxEvents.DisplayMember = "Name";
+
+            foreach (Event fbEvent in LoggedInUser.Events)
+            {
+                listBoxEvents.Items.Add(fbEvent);
+            }
+
+            if (LoggedInUser.Events.Count == 0)
+            {
+                MessageBox.Show("No event is available!");
+            }
         }
     }
 }
