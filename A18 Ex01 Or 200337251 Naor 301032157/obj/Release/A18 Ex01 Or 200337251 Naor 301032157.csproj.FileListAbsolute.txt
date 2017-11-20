@@ -1,0 +1,13 @@
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Release\A18_Ex01_Or_200337251_Naor_301032157.FacebookAppDashboard.resources
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Release\A18_Ex01_Or_200337251_Naor_301032157.Properties.Resources.resources
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Release\A18 Ex01 Or 200337251 Naor 301032157.csproj.GenerateResource.Cache
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\A18 Ex01 Or 200337251 Naor 301032157.exe.config
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\A18 Ex01 Or 200337251 Naor 301032157.exe
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\A18 Ex01 Or 200337251 Naor 301032157.pdb
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\Facebook.dll
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\FbGraphApiWrapper.dll
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\System.Net.Http.dll
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\bin\Release\System.Net.Http.xml
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Release\A18 Ex01 Or 200337251 Naor 301032157.csprojResolveAssemblyReference.cache
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Release\A18 Ex01 Or 200337251 Naor 301032157.exe
+C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Release\A18 Ex01 Or 200337251 Naor 301032157.pdb

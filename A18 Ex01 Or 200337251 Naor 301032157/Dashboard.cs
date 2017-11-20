@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-
+// $TODO - Need to disable the logout method.
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
 
@@ -16,44 +16,31 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private AppSettings m_AppSettings;
         private const string k_AppID = "495417090841854";
 
-        //FacebookWrapper.ObjectModel.User m_LoggedInUser;
-
-        //public FacebookWrapper.ObjectModel.User LoggedInUser
-        //{
-        //    get
-        //    {
-        //        return m_LoggedInUser;
-        //    }
-
-        //    private set
-        //    {
-        //        m_LoggedInUser = value;
-        //    }
-        //}
-
         public FacebookAppDashboard()
         {
             InitializeComponent();
 
             this.StartPosition = FormStartPosition.Manual;
-
-
             FacebookWrapper.FacebookService.s_CollectionLimit = 200;
             FacebookWrapper.FacebookService.s_FbApiVersion = 2.8f;
 
-            m_AppSettings = new AppSettings();
+            m_AppSettings = AppSettings.LoadFromFile();
+            loadUISettingsFromXML();
+        }
+        //TODO - AppUIUtils
+        private void loadUISettingsFromXML()
+        {
             this.Size = m_AppSettings.LastWindowSize;
             this.Location = m_AppSettings.LastWindowLocation;
             this.checkBoxRememberUser.Checked = m_AppSettings.RememberUser;
-
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
             FacebookAppLogic.LoginAndInit();
-            popoluateUIFromFacebookData();
-            m_AppSettings.LoadFromFile();
+            populateUIFromFacebookData();
+            // m_AppSettings.LoadFromFile();
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -64,6 +51,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void saveUserSettings()
         {
+
             m_AppSettings.LastWindowLocation = this.Location;
             m_AppSettings.LastWindowSize = this.Size;
             m_AppSettings.RememberUser = this.checkBoxRememberUser.Checked;
@@ -78,7 +66,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         }
 
         //$ should be moved to a UI class/Project.
-        private void popoluateUIFromFacebookData()
+        private void populateUIFromFacebookData()
         {
             this.Text = "You are now connected as" + FacebookAppLogic.AppUser.Name;
             displayUserInfo();
@@ -100,7 +88,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
 
             
-            popoluateUIFromFacebookData();
+            populateUIFromFacebookData();
         }
 
 
@@ -214,6 +202,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                     likedRestaurants.Add(page);
                 }
             }
+
+            return;
 
         }
 

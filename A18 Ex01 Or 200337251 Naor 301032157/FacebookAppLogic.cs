@@ -15,6 +15,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
          private static FacebookWrapper.ObjectModel.User m_LoggedInUser; // TODO - this should be removed, and is here for testing. all relevant info should be in FacebookAppUser.
          private static FacebookAppUser m_AppUser;
         public static LoginResult LoginResult { get; set; }
+        private static AppSettings m_AppSettings;
         private static string s_AccessToken;
         public int MyProperty { get; set; }
 
@@ -36,7 +37,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         static FacebookAppLogic()
         {
-        //    m_LoggedInUser = new FacebookWrapper.ObjectModel.User();
+            m_AppSettings = AppSettings.LoadFromFile();
+            s_AccessToken = m_AppSettings.LastAccessToken;
+            //    m_LoggedInUser = new FacebookWrapper.ObjectModel.User();
         }
 
         public static void LoginAndInit()
@@ -48,7 +51,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             if(string.IsNullOrEmpty(s_AccessToken))
             {
                 LoginResult = FacebookService.Login(k_AppID, /// (desig patter's "Design Patterns Course App 2.4" app)
-                "public_profile",
+                #region Permissions
+
+             
+                    "public_profile",
              "user_education_history",
              "user_birthday",
              "user_actions.video",
@@ -93,13 +99,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 // "user_birthday", "user_education_history", "user_hometown", "user_likes","user_location","user_relationships","user_relationship_details","user_religion_politics", "user_videos", "user_website", "user_work_history", "email","read_insights","rsvp_event","manage_pages"
                 // The documentation regarding facebook login and permissions can be found here: 
                 // https://developers.facebook.com/docs/facebook-login/permissions#reference
-
+                #endregion
             }
             else
             {
                 LoginResult = FacebookService.Connect(s_AccessToken);
             }
-
 
             if (!string.IsNullOrEmpty(LoginResult.AccessToken))
             {

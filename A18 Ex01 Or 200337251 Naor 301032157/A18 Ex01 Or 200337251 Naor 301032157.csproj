@@ -34,13 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Studie\ThirdYear\Simister A\Design Patterns\01_FB01_BasicFacebookFeatures.V6.8.0.15\01_FB01_BasicFacebookFeatures.V6.8.0.15\FBApi\Facebook.dll</HintPath>
+    <Reference Include="Facebook">
+      <HintPath>..\..\..\..\..\Downloads\V6.8.0.16\V6.8.0.16\Facebook.dll</HintPath>
     </Reference>
-    <Reference Include="FbGraphApiWrapper, Version=6.8.0.15, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Studie\ThirdYear\Simister A\Design Patterns\01_FB01_BasicFacebookFeatures.V6.8.0.15\01_FB01_BasicFacebookFeatures.V6.8.0.15\FBApi\FbGraphApiWrapper.dll</HintPath>
+    <Reference Include="FbGraphApiWrapper">
+      <HintPath>..\..\..\..\..\Downloads\V6.8.0.16\V6.8.0.16\FbGraphApiWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

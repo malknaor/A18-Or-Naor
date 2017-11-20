@@ -159,7 +159,6 @@
             // 
             // buttonLogout
             // 
-            this.buttonLogout.Enabled = false;
             this.buttonLogout.Location = new System.Drawing.Point(243, 95);
             this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
@@ -339,7 +338,7 @@
             this.checkBoxRememberUser.Text = "Remember user?";
             this.checkBoxRememberUser.UseVisualStyleBackColor = true;
             // 
-            // formFacebookApp
+            // FacebookAppDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -373,7 +372,7 @@
             this.Controls.Add(this.pictureBoxProfile);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "formFacebookApp";
+            this.Name = "FacebookAppDashboard";
             this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FacebookExprience";
