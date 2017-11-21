@@ -117,10 +117,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             listBoxFriendsList.Items.Clear();
             listBoxFriendsList.DisplayMember = "Name";
+            listBoxFriendsSelect.Items.Clear();
+            listBoxFriendsSelect.DisplayMember = "Name";
 
             foreach (FacebookWrapper.ObjectModel.User friend in FacebookAppLogic.LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
+                listBoxFriendsSelect.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
