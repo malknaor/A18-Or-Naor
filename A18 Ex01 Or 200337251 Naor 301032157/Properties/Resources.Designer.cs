@@ -59,5 +59,35 @@ namespace A18_Ex01_Or_200337251_Naor_301032157.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap facebookBackgroundImage {
+            get {
+                object obj = ResourceManager.GetObject("facebookBackgroundImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FacebookLogInImage1 {
+            get {
+                object obj = ResourceManager.GetObject("FacebookLogInImage1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FacebookLogoSquare {
+            get {
+                object obj = ResourceManager.GetObject("FacebookLogoSquare", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

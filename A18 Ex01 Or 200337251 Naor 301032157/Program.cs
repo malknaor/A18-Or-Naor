@@ -16,7 +16,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FacebookAppDashboard());
+            Application.Run(new MainForm());
         }
     }
 }

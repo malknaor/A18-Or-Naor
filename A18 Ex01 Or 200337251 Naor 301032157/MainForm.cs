@@ -8,15 +8,13 @@ using System.Windows.Forms;
 // $TODO - Need to disable the logout method.
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-
-
     //$TODO - Naming conventions for forms??
-    public partial class FacebookAppDashboard : Form
+    public partial class MainForm : Form
     {
         private AppSettings m_AppSettings;
         private const string k_AppID = "495417090841854";
 
-        public FacebookAppDashboard()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -33,6 +31,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             this.Size = m_AppSettings.LastWindowSize;
             this.Location = m_AppSettings.LastWindowLocation;
             this.checkBoxRememberUser.Checked = m_AppSettings.RememberUser;
+            if(m_AppSettings.RememberUser)
+            {
+                               
+            }
+
         }
 
         protected override void OnShown(EventArgs e)
@@ -47,8 +50,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             base.OnFormClosing(e);
             saveUserSettings();
             m_AppSettings.SaveToFile();
+            //Should be wrapped by the logic class.
+            FacebookService.Logout(null);
         }
-
         private void saveUserSettings()
         {
 
@@ -68,7 +72,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         //$ should be moved to a UI class/Project.
         private void populateUIFromFacebookData()
         {
-            this.Text = "You are now connected as" + FacebookAppLogic.AppUser.Name;
+            this.Text = "Connected as: " + FacebookAppLogic.AppUser.Name;
             displayUserInfo();
             fetchCheckins();
             fetchFriends();
@@ -76,7 +80,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             fetchLikedPages();
             fetchPosts();
         }
-
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
 
@@ -90,9 +93,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             
             populateUIFromFacebookData();
         }
-
-
-
         private void pictureBoxProfilePhoto_Click(object sender, EventArgs e)
         {
             //if (LoggedInUser.Albums.Count > 0)
@@ -327,5 +327,35 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             filterPagesByRestaurant();
 
         }
+
+        private void buttonGetcolleagues_Click(object sender, EventArgs e)
+        {
+            fetchColleagues();
+        }
+        // $TODO - Move to Logic.
+        private void fetchColleagues()
+        {
+            foreach (FacebookWrapper.ObjectModel.User friend in FacebookAppLogic.LoggedInUser.Friends)
+            {   //$TODO - Should be appuser, not facebook user. also checking sould be done in logic.
+
+                if (friend.WorkExperiences != null)
+                {
+                    if(friend.WorkExperiences[0].Employer.Name == FacebookAppLogic.LoggedInUser.WorkExperiences[0].Employer.Name)
+                    {
+                        listBoxColleagues.Items.Add(friend.Name);
+                        //Add to Colleagues collection. array of iColleuge
+
+                    }
+                }
+            }
+
+            if (FacebookAppLogic.LoggedInUser.Checkins.Count == 0)
+            {
+                MessageBox.Show("No Checkins to retrieve :(");
+            }
+
+        }
+
+       
     }
 }

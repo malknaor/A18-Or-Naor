@@ -5,7 +5,7 @@ using System.Text;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    class LunchFacilitator
+    class LunchTimeMatchmaker
     {
     }
 }
