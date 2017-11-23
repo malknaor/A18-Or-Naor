@@ -27,6 +27,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             m_AppSettings = AppSettings.LoadFromFile();
             loadUIAppSettings();
         }
+
         //$TODO - AppUIUtils
         private void loadUIAppSettings()
         {
@@ -41,9 +42,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             LogicManager.LoginOrConnect();
             fetchFriends();
 
-            // populateUIFromFacebookData();
-            // m_AppSettings.LoadFromFile();
+            populateUIFromFacebookData();
+            //AppSettings.LoadFromFile();
         }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
@@ -52,6 +54,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             //Should be wrapped by the logic class.
             FacebookService.Logout(null);
         }
+
         private void saveUserSettings()
         {
             //Save UI Settings
@@ -76,8 +79,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             displayUserInfo();
             fetchFriends();
-        ;
+            fetchEvents();
+            fetchLikedPages();
+            fetchPosts();
         }
+
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
 
@@ -114,13 +120,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             listBoxFriendsList.Items.Clear();
             listBoxFriendsList.DisplayMember = "Name";
-            listBoxFriendsSelect.Items.Clear();
-            listBoxFriendsSelect.DisplayMember = "Name";
+            //listBoxFriendsSelect.Items.Clear();
+            //listBoxFriendsSelect.DisplayMember = "Name";
 
             foreach (User friend in LogicManager.LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
-                listBoxFriendsSelect.Items.Add(friend);
+                //listBoxFriendsSelect.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
@@ -360,10 +366,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         }
 
-        private void listBoxFriendsSelect_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            // Add item to the post
-            throw new NotImplementedException();
-        }
+       
     }
 }

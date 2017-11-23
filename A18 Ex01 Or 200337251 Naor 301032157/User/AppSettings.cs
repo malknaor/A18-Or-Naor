@@ -28,12 +28,19 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             // Something can always happen here, so try catch... the exeption will be thrown to whoever can catch it.
             //Try finally dispose.                      
+
+            if (!File.Exists(@"D:\appSettings.xml"))
+            {
+                File.Create(@"D:\appSettings.xml").Dispose();
+            }
+
             using (Stream stream = new FileStream(@"D:\appSettings.xml", FileMode.Truncate))
             {
                 XmlSerializer serializer = new XmlSerializer(this.GetType());
                 serializer.Serialize(stream, this);
             }
         }
+
         public static AppSettings LoadFromFile()
         {
             // $TODO - app settings clip 1:17:02 - default values.
@@ -46,6 +53,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                     appSettingsObj = deSerializer.Deserialize(stream) as AppSettings;
                 }
             }
+
             return appSettingsObj;
         }
     }

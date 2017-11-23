@@ -13,6 +13,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private const string k_AppID = "495417090841854";
 
         private static User m_LoggedInUser; // TODO - this should be removed, and is here for testing. all relevant info should be in FacebookAppUser.
+
         public static LoginResult LoginResult { get; set; }
         private static AppSettings m_AppSettings;
         public static string AccessToken { get; set; }
@@ -27,8 +28,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-
-        static LogicManager()
+        public LogicManager()
         {
             m_AppSettings = AppSettings.LoadFromFile();
             AccessToken = m_AppSettings.LastAccessToken;
