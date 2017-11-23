@@ -3,6 +3,7 @@ using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 // $TODO - Need to disable the logout method.
@@ -11,38 +12,36 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     //$TODO - Naming conventions for forms??
     public partial class MainForm : Form
     {
+        private LogicManager m_AppLogic;
         private AppSettings m_AppSettings;
         private const string k_AppID = "495417090841854";
 
         public MainForm()
         {
             InitializeComponent();
-
+            m_AppLogic = new LogicManager();
             this.StartPosition = FormStartPosition.Manual;
             FacebookWrapper.FacebookService.s_CollectionLimit = 200;
             FacebookWrapper.FacebookService.s_FbApiVersion = 2.8f;
-
+          
             m_AppSettings = AppSettings.LoadFromFile();
-            loadUISettingsFromXML();
+            loadUIAppSettings();
         }
-        //TODO - AppUIUtils
-        private void loadUISettingsFromXML()
+        //$TODO - AppUIUtils
+        private void loadUIAppSettings()
         {
             this.Size = m_AppSettings.LastWindowSize;
             this.Location = m_AppSettings.LastWindowLocation;
             this.checkBoxRememberUser.Checked = m_AppSettings.RememberUser;
-            if(m_AppSettings.RememberUser)
-            {
-                               
-            }
-
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            FacebookAppLogic.LoginAndInit();
-            populateUIFromFacebookData();
+            LogicManager.LoginOrConnect();
+            fetchFriends();
+
+            // populateUIFromFacebookData();
             // m_AppSettings.LoadFromFile();
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -55,13 +54,15 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         }
         private void saveUserSettings()
         {
-
+            //Save UI Settings
             m_AppSettings.LastWindowLocation = this.Location;
             m_AppSettings.LastWindowSize = this.Size;
             m_AppSettings.RememberUser = this.checkBoxRememberUser.Checked;
+
+            // Save Logic Settings
             if (m_AppSettings.RememberUser)
             {
-                m_AppSettings.LastAccessToken = FacebookAppLogic.LoginResult.AccessToken;
+                m_AppSettings.LastAccessToken = LogicManager.LoginResult.AccessToken;
             }
             else
             {
@@ -72,26 +73,21 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         //$ should be moved to a UI class/Project.
         private void populateUIFromFacebookData()
         {
-            this.Text = "Connected as: " + FacebookAppLogic.AppUser.Name;
+
             displayUserInfo();
-            fetchCheckins();
             fetchFriends();
-            fetchEvents();
-            fetchLikedPages();
-            fetchPosts();
+        ;
         }
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
 
-            FacebookAppLogic.LoginAndInit();
-            if (FacebookAppLogic.AppUser != null)
+            LogicManager.LoginOrConnect();
+            if (LogicManager.LoggedInUser != null)
             {
                 buttonLogout.Enabled = true;
                 buttonUserLogin.Enabled = false;
             }
-
-            
-            populateUIFromFacebookData();
+            new Thread(LogicManager.LoadFriendsCache).Start();
         }
         private void pictureBoxProfilePhoto_Click(object sender, EventArgs e)
         {
@@ -104,13 +100,14 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         //Friends List//
         private void buttonFetchFriends_Click(object sender, EventArgs e)
         {
-            fetchFriends();
+            
         }
 
         private void displayUserInfo()
         {
-            pictureBoxProfile.LoadAsync(FacebookAppLogic.AppUser.PictureURL);
-            labelUserName.Text = FacebookAppLogic.AppUser.Name;
+            this.Text = "Connected as: " + LogicManager.LoggedInUser.Name;
+            pictureBoxProfile.LoadAsync(LogicManager.LoggedInUser.PictureLargeURL);
+            labelUserName.Text = LogicManager.LoggedInUser.Name;
         }
 
         private void fetchFriends()
@@ -120,14 +117,14 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxFriendsSelect.Items.Clear();
             listBoxFriendsSelect.DisplayMember = "Name";
 
-            foreach (FacebookWrapper.ObjectModel.User friend in FacebookAppLogic.LoggedInUser.Friends)
+            foreach (User friend in LogicManager.LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
                 listBoxFriendsSelect.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (FacebookAppLogic.LoggedInUser.Friends.Count == 0)
+            if (LogicManager.LoggedInUser.Friends.Count == 0)
             {
                 MessageBox.Show("No Friends on the list, forever alone...");
             }
@@ -166,7 +163,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxLikedPages.Items.Clear();
             listBoxLikedPages.DisplayMember = "Name";
 
-            foreach (Page page in FacebookAppLogic.LoggedInUser.LikedPages)
+            foreach (Page page in LogicManager.LoggedInUser.LikedPages)
             {
                 listBoxLikedPages.Items.Add(page);
             }
@@ -185,29 +182,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 pictureBoxPages.LoadAsync(selectedPage.PictureNormalURL);
             }
         }
-
-        //$TODO - This should not be invoked by a control, only for testing...
-        // Part of the Feature's Logic.,
-        private void filterPagesByRestaurant()
+        private void getCommonResuaurants()
         {
-            List<Page> likedRestaurants = new List<Page>();
-
-            //$DEBUG
-            //List<string> allPagesCategoriesNames = new List<string>();
-
-            foreach (Page page in FacebookAppLogic.LoggedInUser.LikedPages)
+            List<Page> commonResaurants = LogicManager.GetCommonRestaurants();
+            foreach (Page restaurant in commonResaurants)
             {
-                // $DEBUG
-                //     allPagesCategoriesNames.Add(page.Category);
-
-                if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant")) // $TODO - method.
-                {
-                    likedRestaurants.Add(page);
-                }
+                listboxCommonRestaurants.Items.Add(restaurant.Name);
             }
-
-            return;
-
+            if(commonResaurants.Count() == 0)
+            {
+                MessageBox.Show("No common restaurants to retrieve :(");
+            }
         }
 
         //Checkins List//
@@ -218,21 +203,37 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchCheckins()
         {
-            foreach (Checkin checkin in FacebookAppLogic.LoggedInUser.Checkins)
+            foreach (Checkin checkin in LogicManager.LoggedInUser.Checkins)
             {
                 listBoxCheckins.Items.Add(checkin.Place.Name);
             }
 
-            if (FacebookAppLogic.LoggedInUser.Checkins.Count == 0)
+            if (LogicManager.LoggedInUser.Checkins.Count == 0)
             {
                 MessageBox.Show("No Checkins to retrieve :(");
             }
         }
 
+        //private void fetchCollection(FacebookObjectCollection<T> i_Collection)
+        //{
+        //    foreach (FacebookObject facebookObj in i_Collection)
+        //    {
+        //        listBoxCheckins.Items.Add(checkin.Place.Name);
+        //    }
+
+        //    if (LogicManager.LoggedInUser.Checkins.Count == 0)
+        //    {
+        //        MessageBox.Show("No Checkins to retrieve :(");
+        //    }
+        //}
+
+
+
+
         //Status update//
         private void buttonPostStatus_Click(object sender, EventArgs e)
         {
-            Status status = FacebookAppLogic.LoggedInUser.PostStatus(textBoxPostStatus.Text);
+            Status status = LogicManager.LoggedInUser.PostStatus(textBoxPostStatus.Text);
             MessageBox.Show("Status posted! ID : " + status.Id);
             textBoxPostStatus.Text = string.Empty;
         }
@@ -245,7 +246,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchPosts()
         {
-            foreach (Post post in FacebookAppLogic.LoggedInUser.Posts)
+            foreach (Post post in LogicManager.LoggedInUser.Posts)
             {
                 if (post.Message != null)
                 {
@@ -261,7 +262,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 }
             }
 
-            if (FacebookAppLogic.LoggedInUser.Posts.Count == 0)
+            if (LogicManager.LoggedInUser.Posts.Count == 0)
             {
                 MessageBox.Show("No Posts to retrieve :(");
             }
@@ -278,12 +279,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxEvents.Items.Clear();
             listBoxEvents.DisplayMember = "Name";
 
-            foreach (Event fbEvent in FacebookAppLogic.LoggedInUser.Events)
+            foreach (Event fbEvent in LogicManager.LoggedInUser.Events)
             {
                 listBoxEvents.Items.Add(fbEvent);
             }
 
-            if (FacebookAppLogic.LoggedInUser.Events.Count == 0)
+            if (LogicManager.LoggedInUser.Events.Count == 0)
             {
                 MessageBox.Show("No event is available!");
             }
@@ -306,7 +307,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         //Logout//
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            if (FacebookAppLogic.LoggedInUser != null)
+            if (LogicManager.LoggedInUser != null)
             {
                 FacebookService.Logout(null);
                 buttonUserLogin.Enabled = true;
@@ -327,7 +328,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonListRestaurantPages_Click(object sender, EventArgs e)
         {
-            filterPagesByRestaurant();
+            getCommonResuaurants();
 
         }
 
@@ -338,12 +339,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         // $TODO - Move to Logic.
         private void fetchColleagues()
         {
-            foreach (FacebookWrapper.ObjectModel.User friend in FacebookAppLogic.LoggedInUser.Friends)
+            foreach (FacebookWrapper.ObjectModel.User friend in LogicManager.LoggedInUser.Friends)
             {   //$TODO - Should be appuser, not facebook user. also checking sould be done in logic.
 
                 if (friend.WorkExperiences != null)
                 {
-                    if(friend.WorkExperiences[0].Employer.Name == FacebookAppLogic.LoggedInUser.WorkExperiences[0].Employer.Name)
+                    if(friend.WorkExperiences[0].Employer.Name == LogicManager.LoggedInUser.WorkExperiences[0].Employer.Name)
                     {
                         listBoxColleagues.Items.Add(friend.Name);
                         //Add to Colleagues collection. array of iColleuge
@@ -352,7 +353,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 }
             }
 
-            if (FacebookAppLogic.LoggedInUser.Checkins.Count == 0)
+            if (LogicManager.LoggedInUser.Checkins.Count == 0)
             {
                 MessageBox.Show("No Checkins to retrieve :(");
             }

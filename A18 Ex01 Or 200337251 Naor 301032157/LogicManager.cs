@@ -8,15 +8,15 @@ using FacebookWrapper.ObjectModel;
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     // $TODO - auto properties.
-    class FacebookAppLogic
+    class LogicManager
     {
         private const string k_AppID = "495417090841854";
 
-         private static FacebookWrapper.ObjectModel.User m_LoggedInUser; // TODO - this should be removed, and is here for testing. all relevant info should be in FacebookAppUser.
-         private static FacebookAppUser m_AppUser;
+        private static User m_LoggedInUser; // TODO - this should be removed, and is here for testing. all relevant info should be in FacebookAppUser.
         public static LoginResult LoginResult { get; set; }
         private static AppSettings m_AppSettings;
-        private static string s_AccessToken;
+        public static string AccessToken { get; set; }
+        
         public int MyProperty { get; set; }
 
         public static FacebookWrapper.ObjectModel.User LoggedInUser
@@ -27,28 +27,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        public static FacebookAppUser AppUser
-        {
-                get
-            {
-                return m_AppUser;
-            }
-        }
 
-        static FacebookAppLogic()
+        static LogicManager()
         {
             m_AppSettings = AppSettings.LoadFromFile();
-            s_AccessToken = m_AppSettings.LastAccessToken;
-            //    m_LoggedInUser = new FacebookWrapper.ObjectModel.User();
+            AccessToken = m_AppSettings.LastAccessToken;
         }
 
-        public static void LoginAndInit()
+       
+
+        public static void LoginOrConnect()
         {
             /// Owner: design.patterns
 
             /// Use the FacebookService.Login method to display the login form to any user who wish to use this application.
             /// You can then save the result.AccessToken for future auto-connect to this user:
-            if(string.IsNullOrEmpty(s_AccessToken))
+            if(string.IsNullOrEmpty(AccessToken))
             {
                 LoginResult = FacebookService.Login(k_AppID, /// (desig patter's "Design Patterns Course App 2.4" app)
                 #region Permissions
@@ -103,14 +97,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
             else
             {
-                LoginResult = FacebookService.Connect(s_AccessToken);
+                LoginResult = FacebookService.Connect(AccessToken);
             }
 
             if (!string.IsNullOrEmpty(LoginResult.AccessToken))
             {
                 m_LoggedInUser = LoginResult.LoggedInUser; // TODO - remove.
-                m_AppUser = new FacebookAppUser(LoginResult.LoggedInUser);
-             //   popolateFacebookData();
             }
             else
             {
@@ -119,6 +111,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-    
+        internal static void LoadFriendsCache()
+        {
+            FacebookObjectCollection<User> collectionToCache = m_LoggedInUser.Friends;
+        }
+
+        private static void FetchCollections()
+        {
+            object temp = m_LoggedInUser.Events;
+
+        }
+
+        internal static List<Page> GetCommonRestaurants()
+        {
+            LunchTimeMatchmaker lunchtimeMatchMaker = new LunchTimeMatchmaker();
+
+            return lunchtimeMatchMaker.commonLikedRestaurants;
+        }
     }
 }

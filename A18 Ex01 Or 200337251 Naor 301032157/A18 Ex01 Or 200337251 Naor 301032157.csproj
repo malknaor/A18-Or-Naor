@@ -60,7 +60,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FacebookAppLogic.cs" />
+    <Compile Include="LogicManager.cs" />
     <Compile Include="Lunchtime Matchmaker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,7 +70,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="User\AppSettings.cs" />
-    <Compile Include="User\FacebookAppUser.cs" />
     <Compile Include="WeatherAPI.cs" />
     <Compile Include="WeatherAPIExecption.cs" />
     <EmbeddedResource Include="MainForm.resx">
