@@ -63,8 +63,12 @@
             this.listBoxCheckins = new System.Windows.Forms.ListBox();
             this.tabControlFeatures = new System.Windows.Forms.TabControl();
             this.tabMettingPlanner = new System.Windows.Forms.TabPage();
-            this.listBoxFriendsSelect = new System.Windows.Forms.ListBox();
+            this.labelSelectCategory = new System.Windows.Forms.Label();
+            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.labelFriendSelect = new System.Windows.Forms.Label();
+            this.listBoxFriendsSelect = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageLunchtime.SuspendLayout();
             this.tabPageDashboard.SuspendLayout();
@@ -104,7 +108,7 @@
             this.checkBoxRememberUser.Font = new System.Drawing.Font("Aharoni", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxRememberUser.ForeColor = System.Drawing.Color.White;
             this.checkBoxRememberUser.Location = new System.Drawing.Point(10, 259);
-            this.checkBoxRememberUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxRememberUser.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxRememberUser.Name = "checkBoxRememberUser";
             this.checkBoxRememberUser.Size = new System.Drawing.Size(120, 16);
             this.checkBoxRememberUser.TabIndex = 22;
@@ -139,9 +143,9 @@
             this.tabPageLunchtime.Controls.Add(this.listboxCommonRestaurants);
             this.tabPageLunchtime.Controls.Add(this.buttonListRestaurantPages);
             this.tabPageLunchtime.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLunchtime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPageLunchtime.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageLunchtime.Name = "tabPageLunchtime";
-            this.tabPageLunchtime.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPageLunchtime.Padding = new System.Windows.Forms.Padding(2);
             this.tabPageLunchtime.Size = new System.Drawing.Size(499, 432);
             this.tabPageLunchtime.TabIndex = 3;
             this.tabPageLunchtime.Text = "LunchTime";
@@ -151,7 +155,7 @@
             // 
             this.listBoxColleagues.FormattingEnabled = true;
             this.listBoxColleagues.Location = new System.Drawing.Point(4, 52);
-            this.listBoxColleagues.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBoxColleagues.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxColleagues.Name = "listBoxColleagues";
             this.listBoxColleagues.Size = new System.Drawing.Size(134, 108);
             this.listBoxColleagues.TabIndex = 29;
@@ -159,7 +163,7 @@
             // buttonGetcolleagues
             // 
             this.buttonGetcolleagues.Location = new System.Drawing.Point(4, 19);
-            this.buttonGetcolleagues.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonGetcolleagues.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGetcolleagues.Name = "buttonGetcolleagues";
             this.buttonGetcolleagues.Size = new System.Drawing.Size(134, 25);
             this.buttonGetcolleagues.TabIndex = 28;
@@ -171,7 +175,7 @@
             // 
             this.listboxCommonRestaurants.FormattingEnabled = true;
             this.listboxCommonRestaurants.Location = new System.Drawing.Point(152, 49);
-            this.listboxCommonRestaurants.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listboxCommonRestaurants.Margin = new System.Windows.Forms.Padding(2);
             this.listboxCommonRestaurants.Name = "listboxCommonRestaurants";
             this.listboxCommonRestaurants.Size = new System.Drawing.Size(154, 108);
             this.listboxCommonRestaurants.TabIndex = 27;
@@ -179,7 +183,7 @@
             // buttonListRestaurantPages
             // 
             this.buttonListRestaurantPages.Location = new System.Drawing.Point(152, 19);
-            this.buttonListRestaurantPages.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonListRestaurantPages.Margin = new System.Windows.Forms.Padding(2);
             this.buttonListRestaurantPages.Name = "buttonListRestaurantPages";
             this.buttonListRestaurantPages.Size = new System.Drawing.Size(153, 25);
             this.buttonListRestaurantPages.TabIndex = 26;
@@ -212,9 +216,9 @@
             this.tabPageDashboard.Controls.Add(this.buttonFetchCheckins);
             this.tabPageDashboard.Controls.Add(this.listBoxCheckins);
             this.tabPageDashboard.Location = new System.Drawing.Point(4, 22);
-            this.tabPageDashboard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPageDashboard.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageDashboard.Name = "tabPageDashboard";
-            this.tabPageDashboard.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPageDashboard.Padding = new System.Windows.Forms.Padding(2);
             this.tabPageDashboard.Size = new System.Drawing.Size(499, 432);
             this.tabPageDashboard.TabIndex = 0;
             this.tabPageDashboard.Text = "Dashboard";
@@ -410,7 +414,7 @@
             this.tabControlFeatures.Controls.Add(this.tabPageLunchtime);
             this.tabControlFeatures.Controls.Add(this.tabMettingPlanner);
             this.tabControlFeatures.Location = new System.Drawing.Point(135, 45);
-            this.tabControlFeatures.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControlFeatures.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlFeatures.Name = "tabControlFeatures";
             this.tabControlFeatures.SelectedIndex = 0;
             this.tabControlFeatures.Size = new System.Drawing.Size(507, 458);
@@ -418,6 +422,10 @@
             // 
             // tabMettingPlanner
             // 
+            this.tabMettingPlanner.Controls.Add(this.labelSelectCategory);
+            this.tabMettingPlanner.Controls.Add(this.comboBoxCategory);
+            this.tabMettingPlanner.Controls.Add(this.label1);
+            this.tabMettingPlanner.Controls.Add(this.dateTimePicker1);
             this.tabMettingPlanner.Controls.Add(this.labelFriendSelect);
             this.tabMettingPlanner.Controls.Add(this.listBoxFriendsSelect);
             this.tabMettingPlanner.Location = new System.Drawing.Point(4, 22);
@@ -428,6 +436,48 @@
             this.tabMettingPlanner.Text = "MeetingPlanner";
             this.tabMettingPlanner.UseVisualStyleBackColor = true;
             // 
+            // labelSelectCategory
+            // 
+            this.labelSelectCategory.AutoSize = true;
+            this.labelSelectCategory.Location = new System.Drawing.Point(349, 16);
+            this.labelSelectCategory.Name = "labelSelectCategory";
+            this.labelSelectCategory.Size = new System.Drawing.Size(85, 13);
+            this.labelSelectCategory.TabIndex = 5;
+            this.labelSelectCategory.Text = "Select Category:";
+            // 
+            // comboBoxCategory
+            // 
+            this.comboBoxCategory.FormattingEnabled = true;
+            this.comboBoxCategory.Location = new System.Drawing.Point(352, 35);
+            this.comboBoxCategory.Name = "comboBoxCategory";
+            this.comboBoxCategory.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCategory.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(17, 143);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Select Date and Time:";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(17, 166);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 2;
+            // 
+            // labelFriendSelect
+            // 
+            this.labelFriendSelect.AutoSize = true;
+            this.labelFriendSelect.Location = new System.Drawing.Point(17, 16);
+            this.labelFriendSelect.Name = "labelFriendSelect";
+            this.labelFriendSelect.Size = new System.Drawing.Size(77, 13);
+            this.labelFriendSelect.TabIndex = 1;
+            this.labelFriendSelect.Text = "Select Friends:";
+            // 
             // listBoxFriendsSelect
             // 
             this.listBoxFriendsSelect.FormattingEnabled = true;
@@ -435,15 +485,7 @@
             this.listBoxFriendsSelect.Name = "listBoxFriendsSelect";
             this.listBoxFriendsSelect.Size = new System.Drawing.Size(120, 95);
             this.listBoxFriendsSelect.TabIndex = 0;
-            // 
-            // labelFriendSelect
-            // 
-            this.labelFriendSelect.AutoSize = true;
-            this.labelFriendSelect.Location = new System.Drawing.Point(17, 16);
-            this.labelFriendSelect.Name = "labelFriendSelect";
-            this.labelFriendSelect.Size = new System.Drawing.Size(74, 13);
-            this.labelFriendSelect.TabIndex = 1;
-            this.labelFriendSelect.Text = "Select Friends";
+            this.listBoxFriendsSelect.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxFriendsSelect_MouseDoubleClick);
             // 
             // MainForm
             // 
@@ -517,6 +559,10 @@
         private System.Windows.Forms.TabPage tabMettingPlanner;
         private System.Windows.Forms.Label labelFriendSelect;
         private System.Windows.Forms.ListBox listBoxFriendsSelect;
+        private System.Windows.Forms.Label labelSelectCategory;
+        private System.Windows.Forms.ComboBox comboBoxCategory;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeatherAPI_namespace
+namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     class WeatherAPIExecption : Exception
     {

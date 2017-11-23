@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Net;
 
-namespace WeatherAPI_namespace
+namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public static class WeatherAPI //this class should be a static
     {

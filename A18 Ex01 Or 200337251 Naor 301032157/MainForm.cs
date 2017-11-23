@@ -359,6 +359,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         }
 
-       
+        private void listBoxFriendsSelect_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // Add item to the post
+            throw new NotImplementedException();
+        }
     }
 }
