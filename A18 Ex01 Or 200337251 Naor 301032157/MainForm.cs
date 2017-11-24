@@ -307,19 +307,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         #region Lunch Time Tab
         private void buttonListRestaurantPages_Click(object sender, EventArgs e)
         {
-            //   getCommonResuaurants();
-        }
-        private void getCommonResuaurants()
-        {
-            List<Page> commonResaurants = AppLogic.GetCommonRestaurants();
-            foreach (Page restaurant in commonResaurants)
-            {
-                listboxCommonRestaurants.Items.Add(restaurant.Name);
-            }
-            if (commonResaurants.Count() == 0)
-            {
-                MessageBox.Show("No common restaurants to retrieve :(");
-            }
+            populateCommonRestaurants();
         }
 
         private void populateColleagues()
@@ -346,7 +334,21 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             if (m_AppLogic.LunchTimeMatchmaker.UserLikedRestaurants.Count() == 0)
             {
-                MessageBox.Show("No Colleagues to retrive :(");
+                MessageBox.Show("No Liked Restaurants. You should go out more :)");
+            }
+        }
+
+        private void populateCommonRestaurants()
+        {
+            listboxCommonRestaurants.Items.Clear();
+            foreach (Page restaurant in m_AppLogic.LunchTimeMatchmaker.CommonLikedRestaurants)
+            {
+                listboxCommonRestaurants.Items.Add(restaurant.Name);
+            }
+
+            if (m_AppLogic.LunchTimeMatchmaker.CommonLikedRestaurants.Count() == 0)
+            {
+                MessageBox.Show("No common restaurants to retrive :(");
             }
         }
 

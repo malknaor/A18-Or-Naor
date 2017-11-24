@@ -18,7 +18,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             Colleagues = new List<User>();
             fetchUserColleagues();
             buildUserLikedRestaurantList();
-          //  buildCommonRestaurantsList();
+            buildCommonRestaurantsList();
         }
 
         private void fetchUserColleagues()
@@ -49,7 +49,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 }
                 CommonLikedRestaurants = CommonLikedRestaurants.Intersect(colleague.LikedPages).ToList();
             }
-            //     return commonLikedRestaurants.ToList();
         }
         private void buildUserLikedRestaurantList()
         {
