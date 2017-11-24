@@ -8,22 +8,24 @@ using FacebookWrapper.ObjectModel;
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     // $TODO - auto properties.
-    class AppLogic
+    public class AppLogic
     {
         private const string k_AppID = "495417090841854";
-        private static User m_LoggedInUser; // TODO - this should be removed, and is here for testing. all relevant info should be in FacebookAppUser.
 
         public static LoginResult LoginResult { get; set; } // Is this needed?
         public AppSettings AppSettings { get; set; }
         public static string AccessToken { get; set; }
         public static User LoggedInUser { get; set; }
 
+        public LunchTimeMatchmaker LunchTimeMatchmaker { get; set; }
+
         public AppLogic()
         {
             AppSettings = AppSettings.LoadFromFile();
             AccessToken = AppSettings.LastAccessToken;
         }
-        public static void ConnectToFacebook()
+
+        public  void ConnectToFacebook()
         {
             if (string.IsNullOrEmpty(AccessToken))
             {
@@ -84,7 +86,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             if (!string.IsNullOrEmpty(LoginResult.AccessToken))
             {
-                m_LoggedInUser = LoginResult.LoggedInUser; // TODO - remove.
+                /*m_*/LoggedInUser = LoginResult.LoggedInUser; // TODO - remove.
             }
             else
             {
@@ -92,7 +94,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 //MessageBox.Show(result.ErrorMessage);
             }
         }
-        public static void LoginOrConnect()
+        public void LoginOrConnect()
         {
             /// Owner: design.patterns
 
@@ -158,7 +160,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             if (!string.IsNullOrEmpty(LoginResult.AccessToken))
             {
-                m_LoggedInUser = LoginResult.LoggedInUser; // TODO - remove.
+                LoggedInUser = LoginResult.LoggedInUser;
             }
             else
             {
@@ -169,7 +171,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         internal static void LoadFriendsCache()
         {
-            FacebookObjectCollection<User> collectionToCache = m_LoggedInUser.Friends;
+            FacebookObjectCollection<User> collectionToCache = /*m_*/LoggedInUser.Friends;
         }
         // First Feature
         internal static List<Page> GetCommonRestaurants()

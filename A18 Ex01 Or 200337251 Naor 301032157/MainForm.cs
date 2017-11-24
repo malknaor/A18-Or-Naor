@@ -13,7 +13,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     public partial class MainForm : Form
     {
         private AppLogic m_AppLogic;
-        private const string k_AppID = "495417090841854";
 
         public MainForm()
         {
@@ -21,7 +20,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             init();
             m_AppLogic = new AppLogic();
 
-            if (m_AppLogic.AppSettings.RememberUser)
+            if (m_AppLogic.AppSettings.LastAccessToken != null)
             {
                 loadUIAppSettings();
             }
@@ -45,7 +44,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-        //    LogicManager.LoginOrConnect();
+            if (m_AppLogic.AppSettings.RememberUser)
+            {
+                m_AppLogic.LoginOrConnect();
+            }
             fetchFriends();
 
             populateUIFromFacebookData();
@@ -61,7 +63,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 m_AppLogic.AppSettings.SaveToFile();
             }
-            
+
             FacebookService.Logout(null); // Do i need this?
         }
 
@@ -86,7 +88,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         //$ should be moved to a UI class/Project.
         private void populateUIFromFacebookData()
         {
-
             displayUserInfo();
             fetchFriends();
             fetchEvents();
@@ -97,7 +98,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
 
-            AppLogic.LoginOrConnect();
+            m_AppLogic.LoginOrConnect();
             if (AppLogic.LoggedInUser != null)
             {
                 buttonLogout.Enabled = true;
@@ -131,13 +132,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             listBoxFriendsList.Items.Clear();
             listBoxFriendsList.DisplayMember = "Name";
-            //listBoxFriendsSelect.Items.Clear();
-            //listBoxFriendsSelect.DisplayMember = "Name";
 
             foreach (User friend in AppLogic.LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
-                //listBoxFriendsSelect.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
@@ -244,9 +242,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         //    }
         //}
 
-
-
-
         //Status update//
         private void buttonPostStatus_Click(object sender, EventArgs e)
         {
@@ -346,7 +341,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void buttonListRestaurantPages_Click(object sender, EventArgs e)
         {
             getCommonResuaurants();
-
         }
 
         private void buttonGetcolleagues_Click(object sender, EventArgs e)
@@ -357,8 +351,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void fetchColleagues()
         {
             foreach (FacebookWrapper.ObjectModel.User friend in AppLogic.LoggedInUser.Friends)
-            {   //$TODO - Should be appuser, not facebook user. also checking sould be done in logic.
-
+            {  
                 if (friend.WorkExperiences != null)
                 {
                     if(friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name)
@@ -372,11 +365,24 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             if (AppLogic.LoggedInUser.Checkins.Count == 0)
             {
-                MessageBox.Show("No Checkins to retrieve :(");
+                MessageBox.Show("No Colleagus to retrive :(");
             }
-
         }
 
-       
+        private void fillCategoryComboBox()
+        {
+            string[] category = { "Business", "Cinema", "Drinking", "Education", "Food", "Pleasure",
+                    "Shoping", "Sports", "Travel", "Vacation", "Work"};
+
+            foreach (string cat in category)
+            {
+                comboBoxCategory.Items.Add(cat);
+            }
+        }
+
+        private void buttonGetForecast_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

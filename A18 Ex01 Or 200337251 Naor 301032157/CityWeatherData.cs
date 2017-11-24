@@ -14,7 +14,7 @@ namespace WeatherAPI_namespace
 
         public static string CheckWeatherData(string i_City)
         {
-            return WeatherAPI.GetTemp(i_City).ToString();
+            return WeatherAPI.GetCurrentTemperature(i_City).ToString();
         }
     }
 }

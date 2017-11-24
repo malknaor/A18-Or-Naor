@@ -20,7 +20,7 @@ namespace WeatherAPI_namespace
         {
         }
 
-        public static float GetTemp(string i_City)
+        public static float GetCurrentTemperature(string i_City)
         {
                 CurrentUrl = setCurrentURL(i_City);
                 XMLDocument = getXmlDocument(CurrentUrl);
@@ -34,9 +34,7 @@ namespace WeatherAPI_namespace
 
         private static string setCurrentURL(string i_City)
         {
-            string urlLink = "http://api.openweathermap.org/data/2.5/weather?q=" + i_City + "&mode=xml&units=metric&APPID=" + k_APIKey;
-
-            return urlLink;
+            return "http://api.openweathermap.org/data/2.5/weather?q=" + i_City + "&mode=xml&units=metric&APPID=" + k_APIKey;
         }
 
         private static XmlDocument getXmlDocument(string i_CurrentURL)
