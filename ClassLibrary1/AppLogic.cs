@@ -175,9 +175,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         }
 
 
-        internal void LoadFriendsCache()
+        public void LoadFBCollectionsCache()
         {
-            FacebookObjectCollection<User> collectionToCache = LoggedInUser.Friends;
+            FacebookObjectCollection<User> FriendsCache = LoggedInUser.Friends;
+            FacebookObjectCollection<Event> EventsCache = LoggedInUser.Events;
+            FacebookObjectCollection<Post> PostsCache = LoggedInUser.Posts;
+            FacebookObjectCollection<Checkin> CheckinsCache = LoggedInUser.Checkins;
         }
         // First Feature
         internal static List<Page> GetCommonRestaurants()

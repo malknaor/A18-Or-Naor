@@ -59,7 +59,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 buttonUserLogin.Enabled = false;
                 tabControlFeatures.Enabled = true;
             }
-            new Thread(m_AppLogic.LoadFriendsCache).Start();
+            new Thread(m_AppLogic.LoadFBCollectionsCache).Start();
             fetchFriends();
             populateUIBasicFacebookData();
         }
