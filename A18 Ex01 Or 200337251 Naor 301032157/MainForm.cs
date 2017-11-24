@@ -17,13 +17,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         public MainForm()
         {
             InitializeComponent();
-            init();
             m_AppLogic = new AppLogic();
-
-            if (m_AppLogic.AppSettings.LastAccessToken != null)
-            {
-                loadUIAppSettings();
-            }
+            init();
         }
 
         private void init()
@@ -31,6 +26,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             this.StartPosition = FormStartPosition.Manual;
             FacebookService.s_CollectionLimit = 100;
             FacebookService.s_FbApiVersion = 2.8f;
+
+            if (m_AppLogic.AppSettings.RememberUser)
+            {
+                loadUIAppSettings();
+            }
         }
 
         //$TODO - AppUIUtils
@@ -44,49 +44,47 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (m_AppLogic.AppSettings.RememberUser)
+            if (m_AppLogic.AppSettings.RememberUser && !string.IsNullOrEmpty(m_AppLogic.AppSettings.LastAccessToken))
             {
-                m_AppLogic.LoginOrConnect();
+                m_AppLogic.LoginToFacebook();
+                doAfterLogin();
             }
-            fetchFriends();
+        }
 
-            populateUIFromFacebookData();
-            //AppSettings.LoadFromFile();
+        private void doAfterLogin()
+        {
+            if (AppLogic.LoggedInUser != null)
+            {
+                buttonLogout.Enabled = true;
+                buttonUserLogin.Enabled = false;
+            }
+            new Thread(m_AppLogic.LoadFriendsCache).Start();
+            fetchFriends();
+            populateUIBasicFacebookData();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-            saveUISettings();
-
             if (checkBoxRememberUser.Checked)
             {
-                m_AppLogic.AppSettings.SaveToFile();
+                saveUserSettings(); 
             }
-
-            FacebookService.Logout(null); // Do i need this?
+         //   FacebookService.Logout(null); // Do i need this?
         }
 
-        private void saveUISettings()
+        private void saveUserSettings()
         {
-            //Save UI Settings
             m_AppLogic.AppSettings.LastWindowLocation = this.Location;
             m_AppLogic.AppSettings.LastWindowSize = this.Size;
             m_AppLogic.AppSettings.RememberUser = this.checkBoxRememberUser.Checked;
+            m_AppLogic.AppSettings.LastAccessToken = AppLogic.LoginResult.AccessToken;
 
-            //// Save Logic Settings
-            //if (m_AppLogic.AppSettings.RememberUser)
-            //{
-            //    m_AppSettings.LastAccessToken = LogicManager.LoginResult.AccessToken;
-            //}
-            //else
-            //{
-            //    m_AppSettings.LastAccessToken = null;
-            //}
+            m_AppLogic.AppSettings.SaveToFile();
         }
 
         //$ should be moved to a UI class/Project.
-        private void populateUIFromFacebookData()
+        private void populateUIBasicFacebookData()
         {
             displayUserInfo();
             fetchFriends();
@@ -97,29 +95,33 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
-
-            m_AppLogic.LoginOrConnect();
+            m_AppLogic.LoginToFacebook();
+            doAfterLogin();
+        }
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
             if (AppLogic.LoggedInUser != null)
             {
-                buttonLogout.Enabled = true;
-                buttonUserLogin.Enabled = false;
+                FacebookService.Logout(null);
+                buttonUserLogin.Enabled = true;
+                //     m_AppLogic
+
+                resetFormControls();
             }
-            new Thread(AppLogic.LoadFriendsCache).Start();
+        }
+        private void resetFormControls()
+        {
+            labelUserName.Text = string.Empty;
+            listBoxFriendsList.Items.Clear();
+            listBoxCheckins.Items.Clear();
+            listBoxLikedPages.Items.Clear();
+            listBoxEvents.Items.Clear();
+            listBoxPosts.Items.Clear();
+            pictureBoxFriends.Image = null;
+            pictureBoxProfile.Image = null;
         }
 
-        private void pictureBoxProfilePhoto_Click(object sender, EventArgs e)
-        {
-            //if (LoggedInUser.Albums.Count > 0)
-            //{
-            //    //Auto generate picture to the user picture box from his albums, else do nothing
-            //}
-        }
-
-        //Friends List//
-        private void buttonFetchFriends_Click(object sender, EventArgs e)
-        {
-            
-        }
+        #region Basic Facebook Experience
 
         private void displayUserInfo()
         {
@@ -154,7 +156,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             if (listBoxFriendsList.SelectedItems.Count == 1)
             {
-                FacebookWrapper.ObjectModel.User selectedFriend = listBoxFriendsList.SelectedItem as FacebookWrapper.ObjectModel.User;
+                User selectedFriend = listBoxFriendsList.SelectedItem as User;
 
                 if (selectedFriend.PictureNormalURL != null)
                 {
@@ -165,12 +167,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                     pictureBoxFriends.Image = pictureBoxFriends.ErrorImage;
                 }
             }
-        }
-
-        //Liked Pages List//
-        private void buttonFetchLikedPages_Click(object sender, EventArgs e)
-        {
-            fetchLikedPages();
         }
 
         private void fetchLikedPages()
@@ -195,18 +191,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 Page selectedPage = listBoxLikedPages.SelectedItem as Page;
                 pictureBoxPages.LoadAsync(selectedPage.PictureNormalURL);
-            }
-        }
-        private void getCommonResuaurants()
-        {
-            List<Page> commonResaurants = AppLogic.GetCommonRestaurants();
-            foreach (Page restaurant in commonResaurants)
-            {
-                listboxCommonRestaurants.Items.Add(restaurant.Name);
-            }
-            if(commonResaurants.Count() == 0)
-            {
-                MessageBox.Show("No common restaurants to retrieve :(");
             }
         }
 
@@ -301,6 +285,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 MessageBox.Show("No event is available!");
             }
         }
+      
 
         private void listBoxEvents_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -315,46 +300,38 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 pictureBoxEvents.LoadAsync(selectedEvent.PictureNormalURL);
             }
         }
+        #endregion
 
-        //Logout//
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-            if (AppLogic.LoggedInUser != null)
-            {
-                FacebookService.Logout(null);
-                buttonUserLogin.Enabled = true;
-                resetFormControls();
-            }
-        }
-
-        private void resetFormControls()
-        {
-            labelUserName.Text = string.Empty;
-            listBoxFriendsList.Items.Clear();
-            listBoxCheckins.Items.Clear();
-            listBoxLikedPages.Items.Clear();
-            listBoxEvents.Items.Clear();
-            listBoxPosts.Items.Clear();
-            pictureBoxProfile.Image = null;
-        }
-
+        #region Lunch Time Tab
         private void buttonListRestaurantPages_Click(object sender, EventArgs e)
         {
             getCommonResuaurants();
         }
-
         private void buttonGetcolleagues_Click(object sender, EventArgs e)
         {
             fetchColleagues();
         }
+
+        private void getCommonResuaurants()
+        {
+            List<Page> commonResaurants = AppLogic.GetCommonRestaurants();
+            foreach (Page restaurant in commonResaurants)
+            {
+                listboxCommonRestaurants.Items.Add(restaurant.Name);
+            }
+            if (commonResaurants.Count() == 0)
+            {
+                MessageBox.Show("No common restaurants to retrieve :(");
+            }
+        }
         // $TODO - Move to Logic.
         private void fetchColleagues()
         {
-            foreach (FacebookWrapper.ObjectModel.User friend in AppLogic.LoggedInUser.Friends)
-            {  
+            foreach (User friend in AppLogic.LoggedInUser.Friends)
+            {
                 if (friend.WorkExperiences != null)
                 {
-                    if(friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name)
+                    if (friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name)
                     {
                         listBoxColleagues.Items.Add(friend.Name);
                         //Add to Colleagues collection. array of iColleuge
@@ -368,7 +345,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 MessageBox.Show("No Colleagus to retrive :(");
             }
         }
+        #endregion
 
+        #region Meeting Planner Tab
         private void fillCategoryComboBox()
         {
             string[] category = { "Business", "Cinema", "Drinking", "Education", "Food", "Pleasure",
@@ -384,5 +363,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
 
         }
+        #endregion
     }
 }

@@ -14,7 +14,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public static LoginResult LoginResult { get; set; } // Is this needed?
         public AppSettings AppSettings { get; set; }
-        public static string AccessToken { get; set; }
         public static User LoggedInUser { get; set; }
 
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; set; }
@@ -22,12 +21,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         public AppLogic()
         {
             AppSettings = AppSettings.LoadFromFile();
-            AccessToken = AppSettings.LastAccessToken;
+            //LoginOrConnect();
+ //           AccessToken = AppSettings.LastAccessToken;
         }
 
-        public  void ConnectToFacebook()
+        public  void DoNotUseThisConnectToFacebook()
         {
-            if (string.IsNullOrEmpty(AccessToken))
+            if (string.IsNullOrEmpty(AppSettings.LastAccessToken))
             {
                 LoginResult = FacebookService.Login(k_AppID,
                 #region Permissions
@@ -81,12 +81,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
             else
             {
-                LoginResult = FacebookService.Connect(AccessToken);
+                LoginResult = FacebookService.Connect(AppSettings.LastAccessToken);
             }
+            if(LoginResult.FacebookOAuthResult.IsSuccess)
 
             if (!string.IsNullOrEmpty(LoginResult.AccessToken))
             {
-                /*m_*/LoggedInUser = LoginResult.LoggedInUser; // TODO - remove.
+                LoggedInUser = LoginResult.LoggedInUser; // TODO - remove.
             }
             else
             {
@@ -94,13 +95,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 //MessageBox.Show(result.ErrorMessage);
             }
         }
-        public void LoginOrConnect()
+        public void LoginToFacebook()
         {
             /// Owner: design.patterns
 
             /// Use the FacebookService.Login method to display the login form to any user who wish to use this application.
             /// You can then save the result.AccessToken for future auto-connect to this user:
-            if(string.IsNullOrEmpty(AccessToken))
+            if(string.IsNullOrEmpty(AppSettings.LastAccessToken))
             {
                 LoginResult = FacebookService.Login(k_AppID, /// (desig patter's "Design Patterns Course App 2.4" app)
                 #region Permissions
@@ -155,10 +156,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
             else
             {
-                LoginResult = FacebookService.Connect(AccessToken);
+                LoginResult = FacebookService.Connect(AppSettings.LastAccessToken);
             }
 
-            if (!string.IsNullOrEmpty(LoginResult.AccessToken))
+            if (LoginResult.FacebookOAuthResult.IsSuccess)
             {
                 LoggedInUser = LoginResult.LoggedInUser;
             }
@@ -169,9 +170,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        internal static void LoadFriendsCache()
+
+        internal void LoadFriendsCache()
         {
-            FacebookObjectCollection<User> collectionToCache = /*m_*/LoggedInUser.Friends;
+            FacebookObjectCollection<User> collectionToCache = LoggedInUser.Friends;
         }
         // First Feature
         internal static List<Page> GetCommonRestaurants()

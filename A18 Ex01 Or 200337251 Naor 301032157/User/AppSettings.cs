@@ -43,7 +43,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public static AppSettings LoadFromFile()
         {
-            // $TODO - app settings clip 1:17:02 - default values.
             AppSettings appSettingsObj = new AppSettings();
             if (File.Exists(@"D:\appSettings.xml"))
             {
