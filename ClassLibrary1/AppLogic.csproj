@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook">
-      <HintPath>..\..\..\..\..\Downloads\V6.8.0.16\V6.8.0.16\Facebook.dll</HintPath>
+      <HintPath>D:\Studie\ThirdYear\Simister A\Design Patterns\V6.8.0.16\V6.8.0.16\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="FbGraphApiWrapper">
-      <HintPath>..\..\..\..\..\Downloads\V6.8.0.16\V6.8.0.16\FbGraphApiWrapper.dll</HintPath>
+      <HintPath>D:\Studie\ThirdYear\Simister A\Design Patterns\V6.8.0.16\V6.8.0.16\FbGraphApiWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

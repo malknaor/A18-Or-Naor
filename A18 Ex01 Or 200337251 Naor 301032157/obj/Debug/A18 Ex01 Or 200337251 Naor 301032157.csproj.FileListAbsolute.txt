@@ -31,3 +31,5 @@ C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157
 C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Debug\A18 Ex01 Or 200337251 Naor 301032157.csproj.GenerateResource.Cache
 C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Debug\A18 Ex01 Or 200337251 Naor 301032157.exe
 C:\Users\or\Source\Repos\Ex01DP\A18-Or-Naor\A18 Ex01 Or 200337251 Naor 301032157\obj\Debug\A18 Ex01 Or 200337251 Naor 301032157.pdb
+C:\Users\malkn\OneDrive\מסמכים\visual studio 2015\Projects\A18 Ex01 OrSasson 200337251 NaorMalka 301032157\A18 Ex01 Or 200337251 Naor 301032157\bin\Debug\ClassLibrary1.dll
+C:\Users\malkn\OneDrive\מסמכים\visual studio 2015\Projects\A18 Ex01 OrSasson 200337251 NaorMalka 301032157\A18 Ex01 Or 200337251 Naor 301032157\bin\Debug\ClassLibrary1.pdb
