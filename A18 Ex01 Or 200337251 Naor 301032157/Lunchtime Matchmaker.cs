@@ -11,7 +11,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public List<User> Colleagues { get; set; }
         public List<Page> UserLikedRestaurants { get; set; }
-        public List<Page> commonLikedRestaurants { get; set; }
+        public List<Page> CommonLikedRestaurants { get; set; }
+
         public LunchTimeMatchmaker()
         {
             Colleagues = new List<User>();
@@ -22,7 +23,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchUserColleagues()
         {
-            foreach (User friend in LogicManager.LoggedInUser.Friends)
+            foreach (User friend in AppLogic.LoggedInUser.Friends)
             {
                 if (isColleague(friend))
                 {
@@ -34,22 +35,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private bool isColleague(User i_friend)
         {
             return i_friend.WorkExperiences != null &&
-                   i_friend.WorkExperiences[0].Employer.Name == LogicManager.LoggedInUser.WorkExperiences[0].Employer.Name;
+                   i_friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name;
         }
 
         public void buildCommonRestaurantsList()
         {
-            commonLikedRestaurants = UserLikedRestaurants;
+            CommonLikedRestaurants = UserLikedRestaurants;
             foreach (User colleague in Colleagues)
             {
-                commonLikedRestaurants = commonLikedRestaurants.Intersect(colleague.LikedPages).ToList();
+                CommonLikedRestaurants = CommonLikedRestaurants.Intersect(colleague.LikedPages).ToList();
             }
             //     return commonLikedRestaurants.ToList();
         }
         private void buildUserLikedRestaurantList()
         {
             UserLikedRestaurants = new List<Page>();
-            foreach (Page page in LogicManager.LoggedInUser.LikedPages)
+            foreach (Page page in AppLogic.LoggedInUser.LikedPages)
             {
                 if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant")) // $TODO - method.
                 {
