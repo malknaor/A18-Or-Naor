@@ -57,6 +57,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 buttonLogout.Enabled = true;
                 buttonUserLogin.Enabled = false;
+                tabControlFeatures.Enabled = true;
             }
             new Thread(m_AppLogic.LoadFriendsCache).Start();
             fetchFriends();
@@ -68,9 +69,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             base.OnFormClosing(e);
             if (checkBoxRememberUser.Checked)
             {
-                saveUserSettings(); 
+                saveUserSettings();
             }
-         //   FacebookService.Logout(null); // Do i need this?
+            //   FacebookService.Logout(null); // Do i need this?
         }
 
         private void saveUserSettings()
@@ -92,7 +93,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             fetchLikedPages();
             fetchPosts();
         }
-        
+
         private void buttonUserLogin_Click(object sender, EventArgs e)
         {
             m_AppLogic.LoginToFacebook();
@@ -104,6 +105,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 FacebookService.Logout(null);
                 buttonUserLogin.Enabled = true;
+                tabControlFeatures.Enabled = false;
                 //     m_AppLogic
 
                 resetFormControls();
@@ -285,7 +287,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 MessageBox.Show("No event is available!");
             }
         }
-      
+
 
         private void listBoxEvents_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -305,13 +307,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         #region Lunch Time Tab
         private void buttonListRestaurantPages_Click(object sender, EventArgs e)
         {
-            getCommonResuaurants();
+            //   getCommonResuaurants();
         }
-        private void buttonGetcolleagues_Click(object sender, EventArgs e)
-        {
-            fetchColleagues();
-        }
-
         private void getCommonResuaurants()
         {
             List<Page> commonResaurants = AppLogic.GetCommonRestaurants();
@@ -324,27 +321,35 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 MessageBox.Show("No common restaurants to retrieve :(");
             }
         }
-        // $TODO - Move to Logic.
-        private void fetchColleagues()
-        {
-            foreach (User friend in AppLogic.LoggedInUser.Friends)
-            {
-                if (friend.WorkExperiences != null)
-                {
-                    if (friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name)
-                    {
-                        listBoxColleagues.Items.Add(friend.Name);
-                        //Add to Colleagues collection. array of iColleuge
 
-                    }
-                }
+        private void populateColleagues()
+        {
+            listBoxColleagues.Items.Clear();
+            foreach (User colleague in m_AppLogic.LunchTimeMatchmaker.Colleagues)
+            {
+                listBoxColleagues.Items.Add(colleague.Name);
             }
 
-            if (AppLogic.LoggedInUser.Checkins.Count == 0)
+            if (m_AppLogic.LunchTimeMatchmaker.Colleagues.Count() == 0)
             {
-                MessageBox.Show("No Colleagus to retrive :(");
+                MessageBox.Show("No Colleagues to retrive :(");
             }
         }
+
+        private void populateUserLikedRestaurants()
+        {
+            listBoxUserLikedRestaurants.Items.Clear();
+            foreach (Page restaurant in m_AppLogic.LunchTimeMatchmaker.UserLikedRestaurants)
+            {
+                listBoxUserLikedRestaurants.Items.Add(restaurant.Name);
+            }
+
+            if (m_AppLogic.LunchTimeMatchmaker.UserLikedRestaurants.Count() == 0)
+            {
+                MessageBox.Show("No Colleagues to retrive :(");
+            }
+        }
+
         #endregion
 
         #region Meeting Planner Tab
@@ -363,6 +368,19 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
 
         }
+
         #endregion
+
+        private void tabControlFeatures_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if((sender as TabControl).SelectedIndex == 1)
+            {
+                m_AppLogic.InitLunchTime();
+                populateColleagues();
+                populateUserLikedRestaurants();
+            }
+        }
+
+     
     }
 }

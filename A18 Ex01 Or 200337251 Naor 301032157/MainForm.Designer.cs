@@ -38,7 +38,6 @@
             this.labelMyLikedRestaurants = new System.Windows.Forms.Label();
             this.labelColleagues = new System.Windows.Forms.Label();
             this.listBoxColleagues = new System.Windows.Forms.ListBox();
-            this.buttonGetcolleagues = new System.Windows.Forms.Button();
             this.listboxCommonRestaurants = new System.Windows.Forms.ListBox();
             this.buttonListRestaurantPages = new System.Windows.Forms.Button();
             this.tabPageDashboard = new System.Windows.Forms.TabPage();
@@ -69,6 +68,7 @@
             this.labelFriendSelect = new System.Windows.Forms.Label();
             this.listBoxFriendsSelect = new System.Windows.Forms.ListBox();
             this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
+            this.listBoxUserLikedRestaurants = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageLunchtime.SuspendLayout();
             this.tabPageDashboard.SuspendLayout();
@@ -95,7 +95,7 @@
             // buttonLogout
             // 
             this.buttonLogout.Location = new System.Drawing.Point(13, 284);
-            this.buttonLogout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonLogout.Margin = new System.Windows.Forms.Padding(4);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(160, 28);
             this.buttonLogout.TabIndex = 7;
@@ -122,7 +122,7 @@
             this.buttonUserLogin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonUserLogin.BackgroundImage")));
             this.buttonUserLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonUserLogin.Location = new System.Drawing.Point(11, 233);
-            this.buttonUserLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonUserLogin.Margin = new System.Windows.Forms.Padding(4);
             this.buttonUserLogin.Name = "buttonUserLogin";
             this.buttonUserLogin.Size = new System.Drawing.Size(167, 43);
             this.buttonUserLogin.TabIndex = 2;
@@ -132,7 +132,7 @@
             // pictureBoxProfile
             // 
             this.pictureBoxProfile.Location = new System.Drawing.Point(11, 60);
-            this.pictureBoxProfile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxProfile.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxProfile.Name = "pictureBoxProfile";
             this.pictureBoxProfile.Size = new System.Drawing.Size(163, 161);
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -141,10 +141,10 @@
             // 
             // tabPageLunchtime
             // 
+            this.tabPageLunchtime.Controls.Add(this.listBoxUserLikedRestaurants);
             this.tabPageLunchtime.Controls.Add(this.labelMyLikedRestaurants);
             this.tabPageLunchtime.Controls.Add(this.labelColleagues);
             this.tabPageLunchtime.Controls.Add(this.listBoxColleagues);
-            this.tabPageLunchtime.Controls.Add(this.buttonGetcolleagues);
             this.tabPageLunchtime.Controls.Add(this.listboxCommonRestaurants);
             this.tabPageLunchtime.Controls.Add(this.buttonListRestaurantPages);
             this.tabPageLunchtime.Location = new System.Drawing.Point(4, 25);
@@ -183,25 +183,14 @@
             this.listBoxColleagues.Location = new System.Drawing.Point(19, 27);
             this.listBoxColleagues.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBoxColleagues.Name = "listBoxColleagues";
-            this.listBoxColleagues.Size = new System.Drawing.Size(177, 132);
+            this.listBoxColleagues.Size = new System.Drawing.Size(177, 164);
             this.listBoxColleagues.TabIndex = 29;
-            // 
-            // buttonGetcolleagues
-            // 
-            this.buttonGetcolleagues.Location = new System.Drawing.Point(19, 165);
-            this.buttonGetcolleagues.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonGetcolleagues.Name = "buttonGetcolleagues";
-            this.buttonGetcolleagues.Size = new System.Drawing.Size(179, 31);
-            this.buttonGetcolleagues.TabIndex = 28;
-            this.buttonGetcolleagues.Text = "Get colleagues";
-            this.buttonGetcolleagues.UseVisualStyleBackColor = true;
-            this.buttonGetcolleagues.Click += new System.EventHandler(this.buttonGetcolleagues_Click);
             // 
             // listboxCommonRestaurants
             // 
             this.listboxCommonRestaurants.FormattingEnabled = true;
             this.listboxCommonRestaurants.ItemHeight = 16;
-            this.listboxCommonRestaurants.Location = new System.Drawing.Point(209, 27);
+            this.listboxCommonRestaurants.Location = new System.Drawing.Point(437, 27);
             this.listboxCommonRestaurants.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listboxCommonRestaurants.Name = "listboxCommonRestaurants";
             this.listboxCommonRestaurants.Size = new System.Drawing.Size(204, 132);
@@ -209,7 +198,7 @@
             // 
             // buttonListRestaurantPages
             // 
-            this.buttonListRestaurantPages.Location = new System.Drawing.Point(211, 165);
+            this.buttonListRestaurantPages.Location = new System.Drawing.Point(437, 165);
             this.buttonListRestaurantPages.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonListRestaurantPages.Name = "buttonListRestaurantPages";
             this.buttonListRestaurantPages.Size = new System.Drawing.Size(204, 31);
@@ -245,7 +234,7 @@
             // labelRecentPosts
             // 
             this.labelRecentPosts.AutoSize = true;
-            this.labelRecentPosts.Location = new System.Drawing.Point(101, 398);
+            this.labelRecentPosts.Location = new System.Drawing.Point(22, 64);
             this.labelRecentPosts.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelRecentPosts.Name = "labelRecentPosts";
             this.labelRecentPosts.Size = new System.Drawing.Size(92, 17);
@@ -256,16 +245,16 @@
             // 
             this.listBoxPosts.FormattingEnabled = true;
             this.listBoxPosts.ItemHeight = 16;
-            this.listBoxPosts.Location = new System.Drawing.Point(101, 418);
-            this.listBoxPosts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxPosts.Location = new System.Drawing.Point(25, 85);
+            this.listBoxPosts.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxPosts.Name = "listBoxPosts";
-            this.listBoxPosts.Size = new System.Drawing.Size(416, 100);
+            this.listBoxPosts.Size = new System.Drawing.Size(613, 132);
             this.listBoxPosts.TabIndex = 38;
             // 
             // buttonPostStatus
             // 
-            this.buttonPostStatus.Location = new System.Drawing.Point(529, 331);
-            this.buttonPostStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonPostStatus.Location = new System.Drawing.Point(538, 16);
+            this.buttonPostStatus.Margin = new System.Windows.Forms.Padding(4);
             this.buttonPostStatus.Name = "buttonPostStatus";
             this.buttonPostStatus.Size = new System.Drawing.Size(100, 28);
             this.buttonPostStatus.TabIndex = 36;
@@ -275,16 +264,16 @@
             // 
             // textBoxPostStatus
             // 
-            this.textBoxPostStatus.Location = new System.Drawing.Point(105, 337);
-            this.textBoxPostStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxPostStatus.Location = new System.Drawing.Point(114, 22);
+            this.textBoxPostStatus.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPostStatus.Name = "textBoxPostStatus";
-            this.textBoxPostStatus.Size = new System.Drawing.Size(416, 22);
+            this.textBoxPostStatus.Size = new System.Drawing.Size(335, 22);
             this.textBoxPostStatus.TabIndex = 35;
             // 
             // labelPostStatus
             // 
             this.labelPostStatus.AutoSize = true;
-            this.labelPostStatus.Location = new System.Drawing.Point(12, 337);
+            this.labelPostStatus.Location = new System.Drawing.Point(22, 27);
             this.labelPostStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPostStatus.Name = "labelPostStatus";
             this.labelPostStatus.Size = new System.Drawing.Size(88, 17);
@@ -294,7 +283,7 @@
             // lableEvents
             // 
             this.lableEvents.AutoSize = true;
-            this.lableEvents.Location = new System.Drawing.Point(12, 198);
+            this.lableEvents.Location = new System.Drawing.Point(22, 233);
             this.lableEvents.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lableEvents.Name = "lableEvents";
             this.lableEvents.Size = new System.Drawing.Size(51, 17);
@@ -303,10 +292,10 @@
             // 
             // pictureBoxEvents
             // 
-            this.pictureBoxEvents.Location = new System.Drawing.Point(211, 219);
-            this.pictureBoxEvents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxEvents.Location = new System.Drawing.Point(214, 254);
+            this.pictureBoxEvents.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxEvents.Name = "pictureBoxEvents";
-            this.pictureBoxEvents.Size = new System.Drawing.Size(80, 100);
+            this.pictureBoxEvents.Size = new System.Drawing.Size(93, 132);
             this.pictureBoxEvents.TabIndex = 23;
             this.pictureBoxEvents.TabStop = false;
             // 
@@ -314,17 +303,17 @@
             // 
             this.listBoxEvents.FormattingEnabled = true;
             this.listBoxEvents.ItemHeight = 16;
-            this.listBoxEvents.Location = new System.Drawing.Point(12, 219);
-            this.listBoxEvents.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxEvents.Location = new System.Drawing.Point(25, 254);
+            this.listBoxEvents.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxEvents.Name = "listBoxEvents";
-            this.listBoxEvents.Size = new System.Drawing.Size(191, 100);
+            this.listBoxEvents.Size = new System.Drawing.Size(191, 132);
             this.listBoxEvents.TabIndex = 22;
             this.listBoxEvents.SelectedIndexChanged += new System.EventHandler(this.listBoxEvents_SelectedIndexChanged);
             // 
             // labelLikedPages
             // 
             this.labelLikedPages.AutoSize = true;
-            this.labelLikedPages.Location = new System.Drawing.Point(312, 182);
+            this.labelLikedPages.Location = new System.Drawing.Point(340, 232);
             this.labelLikedPages.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelLikedPages.Name = "labelLikedPages";
             this.labelLikedPages.Size = new System.Drawing.Size(82, 17);
@@ -333,10 +322,10 @@
             // 
             // pictureBoxPages
             // 
-            this.pictureBoxPages.Location = new System.Drawing.Point(511, 218);
-            this.pictureBoxPages.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxPages.Location = new System.Drawing.Point(538, 254);
+            this.pictureBoxPages.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxPages.Name = "pictureBoxPages";
-            this.pictureBoxPages.Size = new System.Drawing.Size(76, 100);
+            this.pictureBoxPages.Size = new System.Drawing.Size(100, 132);
             this.pictureBoxPages.TabIndex = 21;
             this.pictureBoxPages.TabStop = false;
             // 
@@ -344,17 +333,17 @@
             // 
             this.listBoxLikedPages.FormattingEnabled = true;
             this.listBoxLikedPages.ItemHeight = 16;
-            this.listBoxLikedPages.Location = new System.Drawing.Point(316, 218);
-            this.listBoxLikedPages.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxLikedPages.Location = new System.Drawing.Point(355, 254);
+            this.listBoxLikedPages.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxLikedPages.Name = "listBoxLikedPages";
-            this.listBoxLikedPages.Size = new System.Drawing.Size(185, 100);
+            this.listBoxLikedPages.Size = new System.Drawing.Size(185, 132);
             this.listBoxLikedPages.TabIndex = 19;
             this.listBoxLikedPages.SelectedIndexChanged += new System.EventHandler(this.listBoxLikedPages_SelectedIndexChanged);
             // 
             // labelCheckins
             // 
             this.labelCheckins.AutoSize = true;
-            this.labelCheckins.Location = new System.Drawing.Point(328, 36);
+            this.labelCheckins.Location = new System.Drawing.Point(22, 400);
             this.labelCheckins.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCheckins.Name = "labelCheckins";
             this.labelCheckins.Size = new System.Drawing.Size(65, 17);
@@ -365,8 +354,8 @@
             // 
             this.listBoxCheckins.FormattingEnabled = true;
             this.listBoxCheckins.ItemHeight = 16;
-            this.listBoxCheckins.Location = new System.Drawing.Point(331, 71);
-            this.listBoxCheckins.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxCheckins.Location = new System.Drawing.Point(25, 421);
+            this.listBoxCheckins.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxCheckins.Name = "listBoxCheckins";
             this.listBoxCheckins.Size = new System.Drawing.Size(191, 84);
             this.listBoxCheckins.TabIndex = 11;
@@ -377,7 +366,7 @@
             this.labelFriendsList.BackColor = System.Drawing.Color.Transparent;
             this.labelFriendsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelFriendsList.ForeColor = System.Drawing.Color.White;
-            this.labelFriendsList.Location = new System.Drawing.Point(8, 411);
+            this.labelFriendsList.Location = new System.Drawing.Point(975, 38);
             this.labelFriendsList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelFriendsList.Name = "labelFriendsList";
             this.labelFriendsList.Size = new System.Drawing.Size(64, 18);
@@ -388,10 +377,10 @@
             // 
             this.listBoxFriendsList.FormattingEnabled = true;
             this.listBoxFriendsList.ItemHeight = 16;
-            this.listBoxFriendsList.Location = new System.Drawing.Point(-1, 455);
-            this.listBoxFriendsList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxFriendsList.Location = new System.Drawing.Point(884, 165);
+            this.listBoxFriendsList.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxFriendsList.Name = "listBoxFriendsList";
-            this.listBoxFriendsList.Size = new System.Drawing.Size(175, 164);
+            this.listBoxFriendsList.Size = new System.Drawing.Size(155, 276);
             this.listBoxFriendsList.TabIndex = 14;
             this.listBoxFriendsList.SelectedIndexChanged += new System.EventHandler(this.listBoxFriendsList_SelectedIndexChanged);
             // 
@@ -400,12 +389,14 @@
             this.tabControlFeatures.Controls.Add(this.tabPageDashboard);
             this.tabControlFeatures.Controls.Add(this.tabPageLunchtime);
             this.tabControlFeatures.Controls.Add(this.tabMettingPlanner);
+            this.tabControlFeatures.Enabled = false;
             this.tabControlFeatures.Location = new System.Drawing.Point(180, 55);
             this.tabControlFeatures.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControlFeatures.Name = "tabControlFeatures";
             this.tabControlFeatures.SelectedIndex = 0;
             this.tabControlFeatures.Size = new System.Drawing.Size(676, 564);
             this.tabControlFeatures.TabIndex = 29;
+            this.tabControlFeatures.SelectedIndexChanged += new System.EventHandler(this.tabControlFeatures_SelectedIndexChanged);
             // 
             // tabMettingPlanner
             // 
@@ -419,9 +410,9 @@
             this.tabMettingPlanner.Controls.Add(this.labelFriendSelect);
             this.tabMettingPlanner.Controls.Add(this.listBoxFriendsSelect);
             this.tabMettingPlanner.Location = new System.Drawing.Point(4, 25);
-            this.tabMettingPlanner.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabMettingPlanner.Margin = new System.Windows.Forms.Padding(4);
             this.tabMettingPlanner.Name = "tabMettingPlanner";
-            this.tabMettingPlanner.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabMettingPlanner.Padding = new System.Windows.Forms.Padding(4);
             this.tabMettingPlanner.Size = new System.Drawing.Size(668, 535);
             this.tabMettingPlanner.TabIndex = 4;
             this.tabMettingPlanner.Text = "MeetingPlanner";
@@ -430,7 +421,7 @@
             // buttonGetForecast
             // 
             this.buttonGetForecast.Location = new System.Drawing.Point(168, 204);
-            this.buttonGetForecast.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonGetForecast.Margin = new System.Windows.Forms.Padding(4);
             this.buttonGetForecast.Name = "buttonGetForecast";
             this.buttonGetForecast.Size = new System.Drawing.Size(112, 28);
             this.buttonGetForecast.TabIndex = 8;
@@ -441,7 +432,7 @@
             // textBoxCity
             // 
             this.textBoxCity.Location = new System.Drawing.Point(27, 208);
-            this.textBoxCity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxCity.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxCity.Name = "textBoxCity";
             this.textBoxCity.Size = new System.Drawing.Size(132, 22);
             this.textBoxCity.TabIndex = 7;
@@ -480,7 +471,7 @@
             // 
             this.comboBoxCategory.FormattingEnabled = true;
             this.comboBoxCategory.Location = new System.Drawing.Point(321, 150);
-            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxCategory.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxCategory.Name = "comboBoxCategory";
             this.comboBoxCategory.Size = new System.Drawing.Size(160, 24);
             this.comboBoxCategory.TabIndex = 3;
@@ -488,7 +479,7 @@
             // textBoxMeetingPost
             // 
             this.textBoxMeetingPost.Location = new System.Drawing.Point(321, 73);
-            this.textBoxMeetingPost.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxMeetingPost.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxMeetingPost.Name = "textBoxMeetingPost";
             this.textBoxMeetingPost.Size = new System.Drawing.Size(132, 22);
             this.textBoxMeetingPost.TabIndex = 2;
@@ -508,19 +499,29 @@
             this.listBoxFriendsSelect.FormattingEnabled = true;
             this.listBoxFriendsSelect.ItemHeight = 16;
             this.listBoxFriendsSelect.Location = new System.Drawing.Point(23, 43);
-            this.listBoxFriendsSelect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxFriendsSelect.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxFriendsSelect.Name = "listBoxFriendsSelect";
             this.listBoxFriendsSelect.Size = new System.Drawing.Size(159, 116);
             this.listBoxFriendsSelect.TabIndex = 0;
             // 
             // pictureBoxFriends
             // 
-            this.pictureBoxFriends.Location = new System.Drawing.Point(100, 378);
-            this.pictureBoxFriends.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxFriends.Location = new System.Drawing.Point(884, 60);
+            this.pictureBoxFriends.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxFriends.Name = "pictureBoxFriends";
-            this.pictureBoxFriends.Size = new System.Drawing.Size(73, 70);
+            this.pictureBoxFriends.Size = new System.Drawing.Size(155, 101);
             this.pictureBoxFriends.TabIndex = 40;
             this.pictureBoxFriends.TabStop = false;
+            // 
+            // listBoxUserLikedRestaurants
+            // 
+            this.listBoxUserLikedRestaurants.FormattingEnabled = true;
+            this.listBoxUserLikedRestaurants.ItemHeight = 16;
+            this.listBoxUserLikedRestaurants.Location = new System.Drawing.Point(208, 27);
+            this.listBoxUserLikedRestaurants.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listBoxUserLikedRestaurants.Name = "listBoxUserLikedRestaurants";
+            this.listBoxUserLikedRestaurants.Size = new System.Drawing.Size(169, 164);
+            this.listBoxUserLikedRestaurants.TabIndex = 32;
             // 
             // MainForm
             // 
@@ -528,7 +529,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1113, 704);
+            this.ClientSize = new System.Drawing.Size(1089, 643);
             this.Controls.Add(this.pictureBoxFriends);
             this.Controls.Add(this.tabControlFeatures);
             this.Controls.Add(this.checkBoxRememberUser);
@@ -539,7 +540,7 @@
             this.Controls.Add(this.listBoxFriendsList);
             this.Controls.Add(this.labelFriendsList);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.RightToLeftLayout = true;
@@ -570,7 +571,6 @@
         private System.Windows.Forms.CheckBox checkBoxRememberUser;
         private System.Windows.Forms.TabPage tabPageLunchtime;
         private System.Windows.Forms.ListBox listBoxColleagues;
-        private System.Windows.Forms.Button buttonGetcolleagues;
         private System.Windows.Forms.ListBox listboxCommonRestaurants;
         private System.Windows.Forms.Button buttonListRestaurantPages;
         private System.Windows.Forms.TabPage tabPageDashboard;
@@ -603,6 +603,7 @@
         private System.Windows.Forms.TextBox textBoxMeetingPost;
         private System.Windows.Forms.Label labelMyLikedRestaurants;
         private System.Windows.Forms.Label labelColleagues;
+        private System.Windows.Forms.ListBox listBoxUserLikedRestaurants;
     }
 }
 

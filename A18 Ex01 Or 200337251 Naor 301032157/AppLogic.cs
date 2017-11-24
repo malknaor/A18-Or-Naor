@@ -15,14 +15,18 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         public static LoginResult LoginResult { get; set; } // Is this needed?
         public AppSettings AppSettings { get; set; }
         public static User LoggedInUser { get; set; }
-
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; set; }
 
         public AppLogic()
         {
             AppSettings = AppSettings.LoadFromFile();
+            
             //LoginOrConnect();
  //           AccessToken = AppSettings.LastAccessToken;
+        }
+        public void InitLunchTime()
+        {
+            LunchTimeMatchmaker = new LunchTimeMatchmaker();
         }
 
         public  void DoNotUseThisConnectToFacebook()
