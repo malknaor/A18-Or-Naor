@@ -3,6 +3,7 @@ using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -136,10 +137,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             listBoxFriendsList.Items.Clear();
             listBoxFriendsList.DisplayMember = "Name";
+            listBoxFriendsSelect.Items.Clear();
+            listBoxFriendsSelect.DisplayMember = "Name";
 
             foreach (User friend in AppLogic.LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
+                listBoxFriendsSelect.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
@@ -197,10 +201,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         }
 
         //Checkins List//
-        private void buttonFetchCheckins_Click(object sender, EventArgs e)
-        {
-            fetchCheckins();
-        }
 
         private void fetchCheckins()
         {
@@ -215,19 +215,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        //private void fetchCollection(FacebookObjectCollection<T> i_Collection)
-        //{
-        //    foreach (FacebookObject facebookObj in i_Collection)
-        //    {
-        //        listBoxCheckins.Items.Add(checkin.Place.Name);
-        //    }
-
-        //    if (LogicManager.LoggedInUser.Checkins.Count == 0)
-        //    {
-        //        MessageBox.Show("No Checkins to retrieve :(");
-        //    }
-        //}
-
         //Status update//
         private void buttonPostStatus_Click(object sender, EventArgs e)
         {
@@ -237,10 +224,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         }
 
         //User Posts List//
-        private void buttonFetchPosts_Click(object sender, EventArgs e)
-        {
-            fetchPosts();
-        }
 
         private void fetchPosts()
         {
@@ -305,6 +288,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         #endregion
 
         #region Lunch Time Tab
+
         private void buttonListRestaurantPages_Click(object sender, EventArgs e)
         {
             populateCommonRestaurants();
@@ -354,15 +338,16 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         #endregion
 
-        #region Meeting Planner Tab
+        #region Sports Planner Tab
+
         private void fillCategoryComboBox()
         {
-            string[] category = { "Business", "Cinema", "Drinking", "Education", "Food", "Pleasure",
-                    "Shoping", "Sports", "Travel", "Vacation", "Work"};
+            string[] Activity = { "BasketBall", "FootBall", "Tennis", "Running", "Walking", "Cycling",
+                    "Surfing", "Swimming", "Climbing", "Vacation", "Work"};
 
-            foreach (string cat in category)
+            foreach (string Act in Activity)
             {
-                comboBoxCategory.Items.Add(cat);
+                comboBoxActivity.Items.Add(Act);
             }
         }
 
@@ -381,8 +366,32 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 populateColleagues();
                 populateUserLikedRestaurants();
             }
+            else if((sender as TabControl).SelectedIndex == 2)
+            {
+                m_AppLogic.InitSportsPlanner();
+                fillCategoryComboBox();
+                
+
+            }
         }
 
-     
+        private void comboBoxActivity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            textBoxActivityPost.Text = textBoxActivityPost.Text + comboBox.SelectedIndex.ToString();
+        }
+
+        private void buttonShareActivity_Click(object sender, EventArgs e)
+        {
+            Status status = AppLogic.LoggedInUser.PostStatus(textBoxActivityPost.Text);
+            MessageBox.Show("Activity posted! ID : " + status.Id);
+            textBoxPostStatus.Text = string.Empty;
+        }
+
+        private void listBoxFriendsSelect_DoubleClick(object sender, EventArgs e)
+        {
+            ListBox listBox = sender as ListBox;
+            textBoxActivityPost.Text = textBoxActivityPost.Text + listBox.SelectedIndex.ToString();
+        }
     }
 }

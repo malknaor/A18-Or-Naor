@@ -49,9 +49,12 @@
   <ItemGroup>
     <Compile Include="AppLogic.cs" />
     <Compile Include="AppSettings.cs" />
-    <Compile Include="CityWeatherData.cs" />
+    <Compile Include="DailyWeatherInfo.cs" />
+    <Compile Include="FiveDaysForecast.cs" />
     <Compile Include="Lunchtime Matchmaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SportsPlanner.cs" />
+    <Compile Include="ThreeHoursWeatherInfo.cs" />
     <Compile Include="WeatherAPI.cs" />
     <Compile Include="WeatherAPIExecption.cs" />
   </ItemGroup>

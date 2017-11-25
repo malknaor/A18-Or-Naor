@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Net;
 
-namespace WeatherAPI_namespace
+namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public static class WeatherAPI //this class should be a static
     {
@@ -20,16 +20,14 @@ namespace WeatherAPI_namespace
         {
         }
 
-        public static float GetCurrentTemperature(string i_City)
+        public static DailyWeatherInfo GetCityTemperature(string i_City) //GetForecast
         {
-                CurrentUrl = setCurrentURL(i_City);
-                XMLDocument = getXmlDocument(CurrentUrl);
+            CurrentUrl = setCurrentURL(i_City);
+            XMLDocument = getXmlDocument(CurrentUrl);
 
-                XmlNode temp_node = XMLDocument.SelectSingleNode("//temperature");
-                XmlAttribute temp_value = temp_node.Attributes["value"];
-                string temp_string = temp_value.Value;
-
-                return float.Parse(temp_string);
+            DailyWeatherInfo forecast = new DailyWeatherInfo(XMLDocument); //Change this
+            
+            return forecast;
         }
 
         private static string setCurrentURL(string i_City)
