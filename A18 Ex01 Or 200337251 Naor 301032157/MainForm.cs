@@ -343,7 +343,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void fillCategoryComboBox()
         {
             string[] Activity = { "BasketBall", "FootBall", "Tennis", "Running", "Walking", "Cycling",
-                    "Surfing", "Swimming", "Climbing", "Vacation", "Work"};
+                    "Surfing", "Swimming", "Climbing" };
 
             foreach (string Act in Activity)
             {
@@ -353,7 +353,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
         {
+            DailyWeatherInfo currentWeatherInfo = m_AppLogic.SportsPlanner.GetWeatherInfo(textBoxCity.Text);
 
+            foreach (ThreeHoursWeatherInfo item in currentWeatherInfo.Forecast)
+            {
+                listBoxWeatherData.Items.Add(item.ToString());
+            }
         }
 
         #endregion
@@ -370,15 +375,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 m_AppLogic.InitSportsPlanner();
                 fillCategoryComboBox();
-                
-
             }
         }
 
         private void comboBoxActivity_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            textBoxActivityPost.Text = textBoxActivityPost.Text + comboBox.SelectedIndex.ToString();
+            textBoxActivityPost.Text = textBoxActivityPost.Text + comboBox.SelectedItem.ToString() + ": ";
         }
 
         private void buttonShareActivity_Click(object sender, EventArgs e)
@@ -391,7 +394,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void listBoxFriendsSelect_DoubleClick(object sender, EventArgs e)
         {
             ListBox listBox = sender as ListBox;
-            textBoxActivityPost.Text = textBoxActivityPost.Text + listBox.SelectedIndex.ToString();
+
+            if (!textBoxActivityPost.Text.Contains(listBox.SelectedItem.ToString()))
+            {
+                textBoxActivityPost.Text = textBoxActivityPost.Text + listBox.SelectedItem.ToString() + ", ";
+            }
         }
     }
 }

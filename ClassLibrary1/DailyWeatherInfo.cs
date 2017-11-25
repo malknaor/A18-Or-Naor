@@ -12,15 +12,18 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     {
         public string Location { get; private set; }
 
-        public DailyWeatherInfo(XmlDocument i_XmlDoc)
+        public DailyWeatherInfo(XmlNode i_XmlNode)
         {
-            XmlNode temp_node = i_XmlDoc.SelectSingleNode("location");
+            XmlNode temp_node = i_XmlNode.SelectSingleNode("location");
             XmlAttribute temp_value = temp_node.Attributes["name"];
 
-            Location = temp_value.ToString();
+
+            Location = temp_node.SelectSingleNode("name").Value;
+
+
             Forecast = new List<ThreeHoursWeatherInfo>();
 
-            temp_node = i_XmlDoc.SelectSingleNode("forecast");
+            temp_node = i_XmlNode.SelectSingleNode("forecast");
             temp_value = temp_node.Attributes["name"];
             string DesiredTime = "17";
 
@@ -38,6 +41,4 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         [XmlElement("forecast")]
         public List<ThreeHoursWeatherInfo> Forecast { get; private set; }
     }
-
-    
 }

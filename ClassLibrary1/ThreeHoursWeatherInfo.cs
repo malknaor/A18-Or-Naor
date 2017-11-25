@@ -27,5 +27,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             temp_value = temp_node.Attributes["name"];
             WeatherDescription = temp_value.ToString();
         }
+
+        public override string ToString()
+        {
+            return DateTime.ToString() + ", " + Temperture.ToString() + ", " + WeatherDescription + ".";
+        }
     }
 }
