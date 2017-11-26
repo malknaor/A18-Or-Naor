@@ -1,19 +1,23 @@
-﻿using FacebookWrapper;
-using FacebookWrapper.ObjectModel;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using FacebookWrapper;
+using FacebookWrapper.ObjectModel;
 
-// $TODO - Need to disable the logout method.
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    //$TODO - Naming conventions for forms??
     public partial class MainForm : Form
     {
         private AppLogic m_AppLogic;
+
+        private const string k_SportInfo = @"How To Use:
+1.Select Activity.
+2.Add Friends (by double click).
+3.Type in the City.
+4.Get Forecast (5 Days Forecast).
+5.Select the desired day (by double click)
+6.Post Activity.";
 
         public MainForm()
         {
@@ -24,7 +28,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void init()
         {
-            this.StartPosition = FormStartPosition.Manual;
+            StartPosition = FormStartPosition.Manual;
             FacebookService.s_CollectionLimit = 100;
             FacebookService.s_FbApiVersion = 2.8f;
 
@@ -34,17 +38,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        //$TODO - AppUIUtils
         private void loadUIAppSettings()
         {
-            this.Size = m_AppLogic.AppSettings.LastWindowSize;
-            this.Location = m_AppLogic.AppSettings.LastWindowLocation;
-            this.checkBoxRememberUser.Checked = m_AppLogic.AppSettings.RememberUser;
+            Size = m_AppLogic.AppSettings.LastWindowSize;
+            Location = m_AppLogic.AppSettings.LastWindowLocation;
+            checkBoxRememberUser.Checked = m_AppLogic.AppSettings.RememberUser;
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+
             if (m_AppLogic.AppSettings.RememberUser && !string.IsNullOrEmpty(m_AppLogic.AppSettings.LastAccessToken))
             {
                 m_AppLogic.LoginToFacebook();
@@ -60,6 +64,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 buttonUserLogin.Enabled = false;
                 tabControlFeatures.Enabled = true;
             }
+
             new Thread(m_AppLogic.LoadFBCollectionsCache).Start();
             fetchFriends();
             populateUIBasicFacebookData();
@@ -72,7 +77,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 saveUserSettings();
             }
-            //   FacebookService.Logout(null); // Do i need this?
         }
 
         private void saveUserSettings()
@@ -85,13 +89,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             m_AppLogic.AppSettings.SaveToFile();
         }
 
-        //$ should be moved to a UI class/Project.
         private void populateUIBasicFacebookData()
         {
             displayUserInfo();
             fetchFriends();
             fetchEvents();
             fetchLikedPages();
+            fetchCheckins();
             fetchPosts();
         }
 
@@ -100,6 +104,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             m_AppLogic.LoginToFacebook();
             doAfterLogin();
         }
+
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             if (AppLogic.LoggedInUser != null)
@@ -107,11 +112,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 FacebookService.Logout(null);
                 buttonUserLogin.Enabled = true;
                 tabControlFeatures.Enabled = false;
-                //     m_AppLogic
 
                 resetFormControls();
             }
         }
+
         private void resetFormControls()
         {
             labelUserName.Text = string.Empty;
@@ -120,6 +125,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxLikedPages.Items.Clear();
             listBoxEvents.Items.Clear();
             listBoxPosts.Items.Clear();
+            listBoxFriendsSelect.Items.Clear();
             pictureBoxFriends.Image = null;
             pictureBoxProfile.Image = null;
         }
@@ -200,8 +206,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        //Checkins List//
-
         private void fetchCheckins()
         {
             foreach (Checkin checkin in AppLogic.LoggedInUser.Checkins)
@@ -215,15 +219,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        //Status update//
         private void buttonPostStatus_Click(object sender, EventArgs e)
         {
             Status status = AppLogic.LoggedInUser.PostStatus(textBoxPostStatus.Text);
             MessageBox.Show("Status posted! ID : " + status.Id);
             textBoxPostStatus.Text = string.Empty;
         }
-
-        //User Posts List//
 
         private void fetchPosts()
         {
@@ -249,12 +250,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
-        //Events List//
-        private void buttonFetchEvents_Click(object sender, EventArgs e)
-        {
-            fetchEvents();
-        }
-
         private void fetchEvents()
         {
             listBoxEvents.Items.Clear();
@@ -270,7 +265,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 MessageBox.Show("No event is available!");
             }
         }
-
 
         private void listBoxEvents_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -342,8 +336,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fillCategoryComboBox()
         {
-            string[] Activity = { "BasketBall", "FootBall", "Tennis", "Running", "Walking", "Cycling",
-                    "Surfing", "Swimming", "Climbing" };
+            string[] Activity = { "BasketBall", "FootBall", "Tennis", "Running", "Walking", "Cycling", "Surfing", "Swimming", "Climbing" };
 
             foreach (string Act in Activity)
             {
@@ -357,11 +350,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             foreach (ThreeHoursWeatherInfo item in currentWeatherInfo.Forecast)
             {
-                listBoxWeatherData.Items.Add(item.ToString());
+                listBoxWeatherData.Items.Add(currentWeatherInfo.Location + ": " + item.ToString());
             }
         }
-
-        #endregion
 
         private void tabControlFeatures_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -375,12 +366,14 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 m_AppLogic.InitSportsPlanner();
                 fillCategoryComboBox();
+                labelSportPlanner.Text = k_SportInfo;
             }
         }
 
         private void comboBoxActivity_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
+            textBoxActivityPost.Text = string.Empty;
             textBoxActivityPost.Text = textBoxActivityPost.Text + comboBox.SelectedItem.ToString() + ": ";
         }
 
@@ -388,17 +381,24 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             Status status = AppLogic.LoggedInUser.PostStatus(textBoxActivityPost.Text);
             MessageBox.Show("Activity posted! ID : " + status.Id);
-            textBoxPostStatus.Text = string.Empty;
+            textBoxActivityPost.Text = string.Empty;
         }
 
         private void listBoxFriendsSelect_DoubleClick(object sender, EventArgs e)
         {
             ListBox listBox = sender as ListBox;
-
+            
             if (!textBoxActivityPost.Text.Contains(listBox.SelectedItem.ToString()))
             {
-                textBoxActivityPost.Text = textBoxActivityPost.Text + listBox.SelectedItem.ToString() + ", ";
+                textBoxActivityPost.Text = textBoxActivityPost.Text + (listBox.SelectedItem as User).Name + ", ";
             }
         }
+
+        private void listBoxWeatherData_DoubleClick(object sender, EventArgs e)
+        {
+            textBoxActivityPost.Text = textBoxActivityPost.Text + Environment.NewLine + "In - " + (sender as ListBox).SelectedItem.ToString();
+        }
+
+        #endregion
     }
 }

@@ -5,17 +5,19 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public class AppLogic
     {
-        private const string k_AppID = "495417090841854";
+        private const string k_AppID1 = "495417090841854";
 
-        public static LoginResult LoginResult { get; set; } // Is this needed?
+        private const string k_AppID2 = "1450160541956417";
+
+        public static LoginResult LoginResult { get; set; }
 
         public AppSettings AppSettings { get; set; }
 
         public static User LoggedInUser { get; set; }
 
-        public LunchTimeMatchmaker LunchTimeMatchmaker { get; set; } //Should the set be private?
+        public LunchTimeMatchmaker LunchTimeMatchmaker { get; private set; }
 
-        public SportsPlanner SportsPlanner { get; set; } //Should the set be private?
+        public SportsPlanner SportsPlanner { get; private set; }
 
         public AppLogic()
         {
@@ -34,15 +36,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public void LoginToFacebook()
         {
-            /// Owner: design.patterns
-
-            /// Use the FacebookService.Login method to display the login form to any user who wish to use this application.
-            /// You can then save the result.AccessToken for future auto-connect to this user:
             if(string.IsNullOrEmpty(AppSettings.LastAccessToken))
             {
-                LoginResult = FacebookService.Login(k_AppID, /// (desig patter's "Design Patterns Course App 2.4" app)
+                LoginResult = FacebookService.Login(k_AppID1 /*k_AppID2 - guy's app id*/,
                 #region Permissions
-
              
                     "public_profile",
              "user_education_history",
@@ -57,7 +54,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
              "publish_actions",
              "user_events",
              "user_games_activity",
-             //"user_groups" (This permission is only available for apps using Graph API version v2.3 or older.)
+             // "user_groups" (This permission is only available for apps using Graph API version v2.3 or older.)
              "user_hometown",
              "user_likes",
              "user_location",
@@ -68,7 +65,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
              "user_relationship_details",
              "user_religion_politics",
 
-             //"user_status" (This permission is only available for apps using Graph API version v2.3 or older.)
+             // "user_status" (This permission is only available for apps using Graph API version v2.3 or older.)
              "user_tagged_places",
              "user_videos",
              "user_website",
@@ -83,12 +80,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
              "publish_pages",
              "publish_actions",
 
-             "rsvp_event"
-             );
-                // These are NOT the complete list of permissions. Other permissions for example:
-                // "user_birthday", "user_education_history", "user_hometown", "user_likes","user_location","user_relationships","user_relationship_details","user_religion_politics", "user_videos", "user_website", "user_work_history", "email","read_insights","rsvp_event","manage_pages"
-                // The documentation regarding facebook login and permissions can be found here: 
-                // https://developers.facebook.com/docs/facebook-login/permissions#reference
+             "rsvp_event");
                 #endregion
             }
             else
@@ -102,8 +94,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
             else
             {
-                //$TODO - Maybe catch?
-              //MessageBox.Show(result.ErrorMessage);
+                ///$TODO - Maybe catch?
+                ///MessageBox.Show(result.ErrorMessage);
             }
         }
 

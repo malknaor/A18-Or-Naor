@@ -59,6 +59,8 @@
             this.listBoxFriendsList = new System.Windows.Forms.ListBox();
             this.tabControlFeatures = new System.Windows.Forms.TabControl();
             this.tabSportPlanner = new System.Windows.Forms.TabPage();
+            this.labelSportPlanner = new System.Windows.Forms.Label();
+            this.listBoxWeatherData = new System.Windows.Forms.ListBox();
             this.buttonShareActivity = new System.Windows.Forms.Button();
             this.buttonGetForecast = new System.Windows.Forms.Button();
             this.textBoxCity = new System.Windows.Forms.TextBox();
@@ -70,7 +72,6 @@
             this.labelFriendSelect = new System.Windows.Forms.Label();
             this.listBoxFriendsSelect = new System.Windows.Forms.ListBox();
             this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
-            this.listBoxWeatherData = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageLunchtime.SuspendLayout();
             this.tabPageDashboard.SuspendLayout();
@@ -383,6 +384,7 @@
             // 
             // tabSportPlanner
             // 
+            this.tabSportPlanner.Controls.Add(this.labelSportPlanner);
             this.tabSportPlanner.Controls.Add(this.listBoxWeatherData);
             this.tabSportPlanner.Controls.Add(this.buttonShareActivity);
             this.tabSportPlanner.Controls.Add(this.buttonGetForecast);
@@ -402,9 +404,27 @@
             this.tabSportPlanner.Text = "SportPlanner";
             this.tabSportPlanner.UseVisualStyleBackColor = true;
             // 
+            // labelSportPlanner
+            // 
+            this.labelSportPlanner.AutoSize = true;
+            this.labelSportPlanner.Location = new System.Drawing.Point(14, 279);
+            this.labelSportPlanner.Name = "labelSportPlanner";
+            this.labelSportPlanner.Size = new System.Drawing.Size(61, 13);
+            this.labelSportPlanner.TabIndex = 11;
+            this.labelSportPlanner.Text = "Instructions";
+            // 
+            // listBoxWeatherData
+            // 
+            this.listBoxWeatherData.FormattingEnabled = true;
+            this.listBoxWeatherData.Location = new System.Drawing.Point(17, 173);
+            this.listBoxWeatherData.Name = "listBoxWeatherData";
+            this.listBoxWeatherData.Size = new System.Drawing.Size(240, 95);
+            this.listBoxWeatherData.TabIndex = 10;
+            this.listBoxWeatherData.DoubleClick += new System.EventHandler(this.listBoxWeatherData_DoubleClick);
+            // 
             // buttonShareActivity
             // 
-            this.buttonShareActivity.Location = new System.Drawing.Point(390, 10);
+            this.buttonShareActivity.Location = new System.Drawing.Point(390, 31);
             this.buttonShareActivity.Name = "buttonShareActivity";
             this.buttonShareActivity.Size = new System.Drawing.Size(103, 23);
             this.buttonShareActivity.TabIndex = 9;
@@ -441,7 +461,7 @@
             // labelMeetingPost
             // 
             this.labelMeetingPost.AutoSize = true;
-            this.labelMeetingPost.Location = new System.Drawing.Point(13, 16);
+            this.labelMeetingPost.Location = new System.Drawing.Point(13, 37);
             this.labelMeetingPost.Name = "labelMeetingPost";
             this.labelMeetingPost.Size = new System.Drawing.Size(43, 13);
             this.labelMeetingPost.TabIndex = 5;
@@ -450,7 +470,7 @@
             // labelActivity
             // 
             this.labelActivity.AutoSize = true;
-            this.labelActivity.Location = new System.Drawing.Point(13, 46);
+            this.labelActivity.Location = new System.Drawing.Point(13, 67);
             this.labelActivity.Name = "labelActivity";
             this.labelActivity.Size = new System.Drawing.Size(74, 13);
             this.labelActivity.TabIndex = 4;
@@ -459,7 +479,7 @@
             // comboBoxActivity
             // 
             this.comboBoxActivity.FormattingEnabled = true;
-            this.comboBoxActivity.Location = new System.Drawing.Point(16, 62);
+            this.comboBoxActivity.Location = new System.Drawing.Point(16, 83);
             this.comboBoxActivity.Name = "comboBoxActivity";
             this.comboBoxActivity.Size = new System.Drawing.Size(121, 21);
             this.comboBoxActivity.TabIndex = 3;
@@ -467,7 +487,7 @@
             // 
             // textBoxActivityPost
             // 
-            this.textBoxActivityPost.Location = new System.Drawing.Point(62, 13);
+            this.textBoxActivityPost.Location = new System.Drawing.Point(62, 34);
             this.textBoxActivityPost.Name = "textBoxActivityPost";
             this.textBoxActivityPost.Size = new System.Drawing.Size(322, 20);
             this.textBoxActivityPost.TabIndex = 2;
@@ -475,7 +495,7 @@
             // labelFriendSelect
             // 
             this.labelFriendSelect.AutoSize = true;
-            this.labelFriendSelect.Location = new System.Drawing.Point(285, 46);
+            this.labelFriendSelect.Location = new System.Drawing.Point(285, 137);
             this.labelFriendSelect.Name = "labelFriendSelect";
             this.labelFriendSelect.Size = new System.Drawing.Size(74, 13);
             this.labelFriendSelect.TabIndex = 1;
@@ -484,7 +504,7 @@
             // listBoxFriendsSelect
             // 
             this.listBoxFriendsSelect.FormattingEnabled = true;
-            this.listBoxFriendsSelect.Location = new System.Drawing.Point(288, 62);
+            this.listBoxFriendsSelect.Location = new System.Drawing.Point(288, 173);
             this.listBoxFriendsSelect.Name = "listBoxFriendsSelect";
             this.listBoxFriendsSelect.Size = new System.Drawing.Size(120, 95);
             this.listBoxFriendsSelect.TabIndex = 0;
@@ -497,14 +517,6 @@
             this.pictureBoxFriends.Size = new System.Drawing.Size(116, 82);
             this.pictureBoxFriends.TabIndex = 40;
             this.pictureBoxFriends.TabStop = false;
-            // 
-            // listBoxWeatherData
-            // 
-            this.listBoxWeatherData.FormattingEnabled = true;
-            this.listBoxWeatherData.Location = new System.Drawing.Point(17, 173);
-            this.listBoxWeatherData.Name = "listBoxWeatherData";
-            this.listBoxWeatherData.Size = new System.Drawing.Size(391, 95);
-            this.listBoxWeatherData.TabIndex = 10;
             // 
             // MainForm
             // 
@@ -588,6 +600,7 @@
         private System.Windows.Forms.ListBox listBoxUserLikedRestaurants;
         private System.Windows.Forms.Button buttonShareActivity;
         private System.Windows.Forms.ListBox listBoxWeatherData;
+        private System.Windows.Forms.Label labelSportPlanner;
     }
 }
 

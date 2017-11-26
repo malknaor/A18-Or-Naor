@@ -8,25 +8,21 @@ using System.Net;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    public static class WeatherAPI //this class should be a static
+    public static class WeatherAPI
     {
-        const string k_APIKey = "4a3c854a9b4225b169858c753b6374a3";
+        private const string k_APIKey = "4a3c854a9b4225b169858c753b6374a3";
 
         private static string CurrentUrl { get; set; }
 
         private static XmlDocument XMLDocument { get; set; }
 
-        static WeatherAPI()
-        {
-        }
-
-        public static DailyWeatherInfo GetCityForecast(string i_City) //GetForecast
+        public static DailyWeatherInfo GetCityForecast(string i_City) 
         {
             CurrentUrl = setCurrentURL(i_City);
             XMLDocument = getXmlDocument(CurrentUrl);
 
             XmlNode xmlNode = XMLDocument.SelectSingleNode("weatherdata"); 
-            DailyWeatherInfo forecast = new DailyWeatherInfo(xmlNode); //Change this
+            DailyWeatherInfo forecast = new DailyWeatherInfo(xmlNode);
             
             return forecast;
         }
