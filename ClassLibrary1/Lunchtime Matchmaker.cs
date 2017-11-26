@@ -10,7 +10,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public List<Page> UserLikedRestaurants { get; set; }
 
-        public List<Page> CommonLikedRestaurants { get; set; }
+        public List<string> CommonLikedRestaurants { get; set; }
 
         public LunchTimeMatchmaker()
         {
@@ -34,21 +34,24 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private bool isColleague(User i_friend)
         {
             return i_friend.WorkExperiences != null &&
-                   i_friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name;
+                   (i_friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name
+                   || AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name.Contains(i_friend.WorkExperiences[0].Employer.Name));
         }
 
         public void buildCommonRestaurantsList()
         {
-            CommonLikedRestaurants = UserLikedRestaurants;
-
+            //CommonLikedRestaurants = UserLikedRestaurants;
+            CommonLikedRestaurants = UserLikedRestaurants.Select(s1 => s1.Name).ToList();
             foreach (User colleague in Colleagues)
             {
-                if(CommonLikedRestaurants.Count() == 0)
+                if (UserLikedRestaurants.Count() == 0)
                 {
                     break;
                 }
-
-                CommonLikedRestaurants = CommonLikedRestaurants.Intersect(colleague.LikedPages).ToList();
+                //     CommonLikedRestaurants 
+                //var TestingIntersection = CommonLikedRestaurants.Intersect(colleague.LikedPages).ToList();
+                //  var commons = CommonLikedRestaurants.Select(s1 => s1.Name).ToList().Intersect(colleague.LikedPages.Select(s2 => s2.Name).ToList()).ToList();
+                CommonLikedRestaurants = CommonLikedRestaurants.Intersect(colleague.LikedPages.Select(s2 => s2.Name).ToList()).ToList();
             }
         }
 
