@@ -11,7 +11,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     {
         private AppLogic m_AppLogic;
 
-        private const string k_SportInfo = @"How To Use:
+        private const string k_SportInfo = @"Instruction:
 1.Select Activity.
 2.Add Friends (by double click).
 3.Type in the City.
@@ -134,7 +134,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void displayUserInfo()
         {
-            this.Text = "Connected as: " + AppLogic.LoggedInUser.Name;
+            Text = "Connected as: " + AppLogic.LoggedInUser.Name;
             pictureBoxProfile.LoadAsync(AppLogic.LoggedInUser.PictureLargeURL);
             labelUserName.Text = AppLogic.LoggedInUser.Name;
         }
@@ -334,39 +334,21 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         #region Sports Planner Tab
 
-        private void fillCategoryComboBox()
+        private void populateCategoryComboBox()
         {
-            string[] Activity = { "BasketBall", "FootBall", "Tennis", "Running", "Walking", "Cycling", "Surfing", "Swimming", "Climbing" };
-
-            foreach (string Act in Activity)
+            foreach (string activity in m_AppLogic.SportsPlanner.ActivityCategory)
             {
-                comboBoxActivity.Items.Add(Act);
+                comboBoxActivity.Items.Add(activity);
             }
         }
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
         {
-            DailyWeatherInfo currentWeatherInfo = m_AppLogic.SportsPlanner.GetWeatherInfo(textBoxCity.Text);
+            DailyWeatherData currentWeatherInfo = m_AppLogic.SportsPlanner.GetWeatherData(textBoxCity.Text);
 
-            foreach (ThreeHoursWeatherInfo item in currentWeatherInfo.Forecast)
+            foreach (ThreeHoursWeatherData item in currentWeatherInfo.Forecast)
             {
                 listBoxWeatherData.Items.Add(currentWeatherInfo.Location + ": " + item.ToString());
-            }
-        }
-
-        private void tabControlFeatures_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if((sender as TabControl).SelectedIndex == 1)
-            {
-                m_AppLogic.InitLunchTime();
-                populateColleagues();
-                populateUserLikedRestaurants();
-            }
-            else if((sender as TabControl).SelectedIndex == 2)
-            {
-                m_AppLogic.InitSportsPlanner();
-                fillCategoryComboBox();
-                labelSportPlanner.Text = k_SportInfo;
             }
         }
 
@@ -396,9 +378,25 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void listBoxWeatherData_DoubleClick(object sender, EventArgs e)
         {
-            textBoxActivityPost.Text = textBoxActivityPost.Text + Environment.NewLine + "In - " + (sender as ListBox).SelectedItem.ToString();
+            textBoxActivityPost.Text = textBoxActivityPost.Text + Environment.NewLine + "At - " + (sender as ListBox).SelectedItem.ToString();
         }
 
         #endregion
+
+        private void tabControlFeatures_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((sender as TabControl).SelectedIndex == 1)
+            {
+                m_AppLogic.InitLunchTime();
+                populateColleagues();
+                populateUserLikedRestaurants();
+            }
+            else if ((sender as TabControl).SelectedIndex == 2)
+            {
+                m_AppLogic.InitSportsPlanner();
+                populateCategoryComboBox();
+                labelSportPlanner.Text = k_SportInfo;
+            }
+        }
     }
 }

@@ -12,17 +12,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     {
         private const string k_APIKey = "4a3c854a9b4225b169858c753b6374a3";
 
-        private static string CurrentUrl { get; set; }
+        private static string CurrentURL { get; set; }
 
         private static XmlDocument XMLDocument { get; set; }
 
-        public static DailyWeatherInfo GetCityForecast(string i_City) 
+        public static DailyWeatherData GetCityForecast(string i_City) 
         {
-            CurrentUrl = setCurrentURL(i_City);
-            XMLDocument = getXmlDocument(CurrentUrl);
+            CurrentURL = setCurrentURL(i_City);
+            XMLDocument = getXmlDocument(CurrentURL);
 
             XmlNode xmlNode = XMLDocument.SelectSingleNode("weatherdata"); 
-            DailyWeatherInfo forecast = new DailyWeatherInfo(xmlNode);
+            DailyWeatherData forecast = new DailyWeatherData(xmlNode);
             
             return forecast;
         }

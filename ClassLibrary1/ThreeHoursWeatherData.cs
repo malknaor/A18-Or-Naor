@@ -3,15 +3,15 @@ using System.Xml;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    public class ThreeHoursWeatherInfo
+    public class ThreeHoursWeatherData
     {
-        public DateTime DateTime { get; private set; }
+        public DateTime DateAndTime { get; private set; }
 
         public float Temperture { get; private set; }
 
         public string WeatherDescription { get; private set; }
 
-        public ThreeHoursWeatherInfo(XmlNode i_XmlDoc)
+        public ThreeHoursWeatherData(XmlNode i_XmlDoc)
         {
             XmlNode temp_node = i_XmlDoc;
             XmlAttribute temp_value = temp_node.Attributes["from"];
@@ -19,7 +19,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             dateTime = dateTime.Replace("T", " ");
 
-            DateTime = DateTime.Parse(dateTime);
+            DateAndTime = DateTime.Parse(dateTime);
             temp_node = i_XmlDoc.SelectSingleNode("temperature");
             temp_value = temp_node.Attributes["value"];
             Temperture = float.Parse(temp_value.Value);
@@ -30,7 +30,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public override string ToString()
         {
-            return DateTime.ToString() + ", " + Temperture.ToString() + ", " + WeatherDescription + ".";
+            return DateAndTime.ToString() + ", " + Temperture.ToString() + ", " + WeatherDescription + ".";
         }
     }
 }
