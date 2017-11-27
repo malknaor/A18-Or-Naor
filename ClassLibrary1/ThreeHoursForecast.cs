@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    public class ThreeHoursWeatherData
+    public class ThreeHoursForecast
     {
         public DateTime DateAndTime { get; private set; }
 
@@ -11,7 +11,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public string WeatherDescription { get; private set; }
 
-        public ThreeHoursWeatherData(XmlNode i_XmlDoc)
+        public ThreeHoursForecast(XmlNode i_XmlDoc)
         {
             XmlNode temp_node = i_XmlDoc;
             XmlAttribute temp_value = temp_node.Attributes["from"];

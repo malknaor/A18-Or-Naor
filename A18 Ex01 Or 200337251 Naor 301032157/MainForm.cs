@@ -9,7 +9,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public partial class MainForm : Form
     {
-        private AppLogic m_AppLogic;
+        private const string k_AppID1 = "495417090841854";
+
+        private const string k_AppID2 = "1450160541956417";
 
         private const string k_SportInfo = @"Instruction:
 1.Select Activity.
@@ -18,6 +20,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 4.Get Forecast (5 Days Forecast).
 5.Select the desired day (by double click)
 6.Post Activity.";
+
+        private AppLogic m_AppLogic;
 
         public MainForm()
         {
@@ -31,6 +35,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             StartPosition = FormStartPosition.Manual;
             FacebookService.s_CollectionLimit = 100;
             FacebookService.s_FbApiVersion = 2.8f;
+
+            comboBoxAppID.Items.Add(k_AppID1);
+            comboBoxAppID.Items.Add(k_AppID2);
 
             if (m_AppLogic.AppSettings.RememberUser)
             {
@@ -112,7 +119,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 FacebookService.Logout(null);
                 buttonUserLogin.Enabled = true;
                 tabControlFeatures.Enabled = false;
-
+                m_AppLogic.ClearUserSettings();
                 resetFormControls();
             }
         }
@@ -336,7 +343,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void populateCategoryComboBox()
         {
-            foreach (string activity in m_AppLogic.SportsPlanner.ActivityCategory)
+            foreach (string activity in m_AppLogic.SportsActivityPlanner.ActivityCategory)
             {
                 comboBoxActivity.Items.Add(activity);
             }
@@ -344,11 +351,23 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
         {
-            DailyWeatherData currentWeatherInfo = m_AppLogic.SportsPlanner.GetWeatherData(textBoxCity.Text);
+            DailyForecast currentForecast = null;
 
-            foreach (ThreeHoursWeatherData item in currentWeatherInfo.Forecast)
+            try
             {
-                listBoxWeatherData.Items.Add(currentWeatherInfo.Location + ": " + item.ToString());
+                currentForecast = m_AppLogic.SportsActivityPlanner.GetForecast(textBoxCity.Text);
+
+                foreach (ThreeHoursForecast item in currentForecast.Forecast)
+                {
+                    listBoxWeatherData.Items.Add(currentForecast.Location + ": " + item.ToString());
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(
+                    @"City Not Found.
+Please try again",
+"ERROR");
             }
         }
 
@@ -393,10 +412,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
             else if ((sender as TabControl).SelectedIndex == 2)
             {
-                m_AppLogic.InitSportsPlanner();
+                m_AppLogic.InitSportsActivityPlanner();
                 populateCategoryComboBox();
                 labelSportPlanner.Text = k_SportInfo;
             }
+        }
+
+        private void comboBoxAppID_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            m_AppLogic.AppID = comboBox.SelectedItem.ToString();
         }
     }
 }

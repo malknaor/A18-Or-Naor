@@ -5,23 +5,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public class AppLogic
     {
-        private const string k_AppID1 = "495417090841854";
-
-        private const string k_AppID2 = "1450160541956417";
-
         public static LoginResult LoginResult { get; set; }
-
-        public AppSettings AppSettings { get; set; }
 
         public static User LoggedInUser { get; set; }
 
+        public string AppID { get; set; }
+
+        public AppSettings AppSettings { get; set; }
+
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; private set; }
 
-        public SportsPlanner SportsPlanner { get; private set; }
+        public SportsActivityPlanner SportsActivityPlanner { get; private set; }
 
         public AppLogic()
         {
             AppSettings = AppSettings.LoadFromFile();
+            AppID = "495417090841854";
         }
 
         public void InitLunchTime()
@@ -29,18 +28,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             LunchTimeMatchmaker = new LunchTimeMatchmaker();
         }
 
-        public void InitSportsPlanner()
+        public void InitSportsActivityPlanner()
         {
-            SportsPlanner = new SportsPlanner();
+            SportsActivityPlanner = new SportsActivityPlanner();
         }
 
         public void LoginToFacebook()
         {
-            if(string.IsNullOrEmpty(AppSettings.LastAccessToken))
+            if (string.IsNullOrEmpty(AppSettings.LastAccessToken))
             {
-                LoginResult = FacebookService.Login(k_AppID1 /*k_AppID2 - guy's app id*/,
-                #region Permissions
-             
+                LoginResult = FacebookService.Login(
+                    AppID,
                     "public_profile",
              "user_education_history",
              "user_birthday",
@@ -54,7 +52,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
              "publish_actions",
              "user_events",
              "user_games_activity",
-             // "user_groups" (This permission is only available for apps using Graph API version v2.3 or older.)
              "user_hometown",
              "user_likes",
              "user_location",
@@ -64,39 +61,23 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
              "user_relationships",
              "user_relationship_details",
              "user_religion_politics",
-
-             // "user_status" (This permission is only available for apps using Graph API version v2.3 or older.)
              "user_tagged_places",
              "user_videos",
              "user_website",
              "user_work_history",
              "read_custom_friendlists",
-
-             // "read_mailbox", (This permission is only available for apps using Graph API version v2.3 or older.)
              "read_page_mailboxes",
-             // "read_stream", (This permission is only available for apps using Graph API version v2.3 or older.)
-             // "manage_notifications", (This permission is only available for apps using Graph API version v2.3 or older.)
              "manage_pages",
              "publish_pages",
              "publish_actions",
-
              "rsvp_event");
-                #endregion
             }
             else
             {
                 LoginResult = FacebookService.Connect(AppSettings.LastAccessToken);
             }
 
-            if (LoginResult.FacebookOAuthResult.IsSuccess)
-            {
-                LoggedInUser = LoginResult.LoggedInUser;
-            }
-            else
-            {
-                ///$TODO - Maybe catch?
-                ///MessageBox.Show(result.ErrorMessage);
-            }
+            LoggedInUser = LoginResult.LoggedInUser;
         }
 
         public void LoadFBCollectionsCache()
@@ -105,6 +86,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             FacebookObjectCollection<Event> EventsCache = LoggedInUser.Events;
             FacebookObjectCollection<Post> PostsCache = LoggedInUser.Posts;
             FacebookObjectCollection<Checkin> CheckinsCache = LoggedInUser.Checkins;
+        }
+
+        public void ClearUserSettings()
+        {
+            AppSettings = AppSettings.ClearSettings();
         }
     }
 }

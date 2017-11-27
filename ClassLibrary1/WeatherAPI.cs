@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
 using System.Net;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
@@ -12,18 +7,20 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     {
         private const string k_APIKey = "4a3c854a9b4225b169858c753b6374a3";
 
-        private static string CurrentURL { get; set; }
+        private static string m_CurrentURL;
 
-        private static XmlDocument XMLDocument { get; set; }
+        private static XmlDocument m_XMLDocument;
 
-        public static DailyWeatherData GetCityForecast(string i_City) 
+        public static DailyForecast GetCityForecast(string i_City)
         {
-            CurrentURL = setCurrentURL(i_City);
-            XMLDocument = getXmlDocument(CurrentURL);
+            DailyForecast forecast;
 
-            XmlNode xmlNode = XMLDocument.SelectSingleNode("weatherdata"); 
-            DailyWeatherData forecast = new DailyWeatherData(xmlNode);
-            
+            m_CurrentURL = setCurrentURL(i_City);
+            m_XMLDocument = getXmlDocument(m_CurrentURL);
+
+            XmlNode xmlNode = m_XMLDocument.SelectSingleNode("weatherdata");
+            forecast = new DailyForecast(xmlNode);
+
             return forecast;
         }
 
@@ -34,15 +31,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private static XmlDocument getXmlDocument(string i_CurrentURL)
         {
-            using (var webClient = new WebClient())
+            XmlDocument xmlDocument;
+
+            using (WebClient webClient = new WebClient())
             {
-                var xmlContent = webClient.DownloadString(i_CurrentURL);
-                var xmlDocument = new XmlDocument();
+                string xmlContent = webClient.DownloadString(i_CurrentURL);
+                xmlDocument = new XmlDocument();
 
                 xmlDocument.LoadXml(xmlContent);
-
-                return xmlDocument;
             }
+
+            return xmlDocument;
         }
     }
 }

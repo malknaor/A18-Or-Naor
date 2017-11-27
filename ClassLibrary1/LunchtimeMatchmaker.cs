@@ -59,7 +59,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             foreach (Page page in AppLogic.LoggedInUser.LikedPages)
             {
-                if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant")) // $TODO - method.
+                if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant"))
                 {
                     UserLikedRestaurants.Add(page);
                 }

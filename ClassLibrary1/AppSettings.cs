@@ -1,11 +1,14 @@
 ﻿using System.Drawing;
 using System.Xml.Serialization;
 using System.IO;
+using System;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public class AppSettings
     {
+        private const string k_RelativePath = @".\appSettings.xml";
+
         public Point LastWindowLocation { get; set; }
 
         public Size LastWindowSize { get; set; }
@@ -17,9 +20,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         public static AppSettings LoadFromFile()
         {
             AppSettings appSettingsObj = new AppSettings();
-            if (File.Exists(@"D:\appSettings.xml"))
+
+            if (File.Exists(k_RelativePath))
             {
-                using (Stream stream = new FileStream(@"D:\appSettings.xml", FileMode.Open))
+                using (Stream stream = new FileStream(k_RelativePath, FileMode.Open))
                 {
                     XmlSerializer deSerializer = new XmlSerializer(typeof(AppSettings));
                     appSettingsObj = deSerializer.Deserialize(stream) as AppSettings;
@@ -29,28 +33,36 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             return appSettingsObj;
         }
 
+        public static AppSettings ClearSettings()
+        {
+            if (File.Exists(k_RelativePath))
+            {
+                File.Delete(k_RelativePath);
+            }
+
+            return LoadFromFile();
+        }
+
         private AppSettings()
         {
             LastAccessToken = null;
             LastWindowLocation = new Point(20, 50);
             LastWindowSize = new Size(1100, 600);
-            RememberUser = false;       
+            RememberUser = false;
         }
 
         public void SaveToFile()
         {
-            /// Something can always happen here, so try catch... the exeption will be thrown to whoever can catch it.
-            /// Try finally dispose.                      
-            if (!File.Exists(@"D:\appSettings.xml"))
+            if (!File.Exists(k_RelativePath))
             {
-                File.Create(@"D:\appSettings.xml").Dispose();
+                File.Create(k_RelativePath).Dispose();
             }
 
-            using (Stream stream = new FileStream(@"D:\appSettings.xml", FileMode.Truncate))
+            using (Stream stream = new FileStream(k_RelativePath, FileMode.Truncate))
             {
                 XmlSerializer serializer = new XmlSerializer(this.GetType());
                 serializer.Serialize(stream, this);
             }
-        }        
+        }
     }
 }

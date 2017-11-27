@@ -72,6 +72,8 @@
             this.labelFriendSelect = new System.Windows.Forms.Label();
             this.listBoxFriendsSelect = new System.Windows.Forms.ListBox();
             this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
+            this.comboBoxAppID = new System.Windows.Forms.ComboBox();
+            this.labelAppID = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageLunchtime.SuspendLayout();
             this.tabPageDashboard.SuspendLayout();
@@ -401,7 +403,7 @@
             this.tabSportPlanner.Padding = new System.Windows.Forms.Padding(3);
             this.tabSportPlanner.Size = new System.Drawing.Size(499, 432);
             this.tabSportPlanner.TabIndex = 4;
-            this.tabSportPlanner.Text = "SportPlanner";
+            this.tabSportPlanner.Text = "SportsActivityPlanner";
             this.tabSportPlanner.UseVisualStyleBackColor = true;
             // 
             // labelSportPlanner
@@ -409,14 +411,14 @@
             this.labelSportPlanner.AutoSize = true;
             this.labelSportPlanner.Location = new System.Drawing.Point(14, 279);
             this.labelSportPlanner.Name = "labelSportPlanner";
-            this.labelSportPlanner.Size = new System.Drawing.Size(61, 13);
+            this.labelSportPlanner.Size = new System.Drawing.Size(64, 13);
             this.labelSportPlanner.TabIndex = 11;
-            this.labelSportPlanner.Text = "Instructions";
+            this.labelSportPlanner.Text = "Instructions:";
             // 
             // listBoxWeatherData
             // 
             this.listBoxWeatherData.FormattingEnabled = true;
-            this.listBoxWeatherData.Location = new System.Drawing.Point(17, 173);
+            this.listBoxWeatherData.Location = new System.Drawing.Point(182, 143);
             this.listBoxWeatherData.Name = "listBoxWeatherData";
             this.listBoxWeatherData.Size = new System.Drawing.Size(240, 95);
             this.listBoxWeatherData.TabIndex = 10;
@@ -434,7 +436,7 @@
             // 
             // buttonGetForecast
             // 
-            this.buttonGetForecast.Location = new System.Drawing.Point(173, 134);
+            this.buttonGetForecast.Location = new System.Drawing.Point(338, 104);
             this.buttonGetForecast.Name = "buttonGetForecast";
             this.buttonGetForecast.Size = new System.Drawing.Size(84, 23);
             this.buttonGetForecast.TabIndex = 8;
@@ -444,7 +446,7 @@
             // 
             // textBoxCity
             // 
-            this.textBoxCity.Location = new System.Drawing.Point(16, 137);
+            this.textBoxCity.Location = new System.Drawing.Point(181, 107);
             this.textBoxCity.Name = "textBoxCity";
             this.textBoxCity.Size = new System.Drawing.Size(151, 20);
             this.textBoxCity.TabIndex = 7;
@@ -452,7 +454,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 120);
+            this.label1.Location = new System.Drawing.Point(178, 90);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 6;
@@ -495,7 +497,7 @@
             // labelFriendSelect
             // 
             this.labelFriendSelect.AutoSize = true;
-            this.labelFriendSelect.Location = new System.Drawing.Point(285, 137);
+            this.labelFriendSelect.Location = new System.Drawing.Point(14, 117);
             this.labelFriendSelect.Name = "labelFriendSelect";
             this.labelFriendSelect.Size = new System.Drawing.Size(74, 13);
             this.labelFriendSelect.TabIndex = 1;
@@ -504,7 +506,7 @@
             // listBoxFriendsSelect
             // 
             this.listBoxFriendsSelect.FormattingEnabled = true;
-            this.listBoxFriendsSelect.Location = new System.Drawing.Point(288, 173);
+            this.listBoxFriendsSelect.Location = new System.Drawing.Point(16, 143);
             this.listBoxFriendsSelect.Name = "listBoxFriendsSelect";
             this.listBoxFriendsSelect.Size = new System.Drawing.Size(120, 95);
             this.listBoxFriendsSelect.TabIndex = 0;
@@ -518,6 +520,24 @@
             this.pictureBoxFriends.TabIndex = 40;
             this.pictureBoxFriends.TabStop = false;
             // 
+            // comboBoxAppID
+            // 
+            this.comboBoxAppID.FormattingEnabled = true;
+            this.comboBoxAppID.Location = new System.Drawing.Point(8, 482);
+            this.comboBoxAppID.Name = "comboBoxAppID";
+            this.comboBoxAppID.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxAppID.TabIndex = 41;
+            this.comboBoxAppID.SelectedIndexChanged += new System.EventHandler(this.comboBoxAppID_SelectedIndexChanged);
+            // 
+            // labelAppID
+            // 
+            this.labelAppID.AutoSize = true;
+            this.labelAppID.Location = new System.Drawing.Point(8, 463);
+            this.labelAppID.Name = "labelAppID";
+            this.labelAppID.Size = new System.Drawing.Size(73, 13);
+            this.labelAppID.TabIndex = 42;
+            this.labelAppID.Text = "Select AppID:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -525,6 +545,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(817, 522);
+            this.Controls.Add(this.labelAppID);
+            this.Controls.Add(this.comboBoxAppID);
             this.Controls.Add(this.pictureBoxFriends);
             this.Controls.Add(this.tabControlFeatures);
             this.Controls.Add(this.checkBoxRememberUser);
@@ -601,6 +623,8 @@
         private System.Windows.Forms.Button buttonShareActivity;
         private System.Windows.Forms.ListBox listBoxWeatherData;
         private System.Windows.Forms.Label labelSportPlanner;
+        private System.Windows.Forms.ComboBox comboBoxAppID;
+        private System.Windows.Forms.Label labelAppID;
     }
 }
 

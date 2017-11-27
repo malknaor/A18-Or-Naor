@@ -2,17 +2,16 @@
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    public class SportsPlanner
+    public class SportsActivityPlanner
     {
-        public DailyWeatherData CurrentWeatherData { get; private set; }
+        public DailyForecast CurrentForecast { get; private set; }
 
         public List<string> ActivityCategory { get; private set; }
 
-        public SportsPlanner()
+        public SportsActivityPlanner()
         {
             ActivityCategory = new List<string>();
 
-            #region Activity
             ActivityCategory.Add("BasketBall");
             ActivityCategory.Add("FootBall");
             ActivityCategory.Add("Tennis");
@@ -22,14 +21,13 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             ActivityCategory.Add("Surfing");
             ActivityCategory.Add("Swimming");
             ActivityCategory.Add("Climbing");
-            #endregion
         }
 
-        public DailyWeatherData GetWeatherData(string i_City)
+        public DailyForecast GetForecast(string i_City)
         {
-            CurrentWeatherData = WeatherAPI.GetCityForecast(i_City);
+            CurrentForecast = WeatherAPI.GetCityForecast(i_City);
         
-            return CurrentWeatherData;
+            return CurrentForecast;
         }
     }
 }
