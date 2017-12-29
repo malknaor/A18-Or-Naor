@@ -355,9 +355,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             try
             {
-                currentForecast = m_AppLogic.SportsActivityPlanner.GetForecast(textBoxCity.Text);
+                currentForecast = m_AppLogic.SportsActivityPlanner.DailyForecast.GetDailyForecastByCity(textBoxCity.Text);
 
-                foreach (ThreeHoursForecast item in currentForecast.Forecast)
+                foreach (IForecast /*ThreeHoursForecast*/ item in currentForecast.Forecast/*Forecast*/)
                 {
                     listBoxWeatherData.Items.Add(currentForecast.Location + ": " + item.ToString());
                 }

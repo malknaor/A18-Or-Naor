@@ -1,0 +1,10 @@
+==========================Exercise Checking Report==========================
+Exercise No...........: 2
+First Student Details.: 200337251- Or Sasson
+Second Student Details: 301032157- Naor Malka
+Delivery Date.........: 27 - januar - 2017
+Delivered In Delay....: 
+Delay Reason..........: 
+Visual Studio Version.: 2015
+Comments..............: No
+========================End Exercise Checking Report========================

@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A18 Ex01 Or 200337251 Naor 301032157", "A18 Ex01 Or 200337251 Naor 301032157\A18 Ex01 Or 200337251 Naor 301032157.csproj", "{67A01339-9B9C-422A-B6DF-D6B4A618E350}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacebookExperience", "A18 Ex01 Or 200337251 Naor 301032157\FacebookExperience.csproj", "{67A01339-9B9C-422A-B6DF-D6B4A618E350}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLogic", "AppLogic\AppLogic.csproj", "{AE3508AB-92F1-4B94-A3EE-9CFC82D3DB7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99AB870C-96F6-48B9-9705-8C91B76C6914}"
+	ProjectSection(SolutionItems) = preProject
+		E:\A18 Ex01 Or 200337251 Naor 301032157.docx = E:\A18 Ex01 Or 200337251 Naor 301032157.docx
+		Exericise Checking Report.txt = Exericise Checking Report.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

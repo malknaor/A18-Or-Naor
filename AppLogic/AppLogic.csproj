@@ -50,11 +50,17 @@
     <Compile Include="AppLogic.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="DailyForecast.cs" />
+    <Compile Include="IFeature.cs" />
+    <Compile Include="IForecast.cs" />
     <Compile Include="LunchtimeMatchMaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SportsActivityPlanner.cs" />
     <Compile Include="ThreeHoursForecast.cs" />
     <Compile Include="WeatherAPI.cs" />
+    <Compile Include="WeatherFacade.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
