@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Facebook">
-      <HintPath>D:\Studie\ThirdYear\Simister A\Design Patterns\V6.8.0.16\V6.8.0.16\Facebook.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\V6.8.0.16\V6.8.0.16\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="FbGraphApiWrapper">
-      <HintPath>D:\Studie\ThirdYear\Simister A\Design Patterns\V6.8.0.16\V6.8.0.16\FbGraphApiWrapper.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\V6.8.0.16\V6.8.0.16\FbGraphApiWrapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

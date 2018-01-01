@@ -12,6 +12,16 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public List<string> CommonLikedRestaurants { get; private set; }
 
+        // Trying to enhance the feature:
+
+        public List<Page> UserInterests { get; private set; } // Liked collections.
+
+        public List<string> CommonInterests { get; private set; } // Common Liked collections.
+
+
+
+        public List<User> Friends { get; set; }
+
         public LunchTimeMatchmaker()
         {
             Colleagues = new List<User>();
@@ -19,6 +29,82 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             buildUserLikedRestaurantList();
             buildCommonRestaurantsList();
         }
+
+        #region Trying to enhance the feature
+
+        private void BuildUserList()
+        {
+            Friends = new List<User>();
+            buildSelectedFriendList();
+            buildUserLikedRestaurantList();
+            buildCommonRestaurantsList();
+        }
+
+        private void buildSelectedFriendList()
+        {
+            // TODO - 2 way Data Binding with the "Friends" Listbox.
+            foreach (User friend in AppLogic.LoggedInUser.Friends)
+            {
+                if (wasSelectedByUser(friend)) // TODO
+                {
+                    Friends.Add(friend);
+                }
+            }
+        }
+
+        //TODO
+        private bool wasSelectedByUser(User friend)
+        {
+            return true;
+        }
+
+        //private void buildUserInterests()
+        //{
+        //    CommonInterests = new List<string>();
+
+            
+  
+
+        //    foreach (FacebookObject in FacebookObjectCollection
+        //    {
+        //        if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant"))
+        //        {
+        //            UserLikedRestaurants.Add(page);
+        //        }
+        //    }
+        //}
+
+        //TODO
+        private object selectInterest()
+        {
+            object obj = new FacebookObjectCollection<Page>();
+
+            if (obj is FacebookObjectCollection<Page>)
+            {
+                obj = AppLogic.LoggedInUser.LikedPages;
+            }
+            else if (obj is FacebookObjectCollection<Event>)
+            {
+                obj = AppLogic.LoggedInUser.Events;
+            }
+            else if (obj is FacebookObjectCollection<Checkin>)
+            {
+                obj = AppLogic.LoggedInUser.Checkins;
+            }
+            else
+            {
+                throw new System.Exception("Error in selectIntrest method. Wrong Type. Expceted : Likes, Events, Checkin");
+            }
+
+            return obj;
+        }
+
+
+
+
+
+
+        #endregion
 
         private void fetchUserColleagues()
         {
@@ -48,7 +134,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 {
                     break;
                 }
-               
+
                 CommonLikedRestaurants = CommonLikedRestaurants.Intersect(colleague.LikedPages.Select(s2 => s2.Name).ToList()).ToList();
             }
         }

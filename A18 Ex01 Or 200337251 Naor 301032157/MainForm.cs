@@ -326,6 +326,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void populateCommonRestaurants()
         {
             listboxCommonRestaurants.Items.Clear();
+
             foreach (string restaurantName in m_AppLogic.LunchTimeMatchmaker.CommonLikedRestaurants)
             {
                 listboxCommonRestaurants.Items.Add(restaurantName);
