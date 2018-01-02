@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    public class DailyForecast : IForecast
+    public class WeeklyForecast : IForecast
     {
         //For next assignment - Itterator with projection of the 3 hour forecast.
         public string Location { get; private set; }
@@ -21,7 +21,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private readonly string r_DesiredWeatherTime = "18:00:00";
 
-        public DailyForecast(XmlNode i_XmlNode)
+        public WeeklyForecast(XmlNode i_XmlNode)
         {
             XmlNode temp_node = i_XmlNode.SelectSingleNode("location");
             XmlAttribute temp_value;
@@ -34,16 +34,23 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             {
                 temp_value = item.Attributes["from"];
 
-                //if (temp_value.Value.Contains(r_DesiredWeatherTime))
-                //{
+                if (temp_value.Value.Contains(r_DesiredWeatherTime))
+                {
                     Forecast.Add(new ThreeHoursForecast(item));
-                //}
+                }
             }
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            string weather = string.Empty;
+
+            foreach (ThreeHoursForecast forecast in Forecast)
+            {
+                weather += Location + ": " + forecast.ToString() + "." + Environment.NewLine;
+            }
+
+            return weather;
         }
     }
 }

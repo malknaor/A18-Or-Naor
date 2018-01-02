@@ -352,16 +352,18 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
         {
-            DailyForecast currentForecast = null;
+            //WeeklyForecast currentForecast = null;
 
             try
             {
-                currentForecast = m_AppLogic.SportsActivityPlanner.DailyForecast.GetDailyForecastByCity(textBoxCity.Text);
+                //currentForecast = (m_AppLogic.SportsActivityPlanner.DailyForecast as WeeklyForecast). (textboxcity.text); /// call the facade to get the weather list 
 
-                foreach (IForecast /*ThreeHoursForecast*/ item in currentForecast.Forecast/*Forecast*/)
-                {
-                    listBoxWeatherData.Items.Add(currentForecast.Location + ": " + item.ToString());
-                }
+                ////foreach (IForecast /*ThreeHoursForecast*/ item in currentForecast.Forecast/*Forecast*/)
+                ////{
+                ////    listBoxWeatherData.Items.Add(currentForecast.Location + ": " + item.ToString());
+                ////}
+
+                //listBoxWeatherData.Items.Add(currentForecast.ToString());
             }
             catch (Exception)
             {

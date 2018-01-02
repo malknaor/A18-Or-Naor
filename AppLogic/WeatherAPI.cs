@@ -14,15 +14,15 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private static XmlDocument m_XMLDocument;
 
-        public static DailyForecast GetCityForecast(string i_City)
+        public static WeeklyForecast GetCityForecast(string i_City)
         {
-            DailyForecast forecast;
+            WeeklyForecast forecast;
 
             m_CurrentURL = setCurrentURL(i_City);
             m_XMLDocument = getXmlDocument(m_CurrentURL);
 
             XmlNode xmlNode = m_XMLDocument.SelectSingleNode("weatherdata");
-            forecast = new DailyForecast(xmlNode);
+            forecast = new WeeklyForecast(xmlNode);
 
             return forecast;
         }

@@ -2,15 +2,21 @@
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
+
+    //FACADE
     public class SportsActivityPlanner
     {
         //  public DailyForecast CurrentForecast { get; private set; }
-        public IForecast DailyForecast { get; private set; }
 
         public List<string> ActivityCategory { get; private set; }
 
+        public List<string> Forecast { get; private set; }
+
+        private WeatherFacade WeatherFacade { get; set; }
+
         public SportsActivityPlanner()
         {
+            WeatherFacade = new WeatherFacade();
             ActivityCategory = new List<string>();
 
             ActivityCategory.Add("BasketBall");
@@ -24,11 +30,17 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             ActivityCategory.Add("Climbing");
         }
 
-        public IForecast GetDailyForecastByCity(string i_City)
+        public List<string> GetDailyForecastByCity(string i_City)
         {
-            DailyForecast = WeatherAPI.GetCityForecast(i_City);
-        
-            return DailyForecast;
+            Forecast = new List<string>();
+            WeatherFacade.GetWeeklyForecast(i_City);
+
+            foreach (IForecast forecast in WeatherFacade.WeeklyForecast)
+            {
+
+            }            
+
+            return Forecast;        
         }
     }
 }
