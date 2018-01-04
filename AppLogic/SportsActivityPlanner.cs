@@ -35,10 +35,10 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             Forecast = new List<string>();
             WeatherFacade.GetWeeklyForecast(i_City);
 
-            foreach (IForecast forecast in WeatherFacade.WeeklyForecast)
-            {
+            //foreach (IForecast forecast in WeatherFacade.WeeklyForecast)
+            //{
 
-            }            
+            //}            
 
             return Forecast;        
         }

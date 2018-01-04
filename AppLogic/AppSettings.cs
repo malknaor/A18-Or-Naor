@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using System.IO;
 using System;
+using AppLogic;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
@@ -17,7 +18,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public bool RememberUser { get; set; }
 
-        public static AppSettings LoadFromFile()
+        public static AppSettings Instance
+        {
+            get { return Singleton<AppSettings>.Instance; }
+        }
+
+        public AppSettings LoadFromFile()
         {
             AppSettings appSettingsObj = new AppSettings();
 
@@ -33,7 +39,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             return appSettingsObj;
         }
 
-        public static AppSettings ClearSettings()
+        public AppSettings ClearSettings()
         {
             if (File.Exists(k_RelativePath))
             {

@@ -1,17 +1,12 @@
-﻿using FacebookWrapper;
+﻿using AppLogic;
+using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
     public class AppLogic
     {
-        public static LoginResult LoginResult { get; set; }
-
-        public static User LoggedInUser { get; set; }
-
-        public string AppID { get; set; }
-
-        public AppSettings AppSettings { get; set; }
+        private/* readonly*/ Session m_session;
 
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; private set; }
 
@@ -19,8 +14,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public AppLogic()
         {
-            AppSettings = AppSettings.LoadFromFile();
-            AppID = "495417090841854";
+         //   AppSettings = AppSettings.LoadFromFile();
+           // AppID = "495417090841854";
         }
 
         public void InitLunchTime()
@@ -35,10 +30,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public void LoginToFacebook()
         {
-            if (string.IsNullOrEmpty(AppSettings.LastAccessToken))
+            m_session = Session.Instance;
+
+            if (string.IsNullOrEmpty(m_session.AppSettings.LastAccessToken))
             {
-                LoginResult = FacebookService.Login(
-                    AppID,
+                m_session.LoginResult = FacebookService.Login(
+                    m_session.AppID,
                     "public_profile",
              "user_education_history",
              "user_birthday",
@@ -74,23 +71,23 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
             else
             {
-                LoginResult = FacebookService.Connect(AppSettings.LastAccessToken);
+                m_session.LoginResult = FacebookService.Connect(m_session.AppSettings.LastAccessToken);
             }
 
-            LoggedInUser = LoginResult.LoggedInUser;
+            m_session.LoggedInUser = m_session.LoginResult.LoggedInUser;
         }
 
         public void LoadFBCollectionsCache()
         {
-            FacebookObjectCollection<User> FriendsCache = LoggedInUser.Friends;
-            FacebookObjectCollection<Event> EventsCache = LoggedInUser.Events;
-            FacebookObjectCollection<Post> PostsCache = LoggedInUser.Posts;
-            FacebookObjectCollection<Checkin> CheckinsCache = LoggedInUser.Checkins;
+            FacebookObjectCollection<User> FriendsCache = m_session.LoggedInUser.Friends;
+            FacebookObjectCollection<Event> EventsCache = m_session.LoggedInUser.Events;
+            FacebookObjectCollection<Post> PostsCache = m_session.LoggedInUser.Posts;
+            FacebookObjectCollection<Checkin> CheckinsCache = m_session.LoggedInUser.Checkins;
         }
 
         public void ClearUserSettings()
         {
-            AppSettings = AppSettings.ClearSettings();
+           Session.Instance.AppSettings.ClearSettings();
         }
     }
 }
