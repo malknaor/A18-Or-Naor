@@ -33,10 +33,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             ActivityCategory.Add("Climbing");
         }
 
-        //public List<string> GetWeeklyForecastByCity(string i_City)
-        //{
-        //    return buildWeeklyForecastList(i_City);
-        //}
+        public List<string> GetWeeklyForecastByCity(string i_City)
+        {
+            buildWeeklyForecastList(i_City);
+
+            return Forecast;
+        }
 
         private void buildWeeklyForecastList(string i_City)
         {

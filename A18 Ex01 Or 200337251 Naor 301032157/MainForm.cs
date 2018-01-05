@@ -354,10 +354,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         }
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
-        {
+        { //  TODO FACADE
             List<string> currentForecast = null;
             try
             {
+                // currentForecast = SomeFacade.WeeklyForcast
+
                 currentForecast = m_AppLogic.SportsActivityPlanner.GetWeeklyForecastByCity(textBoxCity.Text);
                 foreach(string forecast in currentForecast)
                 {

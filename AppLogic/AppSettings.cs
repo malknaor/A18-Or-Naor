@@ -32,7 +32,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             using (Stream stream = new FileStream(k_RelativePath, FileMode.Open))
             {
                 XmlSerializer deSerializer = new XmlSerializer(this.GetType());
-                appSettingsObj = deSerializer.Deserialize(stream) as AppSettin`gs;
+                appSettingsObj = deSerializer.Deserialize(stream) as AppSettings;
 
                 this.LastAccessToken = appSettingsObj.LastAccessToken;
                 this.LastWindowLocation = appSettingsObj.LastWindowLocation;
