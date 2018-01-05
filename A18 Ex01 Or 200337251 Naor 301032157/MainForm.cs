@@ -4,6 +4,8 @@ using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
+using AppLogic;
+using System.Collections.Generic;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
@@ -39,24 +41,24 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             comboBoxAppID.Items.Add(k_AppID1);
             comboBoxAppID.Items.Add(k_AppID2);
 
-            if (m_AppLogic.AppSettings.RememberUser)
+            if (Session.Instance.AppSettings.RememberUser)
             {
                 loadUIAppSettings();
             }
         }
 
         private void loadUIAppSettings()
-        {
-            Size = m_AppLogic.AppSettings.LastWindowSize;
-            Location = m_AppLogic.AppSettings.LastWindowLocation;
-            checkBoxRememberUser.Checked = m_AppLogic.AppSettings.RememberUser;
+        { // TODO - UI manager facade??? or maybe to get rid of the app settings.
+            Size = Session.Instance.AppSettings.LastWindowSize;
+            Location = Session.Instance.AppSettings.LastWindowLocation;
+            checkBoxRememberUser.Checked = Session.Instance.AppSettings.RememberUser;
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
 
-            if (m_AppLogic.AppSettings.RememberUser && !string.IsNullOrEmpty(m_AppLogic.AppSettings.LastAccessToken))
+            if (Session.Instance.AppSettings.RememberUser && !string.IsNullOrEmpty(Session.Instance.AppSettings.LastAccessToken))
             {
                 m_AppLogic.LoginToFacebook();
                 doAfterLogin();
@@ -65,7 +67,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void doAfterLogin()
         {
-            if (AppLogic.LoggedInUser != null)
+            if (Session.Instance.LoggedInUser != null)
             {
                 buttonLogout.Enabled = true;
                 buttonUserLogin.Enabled = false;
@@ -88,12 +90,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void saveUserSettings()
         {
-            m_AppLogic.AppSettings.LastWindowLocation = this.Location;
-            m_AppLogic.AppSettings.LastWindowSize = this.Size;
-            m_AppLogic.AppSettings.RememberUser = this.checkBoxRememberUser.Checked;
-            m_AppLogic.AppSettings.LastAccessToken = AppLogic.LoginResult.AccessToken;
+            Session.Instance.AppSettings.LastWindowLocation = this.Location;
+            Session.Instance.AppSettings.LastWindowSize = this.Size;
+            Session.Instance.AppSettings.RememberUser = this.checkBoxRememberUser.Checked;
+            Session.Instance.AppSettings.LastAccessToken = Session.Instance.LoginResult.AccessToken;
 
-            m_AppLogic.AppSettings.SaveToFile();
+            Session.Instance.AppSettings.SaveToFile();
         }
 
         private void populateUIBasicFacebookData()
@@ -114,8 +116,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            if (AppLogic.LoggedInUser != null)
+            if (Session.Instance.LoggedInUser != null)
             {
+                // TODO - Should this be inside the Session class?
                 FacebookService.Logout(null);
                 buttonUserLogin.Enabled = true;
                 tabControlFeatures.Enabled = false;
@@ -141,9 +144,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void displayUserInfo()
         {
-            Text = "Connected as: " + AppLogic.LoggedInUser.Name;
-            pictureBoxProfile.LoadAsync(AppLogic.LoggedInUser.PictureLargeURL);
-            labelUserName.Text = AppLogic.LoggedInUser.Name;
+            Text = "Connected as: " + Session.Instance.LoggedInUser.Name;
+            pictureBoxProfile.LoadAsync(Session.Instance.LoggedInUser.PictureLargeURL);
+            labelUserName.Text = Session.Instance.LoggedInUser.Name;
         }
 
         private void fetchFriends()
@@ -153,14 +156,14 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxFriendsSelect.Items.Clear();
             listBoxFriendsSelect.DisplayMember = "Name";
 
-            foreach (User friend in AppLogic.LoggedInUser.Friends)
+            foreach (User friend in Session.Instance.LoggedInUser.Friends)
             {
                 listBoxFriendsList.Items.Add(friend);
                 listBoxFriendsSelect.Items.Add(friend);
                 friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
-            if (AppLogic.LoggedInUser.Friends.Count == 0)
+            if (Session.Instance.LoggedInUser.Friends.Count == 0)
             {
                 MessageBox.Show("You have no friends. Life Sucks.");
             }
@@ -193,7 +196,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxLikedPages.Items.Clear();
             listBoxLikedPages.DisplayMember = "Name";
 
-            foreach (Page page in AppLogic.LoggedInUser.LikedPages)
+            foreach (Page page in Session.Instance.LoggedInUser.LikedPages)
             {
                 listBoxLikedPages.Items.Add(page);
             }
@@ -215,12 +218,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchCheckins()
         {
-            foreach (Checkin checkin in AppLogic.LoggedInUser.Checkins)
+            foreach (Checkin checkin in Session.Instance.LoggedInUser.Checkins)
             {
                 listBoxCheckins.Items.Add(checkin.Place.Name);
             }
 
-            if (AppLogic.LoggedInUser.Checkins.Count == 0)
+            if (Session.Instance.LoggedInUser.Checkins.Count == 0)
             {
                 MessageBox.Show("No Checkins to retrieve :(");
             }
@@ -228,14 +231,14 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonPostStatus_Click(object sender, EventArgs e)
         {
-            Status status = AppLogic.LoggedInUser.PostStatus(textBoxPostStatus.Text);
+            Status status = Session.Instance.LoggedInUser.PostStatus(textBoxPostStatus.Text);
             MessageBox.Show("Status posted! ID : " + status.Id);
             textBoxPostStatus.Text = string.Empty;
         }
 
         private void fetchPosts()
         {
-            foreach (Post post in AppLogic.LoggedInUser.Posts)
+            foreach (Post post in Session.Instance.LoggedInUser.Posts)
             {
                 if (post.Message != null)
                 {
@@ -251,7 +254,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
                 }
             }
 
-            if (AppLogic.LoggedInUser.Posts.Count == 0)
+            if (Session.Instance.LoggedInUser.Posts.Count == 0)
             {
                 MessageBox.Show("No Posts to retrieve :(");
             }
@@ -262,12 +265,12 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             listBoxEvents.Items.Clear();
             listBoxEvents.DisplayMember = "Name";
 
-            foreach (Event fbEvent in AppLogic.LoggedInUser.Events)
+            foreach (Event fbEvent in Session.Instance.LoggedInUser.Events)
             {
                 listBoxEvents.Items.Add(fbEvent);
             }
 
-            if (AppLogic.LoggedInUser.Events.Count == 0)
+            if (Session.Instance.LoggedInUser.Events.Count == 0)
             {
                 MessageBox.Show("No event is available!");
             }
@@ -352,19 +355,16 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
         {
-            //WeeklyForecast currentForecast = null;
-
+            List<string> currentForecast = null;
             try
             {
-                //currentForecast = (m_AppLogic.SportsActivityPlanner.DailyForecast as WeeklyForecast). (textboxcity.text); /// call the facade to get the weather list 
-
-                ////foreach (IForecast /*ThreeHoursForecast*/ item in currentForecast.Forecast/*Forecast*/)
-                ////{
-                ////    listBoxWeatherData.Items.Add(currentForecast.Location + ": " + item.ToString());
-                ////}
-
-                //listBoxWeatherData.Items.Add(currentForecast.ToString());
+                currentForecast = m_AppLogic.SportsActivityPlanner.GetWeeklyForecastByCity(textBoxCity.Text);
+                foreach(string forecast in currentForecast)
+                {
+                    listBoxWeatherData.Items.Add(forecast);
+                }
             }
+
             catch (Exception)
             {
                 MessageBox.Show(
@@ -383,7 +383,7 @@ Please try again",
 
         private void buttonShareActivity_Click(object sender, EventArgs e)
         {
-            Status status = AppLogic.LoggedInUser.PostStatus(textBoxActivityPost.Text);
+            Status status = Session.Instance.LoggedInUser.PostStatus(textBoxActivityPost.Text);
             MessageBox.Show("Activity posted! ID : " + status.Id);
             textBoxActivityPost.Text = string.Empty;
         }
@@ -425,7 +425,7 @@ Please try again",
         {
             ComboBox comboBox = sender as ComboBox;
 
-            m_AppLogic.AppID = comboBox.SelectedItem.ToString();
+            Session.Instance.AppID = comboBox.SelectedItem.ToString();
         }
     }
 }

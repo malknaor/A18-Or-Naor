@@ -8,7 +8,7 @@ using A18_Ex01_Or_200337251_Naor_301032157;
 
 namespace AppLogic
 {
-    public class Session 
+    public class Session
     {
         // Perhaps we should implement the facades as singletons?
         // Seems reasonable.
@@ -27,14 +27,15 @@ namespace AppLogic
         private Session()
         {
             init();
-           
+
 
             Count++;
         }
 
         private void init()
         {
-            AppSettings = AppSettings.LoadFromFile();
+            AppSettings = AppSettings.Instance;
+            // This is guy's ID. need to pass as paramater.
             AppID = "495417090841854";
         }
 
@@ -42,35 +43,14 @@ namespace AppLogic
         public static Session Instance
         {
             get
-            {
-                if(Count > 1)
+            { //TODO Delete when done.
+                if (Count > 1)
                 {
                     throw new Exception("For Singleton debugging. More than one instance created");
                 }
                 return Singleton<Session>.Instance;
             }
-        }    
-
-
+        }
     }
 
-//    public class Singleton<T> where T : class, new()
-//    {
-//        Singleton() { }
-
-//        class SingletonCreator
-//        {
-//            static SingletonCreator() { }
-//            // Private object instantiated with private constructor
-//            internal static readonly T instance = new T();
-//        }
-
-//        public static T Instance
-//        {
-//            get { return SingletonCreator.instance; }
-//        }
-
-//        // Calling the Singleton
-//        // something = Singleton<Test1>.UniqueInstance;
-//    }
 }

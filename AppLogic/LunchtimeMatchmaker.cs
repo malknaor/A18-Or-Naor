@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FacebookWrapper.ObjectModel;
+using AppLogic;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
@@ -43,7 +44,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private void buildSelectedFriendList()
         {
             // TODO - 2 way Data Binding with the "Friends" Listbox.
-            foreach (User friend in AppLogic.LoggedInUser.Friends)
+            foreach (User friend in Session.Instance.LoggedInUser.Friends)
             {
                 if (wasSelectedByUser(friend)) // TODO
                 {
@@ -81,15 +82,15 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
             if (obj is FacebookObjectCollection<Page>)
             {
-                obj = AppLogic.LoggedInUser.LikedPages;
+                obj = Session.Instance.LoggedInUser.LikedPages;
             }
             else if (obj is FacebookObjectCollection<Event>)
             {
-                obj = AppLogic.LoggedInUser.Events;
+                obj = Session.Instance.LoggedInUser.Events;
             }
             else if (obj is FacebookObjectCollection<Checkin>)
             {
-                obj = AppLogic.LoggedInUser.Checkins;
+                obj = Session.Instance.LoggedInUser.Checkins;
             }
             else
             {
@@ -108,7 +109,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private void fetchUserColleagues()
         {
-            foreach (User friend in AppLogic.LoggedInUser.Friends)
+            foreach (User friend in Session.Instance.LoggedInUser.Friends)
             {
                 if (isColleague(friend))
                 {
@@ -120,8 +121,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         private bool isColleague(User i_friend)
         {
             return i_friend.WorkExperiences != null &&
-                   (i_friend.WorkExperiences[0].Employer.Name == AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name
-                   || AppLogic.LoggedInUser.WorkExperiences[0].Employer.Name.Contains(i_friend.WorkExperiences[0].Employer.Name));
+                   (i_friend.WorkExperiences[0].Employer.Name == Session.Instance.LoggedInUser.WorkExperiences[0].Employer.Name
+                   || Session.Instance.LoggedInUser.WorkExperiences[0].Employer.Name.Contains(i_friend.WorkExperiences[0].Employer.Name));
         }
 
         private void buildCommonRestaurantsList()
@@ -143,7 +144,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         {
             UserLikedRestaurants = new List<Page>();
 
-            foreach (Page page in AppLogic.LoggedInUser.LikedPages)
+            foreach (Page page in Session.Instance.LoggedInUser.LikedPages)
             {
                 if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant"))
                 {

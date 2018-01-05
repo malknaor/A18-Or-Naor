@@ -6,8 +6,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
     //FACADE
     public class SportsActivityPlanner
     {
-        //  public DailyForecast CurrentForecast { get; private set; }
-
         public List<string> ActivityCategory { get; private set; }
 
         public List<string> Forecast { get; private set; }
@@ -17,6 +15,11 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
         public SportsActivityPlanner()
         {
             WeatherFacade = new WeatherFacade();
+            initCategories();
+        }
+
+        private void initCategories()
+        {
             ActivityCategory = new List<string>();
 
             ActivityCategory.Add("BasketBall");
@@ -30,17 +33,20 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             ActivityCategory.Add("Climbing");
         }
 
-        public List<string> GetDailyForecastByCity(string i_City)
+        //public List<string> GetWeeklyForecastByCity(string i_City)
+        //{
+        //    return buildWeeklyForecastList(i_City);
+        //}
+
+        private void buildWeeklyForecastList(string i_City)
         {
             Forecast = new List<string>();
             WeatherFacade.GetWeeklyForecast(i_City);
 
-            //foreach (IForecast forecast in WeatherFacade.WeeklyForecast)
-            //{
-
-            //}            
-
-            return Forecast;        
+            foreach (ThreeHoursForecast forecast in WeatherFacade.WeeklyForecast.Forecast)
+            {
+                Forecast.Add(WeatherFacade.WeeklyForecast.Location + ": " + forecast.ToString());
+            }
         }
     }
 }

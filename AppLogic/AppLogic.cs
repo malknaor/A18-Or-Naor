@@ -14,8 +14,6 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public AppLogic()
         {
-         //   AppSettings = AppSettings.LoadFromFile();
-           // AppID = "495417090841854";
         }
 
         public void InitLunchTime()
@@ -87,7 +85,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public void ClearUserSettings()
         {
-           Session.Instance.AppSettings.ClearSettings();
+           Session.Instance.AppSettings.LoadDefaultSettings();
         }
     }
 }

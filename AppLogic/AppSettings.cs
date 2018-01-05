@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System;
 using AppLogic;
+using System.Reflection;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
@@ -23,33 +24,49 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             get { return Singleton<AppSettings>.Instance; }
         }
 
-        public AppSettings LoadFromFile()
+        private void LoadFromFile()
         {
             AppSettings appSettingsObj = new AppSettings();
+            Type typeOfMe = this.GetType();
 
-            if (File.Exists(k_RelativePath))
+            using (Stream stream = new FileStream(k_RelativePath, FileMode.Open))
             {
-                using (Stream stream = new FileStream(k_RelativePath, FileMode.Open))
-                {
-                    XmlSerializer deSerializer = new XmlSerializer(typeof(AppSettings));
-                    appSettingsObj = deSerializer.Deserialize(stream) as AppSettings;
-                }
-            }
+                XmlSerializer deSerializer = new XmlSerializer(this.GetType());
+                appSettingsObj = deSerializer.Deserialize(stream) as AppSettin`gs;
 
-            return appSettingsObj;
+                this.LastAccessToken = appSettingsObj.LastAccessToken;
+                this.LastWindowLocation = appSettingsObj.LastWindowLocation;
+                this.LastWindowSize = appSettingsObj.LastWindowSize;
+
+                //foreach (PropertyInfo propInfo in typeOfMe.GetProperties())
+                //{
+
+                // appSettingsObj typeOfMe.GetProperty( (propInfo.ToString()) = propInfo.GetValue();  
+                //}
+            }
         }
 
-        public AppSettings ClearSettings()
+        public void LoadDefaultSettings()
         {
             if (File.Exists(k_RelativePath))
             {
                 File.Delete(k_RelativePath);
             }
 
-            return LoadFromFile();
+            initDefaultSettings();
         }
 
         private AppSettings()
+        {
+            initDefaultSettings();
+
+            if (File.Exists(k_RelativePath))
+            {
+                LoadFromFile();
+            }
+        }
+
+        private void initDefaultSettings()
         {
             LastAccessToken = null;
             LastWindowLocation = new Point(20, 50);
