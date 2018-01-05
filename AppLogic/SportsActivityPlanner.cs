@@ -23,14 +23,15 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             ActivityCategory = new List<string>();
 
             ActivityCategory.Add("BasketBall");
-            ActivityCategory.Add("FootBall");
-            ActivityCategory.Add("Tennis");
-            ActivityCategory.Add("Running");
-            ActivityCategory.Add("Walking");
+            ActivityCategory.Add("Climbing");
             ActivityCategory.Add("Cycling");
+            ActivityCategory.Add("FootBall");
+            ActivityCategory.Add("Hiking");
+            ActivityCategory.Add("Running");
             ActivityCategory.Add("Surfing");
             ActivityCategory.Add("Swimming");
-            ActivityCategory.Add("Climbing");
+            ActivityCategory.Add("Tennis");
+            ActivityCategory.Add("Walking");
         }
 
         public List<string> GetWeeklyForecastByCity(string i_City)
@@ -45,9 +46,9 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             Forecast = new List<string>();
             WeatherFacade.GetWeeklyForecast(i_City);
 
-            foreach (ThreeHoursForecast forecast in WeatherFacade.WeeklyForecast.Forecast)
+            foreach (WeatherForecast forecast in (WeatherFacade.WeeklyForecast as WeeklyForecast).Forecast)
             {
-                Forecast.Add(WeatherFacade.WeeklyForecast.Location + ": " + forecast.ToString());
+                Forecast.Add(forecast.ToString());
             }
         }
     }

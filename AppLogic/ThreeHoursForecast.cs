@@ -3,15 +3,9 @@ using System.Xml;
 
 namespace A18_Ex01_Or_200337251_Naor_301032157
 {
-    public class ThreeHoursForecast : IForecast
+    public class ThreeHoursForecast : WeatherForecast
     {
-        public DateTime DateAndTime { get;  private set; }
-
-        public float Temperture { get;  private set; }
-
-        public string Description { get; private set; }
-
-        public ThreeHoursForecast(XmlNode i_XmlNode)
+        public ThreeHoursForecast(XmlNode i_XmlNode, string i_Location)
         {
             XmlNode temp_node = i_XmlNode;
             XmlAttribute temp_value = temp_node.Attributes["from"];
@@ -26,11 +20,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             temp_node = i_XmlNode.SelectSingleNode("symbol");
             temp_value = temp_node.Attributes["name"];
             Description = temp_value.Value;
-        }
-
-        public override string ToString()
-        {
-            return DateAndTime.ToString() + ", " + Temperture.ToString() + ", " + Description + ".";
+            Location = i_Location;
         }
     }
 }

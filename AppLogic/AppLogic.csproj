@@ -53,7 +53,7 @@
     <Compile Include="Singleton.cs" />
     <Compile Include="WeeklyForecast.cs" />
     <Compile Include="IFeature.cs" />
-    <Compile Include="IForecast.cs" />
+    <Compile Include="WeatherForecast.cs" />
     <Compile Include="LunchtimeMatchMaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SportsActivityPlanner.cs" />
