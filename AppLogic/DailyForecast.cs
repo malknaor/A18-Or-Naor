@@ -18,9 +18,9 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             Forecast = new List<WeatherForecast>();
         }
 
-        public void AddForecast(XmlNode i_XmlNode)
+        public void AddForecast(WeatherForecast i_Weather)
         {
-            Forecast.Add(new ThreeHoursForecast(i_XmlNode, Location));
+            Forecast.Add(i_Weather);
         }
 
         public void Reset()

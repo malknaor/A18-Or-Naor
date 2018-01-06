@@ -11,8 +11,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
         [XmlElement("forecast")]
         public List<WeatherForecast> Forecast { get; private set; }
 
-        //private readonly string r_DesiredWeatherTime = "18:00:00";
-
         public WeeklyForecast(XmlNode i_XmlNode)
         {
             List<string> date = new List<string>();
@@ -29,7 +27,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
                 temp_value = item.Attributes["from"];
                 dateToCheck = temp_value.Value.ToString();
 
-                dateToCheck = dateToCheck.Substring(0, dateToCheck.IndexOf("T")); /*Replace("T", " ");*/
+                dateToCheck = dateToCheck.Substring(0, dateToCheck.IndexOf("T"));
 
                 if (!date.Contains(dateToCheck))
                 {
@@ -49,7 +47,8 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
                     
                     if (temp_value.Value.Contains(dateToCheck))
                     {
-                        daily.AddForecast(item);
+                        ThreeHoursForecast nodeToAdd = new ThreeHoursForecast(item, Location);
+                        daily.AddForecast(nodeToAdd);
                     }
                 }
 
@@ -57,9 +56,9 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             }
         }
 
-        public void AddDailyForecast()
+        public void AddDailyForecast(WeatherForecast i_Weather)
         {
-            
+            Forecast.Add(i_Weather);
         }
 
         public void Reset()
