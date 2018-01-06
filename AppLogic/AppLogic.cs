@@ -1,12 +1,13 @@
 ﻿using AppLogic;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
+using System.Threading;
 
 namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class AppLogic
     {
-        private/* readonly*/ Session m_session;
+        private/* readonly*/ Session m_Session;
 
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; private set; }
 
@@ -28,12 +29,12 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         public void LoginToFacebook()
         {
-            m_session = Session.Instance;
+            m_Session = Session.Instance;
 
             if (string.IsNullOrEmpty(AppSettings.Instance.LastAccessToken))
             {
-                m_session.LoginResult = FacebookService.Login(
-                    m_session.AppID,
+                m_Session.LoginResult = FacebookService.Login(
+                    m_Session.AppID,
                     "public_profile",
              "user_education_history",
              "user_birthday",
@@ -69,18 +70,18 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             }
             else
             {
-                m_session.LoginResult = FacebookService.Connect(AppSettings.Instance.LastAccessToken);
+                m_Session.LoginResult = FacebookService.Connect(AppSettings.Instance.LastAccessToken);
             }
 
-            m_session.LoggedInUser = m_session.LoginResult.LoggedInUser;
+            m_Session.LoggedInUser = m_Session.LoginResult.LoggedInUser;
         }
 
         public void LoadFBCollectionsCache()
         {
-            FacebookObjectCollection<User> FriendsCache = m_session.LoggedInUser.Friends;
-            FacebookObjectCollection<Event> EventsCache = m_session.LoggedInUser.Events;
-            FacebookObjectCollection<Post> PostsCache = m_session.LoggedInUser.Posts;
-            FacebookObjectCollection<Checkin> CheckinsCache = m_session.LoggedInUser.Checkins;
+            FacebookObjectCollection<User> FriendsCache = m_Session.LoggedInUser.Friends;
+            FacebookObjectCollection<Event> EventsCache = m_Session.LoggedInUser.Events;
+            FacebookObjectCollection<Post> PostsCache = m_Session.LoggedInUser.Posts;
+            FacebookObjectCollection<Checkin> CheckinsCache = m_Session.LoggedInUser.Checkins;
         }
 
         public void ClearUserSettings()

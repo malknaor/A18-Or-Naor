@@ -75,9 +75,9 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
                 tabControlFeatures.Enabled = true;
             }
 
-            new Thread(m_AppLogic.LoadFBCollectionsCache).Start();
-            fetchFriends();
-            populateUIBasicFacebookData();
+          //  new Thread(m_AppLogic.LoadFBCollectionsCache).Start();
+            //new Thread(fetchFriends).Start();
+            new Thread(populateUIBasicFacebookData).Start(); 
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -100,12 +100,12 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void populateUIBasicFacebookData()
         {
-            displayUserInfo();
-            fetchFriends();
-            fetchEvents();
-            fetchLikedPages();
-            fetchCheckins();
-            fetchPosts();
+            this.Invoke(new Action(displayUserInfo));
+            new Thread(fetchFriends).Start();
+            new Thread(fetchEvents).Start();
+            new Thread(fetchLikedPages).Start();
+            new Thread(fetchCheckins).Start();
+            new Thread(fetchPosts).Start();             
         }
 
         private void buttonUserLogin_Click(object sender, EventArgs e)
@@ -151,16 +151,14 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void fetchFriends()
         {
-            listBoxFriendsList.Items.Clear();
-            listBoxFriendsList.DisplayMember = "Name";
-            listBoxFriendsSelect.Items.Clear();
-            listBoxFriendsSelect.DisplayMember = "Name";
+            listBoxFriendsList.Invoke(new Action(() => listBoxFriendsList.Items.Clear()));
+            listBoxFriendsList.Invoke(new Action(() => listBoxFriendsList.DisplayMember = "Name"));
 
             foreach (User friend in Session.Instance.LoggedInUser.Friends)
             {
-                listBoxFriendsList.Items.Add(friend);
-                listBoxFriendsSelect.Items.Add(friend);
-                friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
+                listBoxFriendsList.Invoke(new Action(() => listBoxFriendsList.Items.Add(friend)));
+                listBoxFriendsSelect.Invoke(new Action(() => listBoxFriendsSelect.Items.Add(friend)));
+               // friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (Session.Instance.LoggedInUser.Friends.Count == 0)
@@ -193,12 +191,12 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void fetchLikedPages()
         {
-            listBoxLikedPages.Items.Clear();
-            listBoxLikedPages.DisplayMember = "Name";
+            listBoxLikedPages.Invoke(new Action(() => listBoxLikedPages.Items.Clear()));
+            listBoxLikedPages.Invoke(new Action(() => listBoxLikedPages.DisplayMember = "Name"));
 
             foreach (Page page in Session.Instance.LoggedInUser.LikedPages)
             {
-                listBoxLikedPages.Items.Add(page);
+                listBoxLikedPages.Invoke(new Action(() => listBoxLikedPages.Items.Add(page)));
             }
         }
 
@@ -218,9 +216,11 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void fetchCheckins()
         {
+            listBoxCheckins.Invoke(new Action(() => listBoxCheckins.Items.Clear()));
+
             foreach (Checkin checkin in Session.Instance.LoggedInUser.Checkins)
             {
-                listBoxCheckins.Items.Add(checkin.Place.Name);
+                listBoxCheckins.Invoke(new Action(() => listBoxCheckins.Items.Add(checkin.Place.Name)));
             }
 
             if (Session.Instance.LoggedInUser.Checkins.Count == 0)
@@ -238,19 +238,20 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void fetchPosts()
         {
+
             foreach (Post post in Session.Instance.LoggedInUser.Posts)
             {
                 if (post.Message != null)
                 {
-                    listBoxPosts.Items.Add(post.Message);
+                    listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(post.Message)));
                 }
                 else if (post.Caption != null)
                 {
-                    listBoxPosts.Items.Add(post.Caption);
+                    listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(post.Caption)));
                 }
                 else
                 {
-                    listBoxPosts.Items.Add(string.Format("[{0}]", post.Type));
+                    listBoxPosts.Invoke(new Action(() => listBoxPosts.Items.Add(string.Format("[{0}]", post.Type))));
                 }
             }
 
@@ -262,12 +263,10 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void fetchEvents()
         {
-            listBoxEvents.Items.Clear();
-            listBoxEvents.DisplayMember = "Name";
-
             foreach (Event fbEvent in Session.Instance.LoggedInUser.Events)
             {
-                listBoxEvents.Items.Add(fbEvent);
+                listBoxEvents.Invoke(new Action(() => listBoxEvents.DisplayMember = "Name"));
+                listBoxEvents.Invoke(new Action(() => listBoxEvents.Items.Add(fbEvent)));
             }
 
             if (Session.Instance.LoggedInUser.Events.Count == 0)

@@ -58,7 +58,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             List<string> filterByTime = new List<string>();
             buildWeeklyForecastList(i_City);
 
-            WeatherFacade.WeeklyForecast.forecastTolList(ref forecastList);
+            WeatherFacade.WeeklyForecast.ForecastToList(ref forecastList);
 
             foreach (string item in forecastList)
             {

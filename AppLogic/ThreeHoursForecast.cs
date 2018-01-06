@@ -28,7 +28,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             Location = i_Location;
         }
 
-        public override void forecastTolList(ref List<string> io_List)
+        public override void ForecastToList(ref List<string> io_List)
         {
             io_List.Add(ToString());
         }

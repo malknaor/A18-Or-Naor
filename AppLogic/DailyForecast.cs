@@ -28,11 +28,11 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             Forecast.Clear();
         }
 
-        public override void forecastTolList(ref List<string> io_List)
+        public override void ForecastToList(ref List<string> io_List)
         {
             foreach (WeatherForecast item in Forecast)
             {
-                item.forecastTolList(ref io_List);
+                item.ForecastToList(ref io_List);
             }
         }
     }
