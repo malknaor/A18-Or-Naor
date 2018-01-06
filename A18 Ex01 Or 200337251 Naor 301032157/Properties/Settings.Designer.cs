@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace A18_Ex01_Or_200337251_Naor_301032157.Properties {
+namespace A18_Ex02_Or_200337251_Naor_301032157.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

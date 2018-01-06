@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace A18_Ex01_Or_200337251_Naor_301032157
+namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     static class Program
     {

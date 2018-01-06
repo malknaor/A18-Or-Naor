@@ -7,7 +7,7 @@ using FacebookWrapper.ObjectModel;
 using AppLogic;
 using System.Collections.Generic;
 
-namespace A18_Ex01_Or_200337251_Naor_301032157
+namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public partial class MainForm : Form
     {
@@ -17,7 +17,8 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         private const string k_SportInfo = @"Instruction:
 1.Select Activity.
-2.Add Friends (by double click).
+2.Select The Time.
+3.Add Friends (by double click).
 3.Type in the City.
 4.Get Forecast (5 Days Forecast).
 5.Select the desired day (by double click)
@@ -353,15 +354,22 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             }
         }
 
+        private void populateTimeComboBox()
+        {
+            foreach (string time in m_AppLogic.SportsActivityPlanner.HoursCategory)
+            {
+                comboBoxTime.Items.Add(time);
+            }
+        }
+
         private void buttonGetForecast_Click(object sender, EventArgs e)
         { //  TODO FACADE
             List<string> currentForecast = null;
             try
             {
-                // currentForecast = SomeFacade.WeeklyForcast
+                currentForecast = m_AppLogic.SportsActivityPlanner.GetWGetWeeklyForecastByCityAndHour(textBoxCity.Text, comboBoxTime.SelectedItem.ToString());
 
-                currentForecast = m_AppLogic.SportsActivityPlanner.GetWeeklyForecastByCity(textBoxCity.Text);
-                foreach(string forecast in currentForecast)
+                foreach (string forecast in currentForecast)
                 {
                     listBoxWeatherData.Items.Add(forecast);
                 }
@@ -419,6 +427,7 @@ Please try again",
             {
                 m_AppLogic.InitSportsActivityPlanner();
                 populateCategoryComboBox();
+                populateTimeComboBox();
                 labelSportPlanner.Text = k_SportInfo;
             }
         }

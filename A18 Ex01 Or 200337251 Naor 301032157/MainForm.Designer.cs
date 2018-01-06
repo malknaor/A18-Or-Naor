@@ -1,4 +1,4 @@
-﻿namespace A18_Ex01_Or_200337251_Naor_301032157
+﻿namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     partial class MainForm
     {
@@ -59,6 +59,7 @@
             this.listBoxFriendsList = new System.Windows.Forms.ListBox();
             this.tabControlFeatures = new System.Windows.Forms.TabControl();
             this.tabSportPlanner = new System.Windows.Forms.TabPage();
+            this.comboBoxTime = new System.Windows.Forms.ComboBox();
             this.labelSportPlanner = new System.Windows.Forms.Label();
             this.listBoxWeatherData = new System.Windows.Forms.ListBox();
             this.buttonShareActivity = new System.Windows.Forms.Button();
@@ -74,6 +75,7 @@
             this.pictureBoxFriends = new System.Windows.Forms.PictureBox();
             this.comboBoxAppID = new System.Windows.Forms.ComboBox();
             this.labelAppID = new System.Windows.Forms.Label();
+            this.labelTime = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.tabPageLunchtime.SuspendLayout();
             this.tabPageDashboard.SuspendLayout();
@@ -386,6 +388,8 @@
             // 
             // tabSportPlanner
             // 
+            this.tabSportPlanner.Controls.Add(this.labelTime);
+            this.tabSportPlanner.Controls.Add(this.comboBoxTime);
             this.tabSportPlanner.Controls.Add(this.labelSportPlanner);
             this.tabSportPlanner.Controls.Add(this.listBoxWeatherData);
             this.tabSportPlanner.Controls.Add(this.buttonShareActivity);
@@ -406,10 +410,18 @@
             this.tabSportPlanner.Text = "SportsActivityPlanner";
             this.tabSportPlanner.UseVisualStyleBackColor = true;
             // 
+            // comboBoxTime
+            // 
+            this.comboBoxTime.FormattingEnabled = true;
+            this.comboBoxTime.Location = new System.Drawing.Point(185, 62);
+            this.comboBoxTime.Name = "comboBoxTime";
+            this.comboBoxTime.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxTime.TabIndex = 13;
+            // 
             // labelSportPlanner
             // 
             this.labelSportPlanner.AutoSize = true;
-            this.labelSportPlanner.Location = new System.Drawing.Point(14, 279);
+            this.labelSportPlanner.Location = new System.Drawing.Point(12, 261);
             this.labelSportPlanner.Name = "labelSportPlanner";
             this.labelSportPlanner.Size = new System.Drawing.Size(64, 13);
             this.labelSportPlanner.TabIndex = 11;
@@ -418,15 +430,15 @@
             // listBoxWeatherData
             // 
             this.listBoxWeatherData.FormattingEnabled = true;
-            this.listBoxWeatherData.Location = new System.Drawing.Point(182, 143);
+            this.listBoxWeatherData.Location = new System.Drawing.Point(185, 153);
             this.listBoxWeatherData.Name = "listBoxWeatherData";
-            this.listBoxWeatherData.Size = new System.Drawing.Size(240, 95);
+            this.listBoxWeatherData.Size = new System.Drawing.Size(294, 95);
             this.listBoxWeatherData.TabIndex = 10;
             this.listBoxWeatherData.DoubleClick += new System.EventHandler(this.listBoxWeatherData_DoubleClick);
             // 
             // buttonShareActivity
             // 
-            this.buttonShareActivity.Location = new System.Drawing.Point(390, 31);
+            this.buttonShareActivity.Location = new System.Drawing.Point(389, 10);
             this.buttonShareActivity.Name = "buttonShareActivity";
             this.buttonShareActivity.Size = new System.Drawing.Size(103, 23);
             this.buttonShareActivity.TabIndex = 9;
@@ -436,7 +448,7 @@
             // 
             // buttonGetForecast
             // 
-            this.buttonGetForecast.Location = new System.Drawing.Point(338, 104);
+            this.buttonGetForecast.Location = new System.Drawing.Point(393, 114);
             this.buttonGetForecast.Name = "buttonGetForecast";
             this.buttonGetForecast.Size = new System.Drawing.Size(84, 23);
             this.buttonGetForecast.TabIndex = 8;
@@ -446,15 +458,15 @@
             // 
             // textBoxCity
             // 
-            this.textBoxCity.Location = new System.Drawing.Point(181, 107);
+            this.textBoxCity.Location = new System.Drawing.Point(184, 117);
             this.textBoxCity.Name = "textBoxCity";
-            this.textBoxCity.Size = new System.Drawing.Size(151, 20);
+            this.textBoxCity.Size = new System.Drawing.Size(166, 20);
             this.textBoxCity.TabIndex = 7;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(178, 90);
+            this.label1.Location = new System.Drawing.Point(181, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 6;
@@ -463,7 +475,7 @@
             // labelMeetingPost
             // 
             this.labelMeetingPost.AutoSize = true;
-            this.labelMeetingPost.Location = new System.Drawing.Point(13, 37);
+            this.labelMeetingPost.Location = new System.Drawing.Point(12, 16);
             this.labelMeetingPost.Name = "labelMeetingPost";
             this.labelMeetingPost.Size = new System.Drawing.Size(43, 13);
             this.labelMeetingPost.TabIndex = 5;
@@ -472,7 +484,7 @@
             // labelActivity
             // 
             this.labelActivity.AutoSize = true;
-            this.labelActivity.Location = new System.Drawing.Point(13, 67);
+            this.labelActivity.Location = new System.Drawing.Point(12, 46);
             this.labelActivity.Name = "labelActivity";
             this.labelActivity.Size = new System.Drawing.Size(74, 13);
             this.labelActivity.TabIndex = 4;
@@ -481,7 +493,7 @@
             // comboBoxActivity
             // 
             this.comboBoxActivity.FormattingEnabled = true;
-            this.comboBoxActivity.Location = new System.Drawing.Point(16, 83);
+            this.comboBoxActivity.Location = new System.Drawing.Point(15, 62);
             this.comboBoxActivity.Name = "comboBoxActivity";
             this.comboBoxActivity.Size = new System.Drawing.Size(121, 21);
             this.comboBoxActivity.TabIndex = 3;
@@ -489,7 +501,7 @@
             // 
             // textBoxActivityPost
             // 
-            this.textBoxActivityPost.Location = new System.Drawing.Point(62, 34);
+            this.textBoxActivityPost.Location = new System.Drawing.Point(61, 13);
             this.textBoxActivityPost.Name = "textBoxActivityPost";
             this.textBoxActivityPost.Size = new System.Drawing.Size(322, 20);
             this.textBoxActivityPost.TabIndex = 2;
@@ -497,7 +509,7 @@
             // labelFriendSelect
             // 
             this.labelFriendSelect.AutoSize = true;
-            this.labelFriendSelect.Location = new System.Drawing.Point(14, 117);
+            this.labelFriendSelect.Location = new System.Drawing.Point(13, 96);
             this.labelFriendSelect.Name = "labelFriendSelect";
             this.labelFriendSelect.Size = new System.Drawing.Size(74, 13);
             this.labelFriendSelect.TabIndex = 1;
@@ -506,7 +518,7 @@
             // listBoxFriendsSelect
             // 
             this.listBoxFriendsSelect.FormattingEnabled = true;
-            this.listBoxFriendsSelect.Location = new System.Drawing.Point(16, 143);
+            this.listBoxFriendsSelect.Location = new System.Drawing.Point(15, 122);
             this.listBoxFriendsSelect.Name = "listBoxFriendsSelect";
             this.listBoxFriendsSelect.Size = new System.Drawing.Size(120, 95);
             this.listBoxFriendsSelect.TabIndex = 0;
@@ -537,6 +549,15 @@
             this.labelAppID.Size = new System.Drawing.Size(73, 13);
             this.labelAppID.TabIndex = 42;
             this.labelAppID.Text = "Select AppID:";
+            // 
+            // labelTime
+            // 
+            this.labelTime.AutoSize = true;
+            this.labelTime.Location = new System.Drawing.Point(185, 45);
+            this.labelTime.Name = "labelTime";
+            this.labelTime.Size = new System.Drawing.Size(98, 13);
+            this.labelTime.TabIndex = 14;
+            this.labelTime.Text = "Select Time (Must!)";
             // 
             // MainForm
             // 
@@ -625,6 +646,8 @@
         private System.Windows.Forms.Label labelSportPlanner;
         private System.Windows.Forms.ComboBox comboBoxAppID;
         private System.Windows.Forms.Label labelAppID;
+        private System.Windows.Forms.ComboBox comboBoxTime;
+        private System.Windows.Forms.Label labelTime;
     }
 }
 

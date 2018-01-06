@@ -5,7 +5,7 @@ using System;
 using AppLogic;
 using System.Reflection;
 
-namespace A18_Ex01_Or_200337251_Naor_301032157
+namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class AppSettings
     {

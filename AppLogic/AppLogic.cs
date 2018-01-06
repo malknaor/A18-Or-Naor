@@ -2,7 +2,7 @@
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
-namespace A18_Ex01_Or_200337251_Naor_301032157
+namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class AppLogic
     {
@@ -10,7 +10,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; private set; }
 
-        public SportsActivityPlanner SportsActivityPlanner { get; private set; }
+        public SportsActivityPlannerFacade SportsActivityPlanner { get; private set; }
 
         public AppLogic()
         {
@@ -23,7 +23,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
 
         public void InitSportsActivityPlanner()
         {
-            SportsActivityPlanner = new SportsActivityPlanner();
+            SportsActivityPlanner = new SportsActivityPlannerFacade();
         }
 
         public void LoginToFacebook()

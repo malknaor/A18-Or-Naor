@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace A18_Ex01_Or_200337251_Naor_301032157.Properties {
+namespace A18_Ex02_Or_200337251_Naor_301032157.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace A18_Ex01_Or_200337251_Naor_301032157.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("A18_Ex01_Or_200337251_Naor_301032157.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("A18_Ex02_Or_200337251_Naor_301032157.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

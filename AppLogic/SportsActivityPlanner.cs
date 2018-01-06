@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 
-namespace A18_Ex01_Or_200337251_Naor_301032157
+namespace A18_Ex02_Or_200337251_Naor_301032157
 {
-
-    //FACADE
-    public class SportsActivityPlanner
+    public class SportsActivityPlannerFacade
     {
         public List<string> ActivityCategory { get; private set; }
 
-        public List<string> Forecast { get; private set; }
+        public List<string> HoursCategory { get; private set; }
 
         private WeatherFacade WeatherFacade { get; set; }
 
-        public SportsActivityPlanner()
+        public SportsActivityPlannerFacade()
         {
             WeatherFacade = new WeatherFacade();
             initCategories();
+            initHours();
         }
 
         private void initCategories()
@@ -34,22 +33,42 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             ActivityCategory.Add("Walking");
         }
 
-        public List<string> GetWeeklyForecastByCity(string i_City)
+        private void initHours()
         {
-            buildWeeklyForecastList(i_City);
+            HoursCategory = new List<string>();
 
-            return Forecast;
+            HoursCategory.Add("00:00:00");
+            HoursCategory.Add("03:00:00");
+            HoursCategory.Add("06:00:00");
+            HoursCategory.Add("09:00:00");
+            HoursCategory.Add("12:00:00");
+            HoursCategory.Add("15:00:00");
+            HoursCategory.Add("18:00:00");
+            HoursCategory.Add("21:00:00");
         }
 
         private void buildWeeklyForecastList(string i_City)
         {
-            Forecast = new List<string>();
             WeatherFacade.GetWeeklyForecast(i_City);
+        }
 
-            foreach (WeatherForecast forecast in (WeatherFacade.WeeklyForecast as WeeklyForecast).Forecast)
+        public List<string> GetWGetWeeklyForecastByCityAndHour(string i_City, string i_Time)
+        {
+            List<string> forecastList = new List<string>();
+            List<string> filterByTime = new List<string>();
+            buildWeeklyForecastList(i_City);
+
+            WeatherFacade.WeeklyForecast.forecastTolList(ref forecastList);
+
+            foreach (string item in forecastList)
             {
-                Forecast.Add(forecast.ToString());
+                if (item.Contains(i_Time))
+                {
+                    filterByTime.Add(item);
+                }
             }
+
+            return filterByTime;
         }
     }
 }

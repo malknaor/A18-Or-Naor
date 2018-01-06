@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 
-namespace A18_Ex01_Or_200337251_Naor_301032157
+namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class ThreeHoursForecast : WeatherForecast
     {
+        protected float Temperture { get; set; }
+
+        protected string Description { get; set; }
+
         public ThreeHoursForecast(XmlNode i_XmlNode, string i_Location)
         {
             XmlNode temp_node = i_XmlNode;
@@ -21,6 +26,16 @@ namespace A18_Ex01_Or_200337251_Naor_301032157
             temp_value = temp_node.Attributes["name"];
             Description = temp_value.Value;
             Location = i_Location;
+        }
+
+        public override void forecastTolList(ref List<string> io_List)
+        {
+            io_List.Add(ToString());
+        }
+
+        public override string ToString()
+        {
+            return Location + ": " + DateAndTime.ToString() + ", Temp: " + Temperture.ToString() + ", " + Description + "."; ;
         }
     }
 }
