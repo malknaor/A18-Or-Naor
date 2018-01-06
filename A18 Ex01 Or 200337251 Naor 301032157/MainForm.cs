@@ -42,7 +42,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             comboBoxAppID.Items.Add(k_AppID1);
             comboBoxAppID.Items.Add(k_AppID2);
 
-            if (Session.Instance.AppSettings.RememberUser)
+            if (AppSettings.Instance.RememberUser)
             {
                 loadUIAppSettings();
             }
@@ -50,16 +50,16 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void loadUIAppSettings()
         { // TODO - UI manager facade??? or maybe to get rid of the app settings.
-            Size = Session.Instance.AppSettings.LastWindowSize;
-            Location = Session.Instance.AppSettings.LastWindowLocation;
-            checkBoxRememberUser.Checked = Session.Instance.AppSettings.RememberUser;
+            Size = AppSettings.Instance.LastWindowSize;
+            Location = AppSettings.Instance.LastWindowLocation;
+            checkBoxRememberUser.Checked = AppSettings.Instance.RememberUser;
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
 
-            if (Session.Instance.AppSettings.RememberUser && !string.IsNullOrEmpty(Session.Instance.AppSettings.LastAccessToken))
+            if (AppSettings.Instance.RememberUser && !string.IsNullOrEmpty(AppSettings.Instance.LastAccessToken))
             {
                 m_AppLogic.LoginToFacebook();
                 doAfterLogin();
@@ -91,12 +91,11 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void saveUserSettings()
         {
-            Session.Instance.AppSettings.LastWindowLocation = this.Location;
-            Session.Instance.AppSettings.LastWindowSize = this.Size;
-            Session.Instance.AppSettings.RememberUser = this.checkBoxRememberUser.Checked;
-            Session.Instance.AppSettings.LastAccessToken = Session.Instance.LoginResult.AccessToken;
-
-            Session.Instance.AppSettings.SaveToFile();
+            AppSettings.Instance.LastWindowLocation = this.Location;
+            AppSettings.Instance.LastWindowSize = this.Size;
+            AppSettings.Instance.RememberUser = this.checkBoxRememberUser.Checked;
+            AppSettings.Instance.LastAccessToken = Session.Instance.LoginResult.AccessToken;
+            AppSettings.Instance.SaveToFile();
         }
 
         private void populateUIBasicFacebookData()

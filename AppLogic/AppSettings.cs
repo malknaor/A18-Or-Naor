@@ -24,25 +24,36 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             get { return Singleton<AppSettings>.Instance; }
         }
 
-        private void LoadFromFile()
+        public void LoadFromFile()
         {
-            AppSettings appSettingsObj = new AppSettings();
-            Type typeOfMe = this.GetType();
+            AppSettings appSettingsObj = null;
 
-            using (Stream stream = new FileStream(k_RelativePath, FileMode.Open))
+            if (File.Exists(k_RelativePath))
             {
-                XmlSerializer deSerializer = new XmlSerializer(this.GetType());
-                appSettingsObj = deSerializer.Deserialize(stream) as AppSettings;
+                using (Stream stream = new FileStream(k_RelativePath, FileMode.Open))
+                {
+                    XmlSerializer deSerializer = new XmlSerializer(typeof(AppSettings));
+                    appSettingsObj = deSerializer.Deserialize(stream) as AppSettings;
+                }
+            }
 
-                this.LastAccessToken = appSettingsObj.LastAccessToken;
-                this.LastWindowLocation = appSettingsObj.LastWindowLocation;
-                this.LastWindowSize = appSettingsObj.LastWindowSize;
+            loadSettingsToInstace(appSettingsObj, this);
+        }
 
-                //foreach (PropertyInfo propInfo in typeOfMe.GetProperties())
-                //{
+        private void loadSettingsToInstace(AppSettings i_CopyFromObject, AppSettings i_CopyToObject)
+        {
+            foreach (PropertyInfo sourcePropertyInfo in i_CopyFromObject.GetType().GetProperties())
+            {
+                if (sourcePropertyInfo.Name == "Instance")
+                {
+                    break;
+                }
+                PropertyInfo destPropertyInfo = i_CopyToObject.GetType().GetProperty(sourcePropertyInfo.Name);
 
-                // appSettingsObj typeOfMe.GetProperty( (propInfo.ToString()) = propInfo.GetValue();  
-                //}
+                destPropertyInfo.SetValue(
+                    i_CopyToObject,
+                    sourcePropertyInfo.GetValue(i_CopyFromObject, null),
+                    null);
             }
         }
 
@@ -57,13 +68,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
         }
 
         private AppSettings()
-        {
-            initDefaultSettings();
-
-            if (File.Exists(k_RelativePath))
-            {
-                LoadFromFile();
-            }
+        {     
         }
 
         private void initDefaultSettings()

@@ -10,15 +10,14 @@ namespace AppLogic
 {
     public class Session
     {
-        // Perhaps we should implement the facades as singletons?
-        // Seems reasonable.
+      
         public LoginResult LoginResult { get; set; }
 
         public User LoggedInUser { get; set; }
 
         public string AppID { get; set; }
 
-        public AppSettings AppSettings { get; set; }
+      //  public AppSettings AppSettings { get; set; }
 
         // For debugging.
         public static int Count { get; private set; }
@@ -34,7 +33,7 @@ namespace AppLogic
 
         private void init()
         {
-            AppSettings = AppSettings.Instance;
+            //AppSettings = AppSettings.Instance;
             // This is guy's ID. need to pass as paramater.
             AppID = "495417090841854";
         }

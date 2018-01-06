@@ -30,7 +30,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
         {
             m_session = Session.Instance;
 
-            if (string.IsNullOrEmpty(m_session.AppSettings.LastAccessToken))
+            if (string.IsNullOrEmpty(AppSettings.Instance.LastAccessToken))
             {
                 m_session.LoginResult = FacebookService.Login(
                     m_session.AppID,
@@ -69,7 +69,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             }
             else
             {
-                m_session.LoginResult = FacebookService.Connect(m_session.AppSettings.LastAccessToken);
+                m_session.LoginResult = FacebookService.Connect(AppSettings.Instance.LastAccessToken);
             }
 
             m_session.LoggedInUser = m_session.LoginResult.LoggedInUser;
@@ -85,7 +85,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         public void ClearUserSettings()
         {
-           Session.Instance.AppSettings.LoadDefaultSettings();
+            AppSettings.Instance.LoadDefaultSettings();
         }
     }
 }
