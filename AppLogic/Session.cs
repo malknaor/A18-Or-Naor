@@ -1,15 +1,25 @@
-﻿using FacebookWrapper;
+﻿using System;
+using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using A18_Ex02_Or_200337251_Naor_301032157;
 
 namespace AppLogic
 {
     public class Session
     {
+        public static int Count { get; private set; }
+
+        public static Session Instance
+        {
+            get
+            {
+                if (Count > 1)
+                {
+                    throw new Exception("For Singleton debugging. More than one instance created");
+                }
+
+                return Singleton<Session>.Instance;
+            }
+        }
       
         public LoginResult LoginResult { get; set; }
 
@@ -17,39 +27,16 @@ namespace AppLogic
 
         public string AppID { get; set; }
 
-      //  public AppSettings AppSettings { get; set; }
-
-        // For debugging.
-        public static int Count { get; private set; }
-
-
         private Session()
         {
             init();
-
 
             Count++;
         }
 
         private void init()
         {
-            //AppSettings = AppSettings.Instance;
-            // This is guy's ID. need to pass as paramater.
             AppID = "495417090841854";
         }
-
-        // Gets the single instance of SingleInstanceClass.
-        public static Session Instance
-        {
-            get
-            { //TODO Delete when done.
-                if (Count > 1)
-                {
-                    throw new Exception("For Singleton debugging. More than one instance created");
-                }
-                return Singleton<Session>.Instance;
-            }
-        }
     }
-
 }

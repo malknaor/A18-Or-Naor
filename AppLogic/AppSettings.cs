@@ -1,14 +1,19 @@
-﻿using System.Drawing;
+﻿using System.Reflection;
+using System.Drawing;
 using System.Xml.Serialization;
 using System.IO;
 using System;
 using AppLogic;
-using System.Reflection;
 
 namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class AppSettings
     {
+        public static AppSettings Instance
+        {
+            get { return Singleton<AppSettings>.Instance; }
+        }
+
         private const string k_RelativePath = @".\appSettings.xml";
 
         public Point LastWindowLocation { get; set; }
@@ -18,11 +23,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
         public string LastAccessToken { get; set; }
 
         public bool RememberUser { get; set; }
-
-        public static AppSettings Instance
-        {
-            get { return Singleton<AppSettings>.Instance; }
-        }
 
         public void LoadFromFile()
         {
@@ -48,6 +48,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
                 {
                     break;
                 }
+
                 PropertyInfo destPropertyInfo = i_CopyToObject.GetType().GetProperty(sourcePropertyInfo.Name);
 
                 destPropertyInfo.SetValue(

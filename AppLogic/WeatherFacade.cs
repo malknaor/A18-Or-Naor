@@ -11,7 +11,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         public WeatherFacade()
         {
-
         }
 
         public WeatherForecast GetWeeklyForecast(string i_City)

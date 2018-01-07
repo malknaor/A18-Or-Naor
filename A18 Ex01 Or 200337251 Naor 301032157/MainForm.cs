@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 using AppLogic;
-using System.Collections.Generic;
 
 namespace A18_Ex02_Or_200337251_Naor_301032157
 {
@@ -75,8 +75,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
                 tabControlFeatures.Enabled = true;
             }
 
-          //  new Thread(m_AppLogic.LoadFBCollectionsCache).Start();
-            //new Thread(fetchFriends).Start();
             new Thread(populateUIBasicFacebookData).Start(); 
         }
 
@@ -158,7 +156,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
             {
                 listBoxFriendsList.Invoke(new Action(() => listBoxFriendsList.Items.Add(friend)));
                 listBoxFriendsSelect.Invoke(new Action(() => listBoxFriendsSelect.Items.Add(friend)));
-               // friend.ReFetch(DynamicWrapper.eLoadOptions.Full);
             }
 
             if (Session.Instance.LoggedInUser.Friends.Count == 0)
@@ -238,7 +235,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void fetchPosts()
         {
-
             foreach (Post post in Session.Instance.LoggedInUser.Posts)
             {
                 if (post.Message != null)
@@ -361,7 +357,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
         }
 
         private void buttonGetForecast_Click(object sender, EventArgs e)
-        { //  TODO FACADE
+        {
             List<string> currentForecast = null;
             try
             {
@@ -372,7 +368,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
                     listBoxWeatherData.Items.Add(forecast);
                 }
             }
-
             catch (Exception)
             {
                 MessageBox.Show(

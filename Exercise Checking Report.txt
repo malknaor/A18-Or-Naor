@@ -3,7 +3,7 @@ Exercise No...........: 2
 First Student Details.: 200337251- Or Sasson
 Second Student Details: 301032157- Naor Malka
 Delivery Date.........: 06 - january - 2018
-Delivered In Delay....: Yes(one day)
+Delivered In Delay....: Yes(two days)
 Delay Reason..........: Extension until January 5th 2018 - Miluim
 Visual Studio Version.: 2015
 Comments..............: No

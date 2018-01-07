@@ -13,13 +13,9 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         public List<string> CommonLikedRestaurants { get; private set; }
 
-        // Trying to enhance the feature:
-
         public List<Page> UserInterests { get; private set; } // Liked collections.
 
         public List<string> CommonInterests { get; private set; } // Common Liked collections.
-
-
 
         public List<User> Friends { get; set; }
 
@@ -43,39 +39,20 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         private void buildSelectedFriendList()
         {
-            // TODO - 2 way Data Binding with the "Friends" Listbox.
             foreach (User friend in Session.Instance.LoggedInUser.Friends)
             {
-                if (wasSelectedByUser(friend)) // TODO
+                if (wasSelectedByUser(friend))
                 {
                     Friends.Add(friend);
                 }
             }
         }
 
-        //TODO
         private bool wasSelectedByUser(User friend)
         {
             return true;
         }
 
-        //private void buildUserInterests()
-        //{
-        //    CommonInterests = new List<string>();
-
-            
-  
-
-        //    foreach (FacebookObject in FacebookObjectCollection
-        //    {
-        //        if (page.Category.Contains("Restaurant") || page.Category.Contains("restaurant"))
-        //        {
-        //            UserLikedRestaurants.Add(page);
-        //        }
-        //    }
-        //}
-
-        //TODO
         private object selectInterest()
         {
             object obj = new FacebookObjectCollection<Page>();
@@ -99,11 +76,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
             return obj;
         }
-
-
-
-
-
 
         #endregion
 

@@ -1,13 +1,12 @@
 ﻿using AppLogic;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
-using System.Threading;
 
 namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class AppLogic
     {
-        private/* readonly*/ Session m_Session;
+        private Session m_Session;
 
         public LunchTimeMatchmaker LunchTimeMatchmaker { get; private set; }
 

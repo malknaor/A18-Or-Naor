@@ -6,7 +6,6 @@ using System.Text;
 
 namespace AppLogic
 {
-
     public static class Singleton<T>
 where T : class
     {
@@ -60,7 +59,9 @@ where T : class
                             {
                                 throw new Exception(null, exception);
                             }
-                            if (constructor == null || constructor.IsAssembly) /// Also exclude internal constructors.
+
+                            /// Also exclude internal constructors.
+                            if (constructor == null || constructor.IsAssembly) 
                             {
                                 throw new Exception(string.Format("A private or protected constructor is missing for '{0}'.", typeof(T).Name));
                             }

@@ -35,7 +35,7 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 
         public override string ToString()
         {
-            return Location + ": " + DateAndTime.ToString() + ", Temp: " + Temperture.ToString() + ", " + Description + "."; ;
+            return Location + ": " + DateAndTime.ToString() + ", Temp: " + Temperture.ToString() + ", " + Description + ".";
         }
     }
 }

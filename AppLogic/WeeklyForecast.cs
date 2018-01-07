@@ -7,7 +7,6 @@ namespace A18_Ex02_Or_200337251_Naor_301032157
 {
     public class WeeklyForecast : WeatherForecast
     {
-        //For next assignment - Itterator with projection of the 3 hour forecast.
         [XmlElement("forecast")]
         public List<WeatherForecast> Forecast { get; private set; }
 
